@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { reduce } from 'rxjs';
+
 import { bubbleData } from './data';
 
 @Component({
@@ -8,9 +10,26 @@ import { bubbleData } from './data';
 })
 export class AppComponent implements OnInit {
   title = 'algorithm-app';
+  chartOptions = {
+    backgoundColor: "#F5DEB3",
+    title: {
+      text: "Basic Column Chart in Angular"
+    },
+    data: [{
+      type: "column",
+      dataPoints: [
+        { label: "Apple",  y: 10  },
+        { label: "Orange", y: 15  },
+        { label: "Banana", y: 25  },
+        { label: "Mango",  y: 30  },
+        { label: "Grape",  y: 28  }
+      ]
+    }]
+			  
+  };
+
   // bubbleData: any[] = [];
   // view: [number, number] = [700,400];
-
   // options
   // showXAxis: boolean = true;
   // showYAxis: boolean = true;
@@ -26,7 +45,6 @@ export class AppComponent implements OnInit {
   // xScaleMax: number = 70;
   // yScaleMin: number = 70;
   // yScaleMax: number = 85;
-
   // colorScheme = '#5AA454';
   // colorScheme = {
   //   domain:
@@ -39,7 +57,6 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     // throw new Error('Method not implemented.');
   }
-
   // onSelect(data: any): void {
   //   console.log('Item clicked', JSON.parse(JSON.stringify(data)));
   // }
