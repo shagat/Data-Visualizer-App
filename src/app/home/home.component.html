@@ -1,0 +1,11 @@
+<h2>Algorithm App</h2>
+<ngb-accordion #acc="ngbAccordion">
+  <ngb-panel id="toggle-1" title="Start">
+    <ng-template ngbPanelContent>
+        <input ngbButtonLabel type="button" class="btn-primary" value="Sort">
+        <input ngbButtonLabel type="button" class="btn-primary" value="Search">
+        <input ngbButtonLabel type="button" class="btn-primary" value="Path Finder">
+    </ng-template>
+  </ngb-panel>
+</ngb-accordion>
+<router-outlet></router-outlet>
