@@ -1,21 +1,63 @@
 <div class="container">
-  <div class="jumbotron jumbotron-fluid">
+  <div class="jumbotron">
     <h1 class="display-5">Algorithm visualizer</h1>
     <p class="lead">This is a sorting, searching and path finding visualizer app.</p>
   </div>
 </div>
 <hr class="my-2">
-<ngb-accordion #acc="ngbAccordion">
-  <ngb-panel [disabled]="disabled" [cardClass]="disabled ? 'disabled' : ''">
-    <ng-template ngbPanelHeader let-opened="opened">
-      <button ngbPanelToggle class="btn btn-outline container-fluid">Start</button>
-    </ng-template>
-    <!-- <ngb-panel id="toggle-1"> -->
-    <ng-template ngbPanelContent class="list-items">
-      <input ngbButtonLabel type="button" class="btn btn-primary" value="Sorting" routerLink="/sort-start">
-      <input ngbButtonLabel type="button" class="btn btn-primary" value="Searching" routerLink="/search-start">
-      <input ngbButtonLabel type="button" class="btn btn-primary" value="Path Finder" routerLink="/pathFinder-start">
-    </ng-template>
-  </ngb-panel>
-</ngb-accordion>
+<div class="container">
+  <button type="button" class="btn btn-primary btn-lg" (click)="collapse.toggle()">
+    START
+  </button>
+  <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title"> Sorting</h4>
+        <div class="card-columns">
+          <div class="card">
+            <div class="card-body">
+              <a routerLink="#" class="card-link"> Bubble Sort</a>
+              <a routerLink="#" class="card-link"> Insertion Sort</a>
+              <a routerLink="#" class="card-link"> Selection Sort</a>
+              <a routerLink="#" class="card-link"> Quick Sort</a>
+              <a routerLink="#" class="card-link"> Merge Sort</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title"> Searching</h4>
+        <div class="card-columns">
+          <div class="card">
+            <div class="card-body">
+              <a routerLink="#" class="card-link"> Bubble Sort</a>
+              <a routerLink="#" class="card-link"> Insertion Sort</a>
+              <a routerLink="#" class="card-link"> Selection Sort</a>
+              <a routerLink="#" class="card-link"> Quick Sort</a>
+              <a routerLink="#" class="card-link"> Merge Sort</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title"> Path Finding</h4>
+        <div class="card-columns">
+          <div class="card">
+            <div class="card-body">
+              <a routerLink="#" class="card-link"> Bubble Sort</a>
+              <a routerLink="#" class="card-link"> Insertion Sort</a>
+              <a routerLink="#" class="card-link"> Selection Sort</a>
+              <a routerLink="#" class="card-link"> Quick Sort</a>
+              <a routerLink="#" class="card-link"> Merge Sort</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <router-outlet></router-outlet>
