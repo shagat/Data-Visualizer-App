@@ -6,9 +6,9 @@ import { SortStartComponent } from './start/sort-start/sort-start.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent, children: [
-    {path:'sort-start', component: SortStartComponent},
     {path:'sort-item', component: SortItemComponent},
-  ]}
+  ]},
+  {path:'sort-start', component: SortStartComponent},
 ];
 
 @NgModule({

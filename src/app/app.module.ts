@@ -11,6 +11,8 @@ import { SortItemComponent } from './start/sort-start/sort-item/sort-item.compon
 import { HeaderComponent } from './header/header.component';
 import { VisualizerComponent } from './visualizer/visualizer.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MaterialsModule } from 'src/materials.modules';
+import { SortStartComponent } from './start/sort-start/sort-start.component';
 
 var CanvasJSChart = CanvasAngularCharts.CanvasJSChart;
 
@@ -21,6 +23,7 @@ var CanvasJSChart = CanvasAngularCharts.CanvasJSChart;
     HomeComponent,
     StartComponent,
     SortItemComponent,
+    SortStartComponent,
     HeaderComponent,
     VisualizerComponent,
   ],
@@ -29,6 +32,7 @@ var CanvasJSChart = CanvasAngularCharts.CanvasJSChart;
     AppRoutingModule,
     BrowserAnimationsModule,
     NgbModule,
+    MaterialsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
