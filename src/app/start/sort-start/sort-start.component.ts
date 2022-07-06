@@ -1,5 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl, NgForm } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-sort-start',
@@ -7,11 +6,10 @@ import { FormControl, NgForm } from '@angular/forms';
   styleUrls: ['./sort-start.component.css']
 })
 export class SortStartComponent implements OnInit {
-  @ViewChild('sortForm', { static: false }) sForm: NgForm;
   inputValue = 1;
   speedValue = 1;
   sortValue: string;
-  model: string;
+
   constructor() { }
 
   ngOnInit(): void {

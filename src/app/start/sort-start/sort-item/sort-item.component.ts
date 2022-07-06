@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-sort-item',
@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./sort-item.component.css']
 })
 export class SortItemComponent implements OnInit {
-
+@Input('sortData') sortData : {};
   constructor() { }
 
   ngOnInit(): void {
