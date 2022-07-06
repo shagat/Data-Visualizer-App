@@ -10,6 +10,8 @@ export class SortStartComponent implements OnInit {
   @ViewChild('sortForm', { static: false }) sForm: NgForm;
   inputValue = 1;
   speedValue = 1;
+  sortValue: string;
+  model: string;
   constructor() { }
 
   ngOnInit(): void {
@@ -17,6 +19,7 @@ export class SortStartComponent implements OnInit {
 
   onSubmit() {
     console.log(this.inputValue);
+    console.log(this.sortValue);
   }
 
 }
