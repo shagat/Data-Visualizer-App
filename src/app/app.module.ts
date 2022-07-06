@@ -13,6 +13,7 @@ import { VisualizerComponent } from './visualizer/visualizer.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MaterialsModule } from 'src/materials.modules';
 import { SortStartComponent } from './start/sort-start/sort-start.component';
+import {  FormsModule } from '@angular/forms';
 
 var CanvasJSChart = CanvasAngularCharts.CanvasJSChart;
 
@@ -30,6 +31,7 @@ var CanvasJSChart = CanvasAngularCharts.CanvasJSChart;
   imports: [
     BrowserModule,
     AppRoutingModule,
+    FormsModule,
     BrowserAnimationsModule,
     NgbModule,
     MaterialsModule

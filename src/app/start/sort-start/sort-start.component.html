@@ -1,23 +1,40 @@
 <div class="container">
-  <form >
+  <form #sortForm="ngForm" class="sort-form">
+    <div ngbRadioGroup class="form-group form-radio btn-group" role="group" aria-label="Radio Buttons">
+      <label ngbButtonLabel class="btn-primary">
+        <input ngbButton type="radio" class="btn-check" value="bubbleSort">Bubble Sort
+      </label>
+      <label ngbButtonLabel class="btn-primary">
+        <input ngbButton type="radio" class="btn-check" value="insertionSort">Insertion Sort
+      </label>
+      <label ngbButtonLabel class="btn-primary">
+        <input ngbButton type="radio" class="btn-check" value="selectionSort">Selection Sort
+      </label>
+      <label ngbButtonLabel class="btn-primary">
+        <input ngbButton type="radio" class="btn-check" value="quickSort">Quick Sort
+      </label>
+      <label ngbButtonLabel class="btn-primary">
+        <input ngbButton type="radio" class="btn-check" value="mergeSort">Merge Sort
+      </label>
+    </div>
     <div class="form-group">
       <label for="itemSliders"> Input:</label>
-      <mat-slider #slider thumbLabel min="2" max="100" tickInterval="2" aria-label="units" color="primary" width="100%" step="5" tickInterval="5" color="primary"></mat-slider>{{slider.value}} items
+      <mat-slider #slider thumbLabel min="2" max="100" tickInterval="2" aria-label="units" color="primary" width="100%"
+        step="5" tickInterval="5" color="primary"></mat-slider>{{slider.value}} items
     </div>
     <div class="form-group">
-    <label for="exampleInputEmail1">Email address</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" aria-
-    describedby="emailHelp" placeholder="Provide email">
+      <label for="exampleInputEmail1">Email address</label>
+      <input type="email" class="form-control" id="exampleInputEmail1" aria- describedby="emailHelp"
+      placeholder="Provide email">
     </div>
     <div class="form-group">
-    <label for="exampleInputPassword1">Your password</label>
-    <input type="password" class="form-control" id="exampleInputPassword1"
-    placeholder="Password">
+      <label for="exampleInputPassword1">Your password</label>
+      <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
     </div>
     <div class="form-group form-check">
-    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-    <label class="form-check-label" for="exampleCheck1">Remember me</label>
+      <input type="checkbox" class="form-check-input" id="exampleCheck1">
+      <label class="form-check-label" for="exampleCheck1">Remember me</label>
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+  </form>
 </div>

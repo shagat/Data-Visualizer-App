@@ -1,4 +1,7 @@
 .container{
-    background-color:rgba(186, 191, 197, 0.705);
+    background-color:rgba(133, 160, 194, 0.637);
     border-radius: 10px;
+}
+.sort-form{
+    padding: 10px;
 }
