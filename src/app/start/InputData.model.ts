@@ -1,4 +1,4 @@
-export class Algorithm {
+export class InputData {
     public algo: string;
     public input: number[];
     public speed: number;
