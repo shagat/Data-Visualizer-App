@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { InputData } from '../../InputData.model';
+import { SortingService } from '../../sorting.service';
 
 @Component({
   selector: 'app-sort-item',
@@ -7,10 +9,14 @@ import { InputData } from '../../InputData.model';
   styleUrls: ['./sort-item.component.css']
 })
 export class SortItemComponent implements OnInit {
-  @Input('inputData') inputData: InputData;
-  constructor() { }
+  inputData: InputData;
+  sortSub = new Subscription;
+  constructor(private sortingService: SortingService) { }
 
   ngOnInit(): void {
+    this.inputData = this.sortingService.getInputData();
+    this.sortSub = this.sortingService.inputDataChanged.subscribe((inputdata:InputData) => 
+    this.inputData = inputdata)
   }
   
   suffle() {
