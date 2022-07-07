@@ -4,24 +4,24 @@
     <div class="btn-group" role="group" name="sortName" ngbRadioGroup aria-label="Radio Buttons"
       [(ngModel)]="sortValue">
       <label ngbButtonLabel class="btn-primary">
-        <input ngbButton type="radio" class="btn-check" value="bubbleSort">Bubble Sort
+        <input ngbButton type="radio" class="btn-check" value="1">Bubble Sort
       </label>
       <label ngbButtonLabel class="btn-primary">
-        <input ngbButton type="radio" class="btn-check" value="insertionSort">Insertion Sort
+        <input ngbButton type="radio" class="btn-check" value="2">Insertion Sort
       </label>
       <label ngbButtonLabel class="btn-primary">
-        <input ngbButton type="radio" class="btn-check" value="selectionSort">Selection Sort
+        <input ngbButton type="radio" class="btn-check" value="3">Selection Sort
       </label>
       <label ngbButtonLabel class="btn-primary">
-        <input ngbButton type="radio" class="btn-check" value="quickSort">Quick Sort
+        <input ngbButton type="radio" class="btn-check" value="4">Quick Sort
       </label>
       <label ngbButtonLabel class="btn-primary">
-        <input ngbButton type="radio" class="btn-check" value="mergeSort">Merge Sort
+        <input ngbButton type="radio" class="btn-check" value="5">Merge Sort
       </label>
     </div>
     <div class="form-group">
       <label for="itemSliders">Input: </label><br>
-      <mat-slider thumbLabel min="2" max="70" tickInterval="2" aria-label="units" color="primary" step="5" tickInterval="5"
+      <mat-slider thumbLabel min="2" max="40" tickInterval="2" aria-label="units" color="primary" step="5" tickInterval="5"
         color="primary" [(value)]="inputValue"></mat-slider>{{inputValue}} items
     </div>
     <div class="form-group">

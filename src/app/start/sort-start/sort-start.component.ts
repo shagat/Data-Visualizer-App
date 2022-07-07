@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { InputData } from '../InputData.model';
 
 @Component({
@@ -7,16 +8,17 @@ import { InputData } from '../InputData.model';
   styleUrls: ['./sort-start.component.css']
 })
 export class SortStartComponent implements OnInit {
-  inputValue = 2;
+  inputValue = 15;
   speedValue = 1;
-  sortValue: string;
+  sortValue = null;
   dataArray: number[] = [];
   inputData: InputData;
 
 
-  constructor() { }
+  constructor(private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
+    this.sortValue = this.route.snapshot.params['id']
   }
 
   getDataArray() {

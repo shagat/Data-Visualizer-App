@@ -8,7 +8,7 @@ const routes: Routes = [
   {path: '', component: HomeComponent, children: [
     {path:'sort-item', component: SortItemComponent},
   ]},
-  {path:'sort-start', component: SortStartComponent},
+  {path:':id/sort-start', component: SortStartComponent},
 ];
 
 @NgModule({
