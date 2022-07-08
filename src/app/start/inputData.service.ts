@@ -7,9 +7,9 @@ import { InputData } from "./InputData.model";
 })
 export class InputDataService {
   inputDataChanged = new Subject<InputData>();
-  dataJSONArrayChanged = new Subject<[{ x: any, y: number }]>();
+  dataJSONArrayChanged = new Subject<[{ x: number, y: number }]>();
   private inputData: InputData;
-  private dataArray: number[] = [];
+  private dataArray:number[] = [];
   private dataJSONArray: [{ x: number, y: number }] = [{x: 0, y: 0}];
   public inputValue: number = 15;
 
@@ -28,14 +28,12 @@ export class InputDataService {
   }
 
   arrayToJSONArray() {
-    this.dataArray.forEach((value, key) => {
+    this.dataArray.forEach((key, value) => {
       this.dataJSONArray.push(
-        { x: (+key), y: (+value) }
+        {x: +value, y: +key}
       )
-      console.log(key, value)
     }
     )
-    console.log(this.dataJSONArray)
   }
 
   getInputData() {
