@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { InputData } from '../InputData.model';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-sort-start',
@@ -8,27 +7,21 @@ import { InputData } from '../InputData.model';
   styleUrls: ['./sort-start.component.css']
 })
 export class SortStartComponent implements OnInit {
-  inputValue = 15;
-  speedValue = 1;
+  inputValue: number;
+  speedValue: number;
   sortValue = null;
-  dataArray: number[] = [];
-  inputData: InputData;
 
-
-  constructor(private route: ActivatedRoute, private router: Router) { }
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.sortValue = this.route.snapshot.params['id']
   }
 
-  getDataArray() {
-    this.dataArray = Array.from({ length: +(this.inputValue) }, () => Math.floor(Math.random() * 40));
+  inputValueSub(event) {
+    this.inputValue = event.value;
   }
 
   onSubmit() {
-    this.getDataArray();
-    this.inputData = new InputData(this.sortValue, this.dataArray, this.speedValue);
-    console.log(this.inputData);
 
   }
 
