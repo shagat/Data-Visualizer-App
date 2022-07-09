@@ -1,7 +1,15 @@
-<div *ngIf="dataJSONArray.length > 1">
-  <canvasjs-chart (chartInstance)="getChartInstance($event)" [options]="chartOptions"></canvasjs-chart>
-
-  <div #chartContainer id="chartContainer" class="chartContainer" style="width: 100%; height: 280px">
-
-  </div>
+<div class="container" *ngIf="dataJSONArray.length > 1">
+  <!-- <canvasjs-chart [options]="chartOptions" (chartInstance)="chart"></canvasjs-chart> -->
+  <ngx-charts-bar-vertical 
+  [view]="view"
+  [gradient]="gradient"
+  [results]="dataJSONArray"
+  [xAxis]="showXAxis"
+  [yAxis]="showYAxis"
+  [showXAxisLabel]="showXAxisLabel"
+  [showYAxisLabel]="showYAxisLabel"
+  [xAxisLabel]="xAxisLabel"
+  [yAxisLabel]="yAxisLabel"
+  (select)="onSelect($event)"
+  ></ngx-charts-bar-vertical>
 </div>

@@ -1,6 +1,5 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { CanvasJS } from 'src/assets/canvasjs.angular.component';
 import { InputDataService } from '../start/inputData.service';
 
 @Component({
@@ -9,82 +8,64 @@ import { InputDataService } from '../start/inputData.service';
   styleUrls: ['./visualizer.component.css']
 })
 export class VisualizerComponent implements OnInit, OnDestroy {
-  @ViewChild('chartContainer', { static: false }) chartContainer: HTMLElement;
   dataArraySub = new Subscription;
+  dataJSONArray: [{ name: number, value: number }] = [{ name: 0, value: 0 }];
+  dataPoints = [
+    { name: "Apple", value: 10 },
+    { name: "Orange", value: 15 },
+    { name: "Banana", value: 25 },
+    { name: "Mango", value: 30 },
+    { name: "Grape", value: 28 }
+  ]
 
-  dataJSONArray: [{ x: number, y: number }] = [{ x: 0, y: 0 }];
+  //Options for charts
+  view: [number, number] = [700, 600];
+  showXAxis = true;
+  showYAxis = true;
+  gradient = false;
+  showLegend = true;
+  showXAxisLabel = true;
+  xAxisLabel = 'Inputs';
+  showYAxisLabel = true;
+  yAxisLabel = 'Value';
 
-  chartOptions = {
-    backgroundColor: "#F5DEB3",
-    title: {
-      text: "Basic Column Chart in Angular"
-    },
-    data: [{
-      type: "column",
-      dataPoints: [
-        { label: "Apple", y: 10 },
-        { label: "Orange", y: 15 },
-        { label: "Banana", y: 25 },
-        { label: "Mango", y: 30 },
-        { label: "Grape", y: 28 }
-      ]
-      // dataPoints: this.dataJSONArray
-    }
-    ]
+  colorScheme = {
+    domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
   };
 
   constructor(private inputDataService: InputDataService) { }
 
   ngOnInit(): void {
-    this.dataArraySub = this.inputDataService.dataJSONArrayChanged.subscribe((dataJSONArray: [{ x: number, y: number }]) => {
+    this.dataArraySub = this.inputDataService.dataJSONArrayChanged.subscribe((dataJSONArray: [{ name: number, value: number }]) => {
       this.dataJSONArray = dataJSONArray;
     }
     )
-    var chart = new CanvasJS.Chart("chartContainer", { 
-      title: {
-        text: "Adding & Updating dataPoints"
-      },
-      data: [
-      {
-        type: "bar",
-        dataPoints: [
-          { label: "Apple", y: 10 },
-          { label: "Orange", y: 15 },
-          { label: "Banana", y: 25 },
-          { label: "Mango", y: 30 },
-          { label: "Grape", y: 28 }
-        ]
-      }
-      ]
-    });
-    chart.render();
   }
 
-  getChartInstance(event) {
-    // event.chartOptions = {
-    //     backgroundColor: "#F5DEB3",
-    //     title: {
-    //       text: "Basic Column Chart in Angular"
-    //     },
-    //     data: [{
-    //       // type: "column",
-    //       type: "column",
-    //       dataPoints: [
-    //         { label: "Apple", y: 10 },
-    //         { label: "Orange", y: 15 },
-    //         { label: "Banana", y: 25 },
-    //         { label: "Mango", y: 30 },
-    //         { label: "Grape", y: 28 }
-    //       ]
-    //       // dataPoints: this.dataJSONArray
-    //     }
-    //     ]
-    //   };
-    // this.chart = event;
+  onSelect(event) {
+    console.log(event)
   }
+
   ngOnDestroy(): void {
     this.dataArraySub.unsubscribe();
   }
 
-
 }
+
+// chartOptions = {
+//   backgroundColor: "#F5DEB3",
+//   title: {
+//     text: "Basic Column Chart in Angular"
+//   },
+//   data: [{
+//     type: "column",
+//     dataPoints: [
+//       { label: "Apple", y: 10 },
+//       { label: "Orange", y: 15 },
+//       { label: "Banana", y: 25 },
+//       { label: "Mango", y: 30 },
+//       { label: "Grape", y: 28 }
+//     ]
+//   }
+// ]
+// };

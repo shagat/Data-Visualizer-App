@@ -7,10 +7,10 @@ import { InputData } from "./InputData.model";
 })
 export class InputDataService {
   inputDataChanged = new Subject<InputData>();
-  dataJSONArrayChanged = new Subject<[{ x: number, y: number }]>();
+  dataJSONArrayChanged = new Subject<[{ name: number, value: number }]>();
   private inputData: InputData;
   private dataArray:number[] = [];
-  private dataJSONArray: [{ x: number, y: number }] = [{x: 0, y: 0}];
+  private dataJSONArray: [{ name: number, value: number }] = [{name: 0, value: 0}];
   public inputValue: number = 15;
 
   setInputData(inputData: InputData) {
@@ -30,7 +30,7 @@ export class InputDataService {
   arrayToJSONArray() {
     this.dataArray.forEach((key, value) => {
       this.dataJSONArray.push(
-        {x: +value, y: +key}
+        {name: +value, value: +key}
       )
     }
     )
