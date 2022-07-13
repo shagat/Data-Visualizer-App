@@ -37,7 +37,10 @@ export class VisualizerComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.dataArraySub = this.inputDataService.dataJSONArrayChanged.subscribe((dataJSONArray: [{ name: number, value: number }]) => {
-      this.dataJSONArray = dataJSONArray;
+      this.dataJSONArray = [{name: 0, value: 0}];
+      setTimeout(() => {
+        this.dataJSONArray = dataJSONArray;
+      }, 0)
     }
     )
   }
