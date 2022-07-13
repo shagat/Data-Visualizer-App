@@ -15,6 +15,7 @@ import { MaterialsModule } from 'src/materials.modules';
 import { SortStartComponent } from './start/sort-start/sort-start.component';
 import {  FormsModule } from '@angular/forms';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { HttpClientModule } from '@angular/common/http';
 
 var CanvasJSChart = CanvasAngularCharts.CanvasJSChart;
 
@@ -34,6 +35,7 @@ var CanvasJSChart = CanvasAngularCharts.CanvasJSChart;
     AppRoutingModule,
     FormsModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     NgbModule,
     MaterialsModule,
     NgxChartsModule
