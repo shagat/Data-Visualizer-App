@@ -10,14 +10,7 @@ import { InputData } from '../start/InputData.model';
 })
 export class VisualizerComponent implements OnInit, OnDestroy {
   dataArraySub = new Subscription;
-  inputData: InputData;
-  dataPoints = [
-    { name: "Apple", value: 10 },
-    { name: "Orange", value: 15 },
-    { name: "Banana", value: 25 },
-    { name: "Mango", value: 30 },
-    { name: "Grape", value: 28 }
-  ]
+  inputData: InputData = new InputData(0, [], 0);
 
   constructor(private inputDataService: InputDataService) { }
 
@@ -34,6 +27,14 @@ export class VisualizerComponent implements OnInit, OnDestroy {
     this.dataArraySub.unsubscribe();
   }
 }
+
+// dataPoints = [
+//   { name: "Apple", value: 10 },
+//   { name: "Orange", value: 15 },
+//   { name: "Banana", value: 25 },
+//   { name: "Mango", value: 30 },
+//   { name: "Grape", value: 28 }
+// ]
 
 // view: [number, number] = [700, 600];
 // showXAxis = true;

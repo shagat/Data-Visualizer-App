@@ -11,24 +11,29 @@ export class InputDataService {
   private dataArray: number[] = [];
   dataKey: number;
 
-  setInputData(inputData: InputData) {
+  submitInputData(inputData: InputData) {
     this.inputData.algo = inputData.algo;
     this.inputData.speed = inputData.speed;
     this.inputData.input = this.dataArray;
     this.inputDataChanged.next(this.inputData)
   }
 
-  setDataKey(dataKey: number){
+  // setInputData(){
+  //   this.inputData.algo = inputData.algo;
+  //   this.inputData.speed = inputData.speed;
+  //   this.inputData.input = this.dataArray;
+  //   this.inputDataChanged.next(this.inputData)
+  // }
+
+  setDataKey(dataKey: number) {
     this.dataKey = dataKey;
-    this.getDataArray();
-  }
-  
-  getDataArray() {
-    this.dataArray = Array.from({ length: +(this.dataKey) }, () => Math.floor(Math.random() * 50));
+    this.spawnDataArray();
+    this.inputDataChanged.next(this.inputData);
   }
 
-  getInputData() {
-    return (this.inputData);
+  spawnDataArray() {
+    this.dataArray = Array.from({ length: +(this.dataKey) }, () => Math.floor(Math.random() * 50));
+    this.inputData.input = this.dataArray;
   }
 
   // suffleArray() {

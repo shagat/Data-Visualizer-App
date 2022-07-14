@@ -14,7 +14,6 @@ export class SortItemComponent implements OnInit, OnDestroy {
   constructor(private inputDataService: InputDataService) { }
 
   ngOnInit(): void {
-    this.inputData = this.inputDataService.getInputData();
     this.sortSub = this.inputDataService.inputDataChanged.subscribe((inputdata: InputData) =>
       this.inputData = inputdata
     )
