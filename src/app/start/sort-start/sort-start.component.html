@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container text-center">
   <h3 class="jumbotron jumbotron-fluid"> Configuration</h3>
   <form #sortForm="ngForm" class="sort-form" (ngSubmit)="onSubmit()">
     <div class="btn-group" role="group" name="sortName" ngbRadioGroup aria-label="Radio Buttons"
@@ -29,10 +29,8 @@
       <mat-slider thumbLabel min="3" max="40" value="5" aria-label="units" color="primary" step="1" tickInterval="5"
         color="primary" (change)="inputValueSub($event)"></mat-slider>{{dataKey}} items
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+      <button type="submit" class="btn btn-primary col-sm-4">Start</button>
   </form>
 </div>
 <hr>
-<div class="container">
   <app-sort-item></app-sort-item>
-</div>
