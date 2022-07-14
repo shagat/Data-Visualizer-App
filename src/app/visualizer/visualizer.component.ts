@@ -12,6 +12,7 @@ import { Chart, registerables } from 'chart.js';
 export class VisualizerComponent implements OnInit, OnDestroy {
   dataArraySub = new Subscription;
   inputData: InputData = new InputData(0, [], 0);
+  previewIndexData: number[] = [];
   chart: Chart;
 
   constructor(private inputDataService: InputDataService) {
@@ -21,17 +22,20 @@ export class VisualizerComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.dataArraySub = this.inputDataService.inputDataChanged.subscribe((inputData: InputData) => {
       this.inputData.input = inputData.input;
+      this.previewIndexData = inputData.input.map((value, index) => {
+        return index
+      })
       this.previewData()
     }
     )
 
     this.chart = new Chart('canvas', {
-      type: 'bar',
+      type: 'line',
       data: {
-        labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        labels: this.previewIndexData,
         datasets: [
           {
-            label: 'inputs',
+            label: 'Value',
             data: this.inputData.input,
             backgroundColor: ['rgb(13, 110, 253)'],
           }
@@ -40,7 +44,9 @@ export class VisualizerComponent implements OnInit, OnDestroy {
     }
     );
   }
+
   previewData() {
+    this.chart.config.data.labels = this.previewIndexData;
     this.chart.config.data.datasets[0].data = this.inputData.input;
     this.chart.update();
   }

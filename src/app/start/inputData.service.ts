@@ -32,7 +32,7 @@ export class InputDataService {
   }
 
   spawnDataArray() {
-    this.dataArray = Array.from({ length: +(this.dataKey) }, () => Math.floor(Math.random() * 50));
+    this.dataArray = Array.from({ length: +(this.dataKey) }, () => Math.floor(Math.random() * 40));
     this.inputData.input = this.dataArray;
   }
 
