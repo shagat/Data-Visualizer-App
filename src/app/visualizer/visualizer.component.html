@@ -1,18 +1,3 @@
-<!-- <div class="container" *ngIf="dataJSONArray.length > 1"> -->
-<!-- <canvasjs-chart [options]="chartOptions" (chartInstance)="chart"></canvasjs-chart> -->
-<!-- <ngx-charts-bar-vertical 
-  [view]="view"
-  [gradient]="gradient"
-  [results]="dataJSONArray"
-  [xAxis]="showXAxis"
-  [yAxis]="showYAxis"
-  [showXAxisLabel]="showXAxisLabel"
-  [showYAxisLabel]="showYAxisLabel"
-  [xAxisLabel]="xAxisLabel"
-  [yAxisLabel]="yAxisLabel"
-  (select)="onSelect($event)"
-  ></ngx-charts-bar-vertical> -->
 <div class="container">
-  <button class="btn btn-primary" type="button" (click)="previewData()"> Preview</button>
   <canvas id="canvas">{{chart}}</canvas>
 </div>

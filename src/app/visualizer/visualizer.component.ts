@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { InputDataService } from '../start/inputData.service';
 import { InputData } from '../start/InputData.model';
-// import { Chart } from 'chart.js/auto';
 import { Chart, registerables } from 'chart.js';
 
 @Component({
@@ -22,9 +21,10 @@ export class VisualizerComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.dataArraySub = this.inputDataService.inputDataChanged.subscribe((inputData: InputData) => {
       this.inputData.input = inputData.input;
-      console.log(this.inputData);
+      this.previewData()
     }
     )
+
     this.chart = new Chart('canvas', {
       type: 'bar',
       data: {
@@ -33,13 +33,15 @@ export class VisualizerComponent implements OnInit, OnDestroy {
           {
             label: 'inputs',
             data: this.inputData.input,
+            backgroundColor: ['rgb(13, 110, 253)'],
           }
         ]
-      }
-    });
+      },
+    }
+    );
   }
   previewData() {
-    // this.chart.data.datasets.indexOf.push(this.inputData.input);
+    this.chart.config.data.datasets[0].data = this.inputData.input;
     this.chart.update();
   }
 
@@ -47,25 +49,3 @@ export class VisualizerComponent implements OnInit, OnDestroy {
     this.dataArraySub.unsubscribe();
   }
 }
-
-// dataPoints = [
-//   { name: "Apple", value: 10 },
-//   { name: "Orange", value: 15 },
-//   { name: "Banana", value: 25 },
-//   { name: "Mango", value: 30 },
-//   { name: "Grape", value: 28 }
-// ]
-
-// view: [number, number] = [700, 600];
-// showXAxis = true;
-// showYAxis = true;
-// gradient = false;
-// showLegend = true;
-// showXAxisLabel = true;
-// xAxisLabel = 'Inputs';
-// showYAxisLabel = true;
-// yAxisLabel = 'Value';
-
-// colorScheme = {
-//   domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
-// };
