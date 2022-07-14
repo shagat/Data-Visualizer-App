@@ -13,5 +13,6 @@
   (select)="onSelect($event)"
   ></ngx-charts-bar-vertical> -->
 <div class="container">
-
+  <button class="btn btn-primary" type="button" (click)="previewData()"> Preview</button>
+  <canvas id="canvas">{{chart}}</canvas>
 </div>

@@ -2,6 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { InputDataService } from '../start/inputData.service';
 import { InputData } from '../start/InputData.model';
+// import { Chart } from 'chart.js/auto';
+import { Chart, registerables } from 'chart.js';
 
 @Component({
   selector: 'app-visualizer',
@@ -11,8 +13,11 @@ import { InputData } from '../start/InputData.model';
 export class VisualizerComponent implements OnInit, OnDestroy {
   dataArraySub = new Subscription;
   inputData: InputData = new InputData(0, [], 0);
+  chart: Chart;
 
-  constructor(private inputDataService: InputDataService) { }
+  constructor(private inputDataService: InputDataService) {
+    Chart.register(...registerables)
+  }
 
   ngOnInit(): void {
     this.dataArraySub = this.inputDataService.inputDataChanged.subscribe((inputData: InputData) => {
@@ -20,8 +25,23 @@ export class VisualizerComponent implements OnInit, OnDestroy {
       console.log(this.inputData);
     }
     )
+    this.chart = new Chart('canvas', {
+      type: 'bar',
+      data: {
+        labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        datasets: [
+          {
+            label: 'inputs',
+            data: this.inputData.input,
+          }
+        ]
+      }
+    });
   }
-
+  previewData() {
+    // this.chart.data.datasets.indexOf.push(this.inputData.input);
+    this.chart.update();
+  }
 
   ngOnDestroy(): void {
     this.dataArraySub.unsubscribe();
