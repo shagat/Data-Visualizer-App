@@ -7,11 +7,9 @@ import { InputData } from "./InputData.model";
 })
 export class InputDataService {
   inputDataChanged = new Subject<InputData>();
-  dataJSONArrayChanged = new Subject<[{ name: number, value: number }]>();
-  private inputData: InputData;
-  private dataArray:number[] = [];
-  private dataJSONArray: [{ name: number, value: number }] = [{name: 0, value: 0}];
-  public inputValue: number = 15;
+  private inputData: InputData = new InputData(0, [], 3);
+  private dataArray: number[] = [];
+  dataKey: number;
 
   setInputData(inputData: InputData) {
     this.inputData.algo = inputData.algo;
@@ -20,42 +18,31 @@ export class InputDataService {
     this.inputDataChanged.next(this.inputData)
   }
 
-  setInputValue(inputValue: number) {
-    this.inputValue = inputValue;
+  setDataKey(dataKey: number){
+    this.dataKey = dataKey;
     this.getDataArray();
-    this.arrayToJSONArray();
-    this.dataJSONArrayChanged.next(this.dataJSONArray);
   }
-
-  arrayToJSONArray() {
-    this.dataArray.forEach((key, value) => {
-      this.dataJSONArray.push(
-        {name: +value, value: +key}
-      )
-    }
-    )
+  
+  getDataArray() {
+    this.dataArray = Array.from({ length: +(this.dataKey) }, () => Math.floor(Math.random() * 50));
   }
 
   getInputData() {
-    return this.inputData;
+    return (this.inputData);
   }
 
-  getDataArray() {
-    this.dataArray = Array.from({ length: +(this.inputValue) }, () => Math.floor(Math.random() * 40));
-  }
-
-  suffleArray() {
-    for (var a = [], i = 0; i < 40; ++i) a[i] = i;
-    function shuffle(array) {
-      var tmp, current, top = array.length;
-      if (top) while (--top) {
-        current = Math.floor(Math.random() * (top + 1));
-        tmp = array[current];
-        array[current] = array[top];
-        array[top] = tmp;
-      }
-      return array;
-    }
-    a = shuffle(a);
-  }
+  // suffleArray() {
+  //   for (var a = [], i = 0; i < 40; ++i) a[i] = i;
+  //   function shuffle(array) {
+  //     var tmp, current, top = array.length;
+  //     if (top) while (--top) {
+  //       current = Math.floor(Math.random() * (top + 1));
+  //       tmp = array[current];
+  //       array[current] = array[top];
+  //       array[top] = tmp;
+  //     }
+  //     return array;
+  //   }
+  //   a = shuffle(a);
+  // }
 }
