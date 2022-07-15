@@ -2,7 +2,7 @@
   <h3 class="jumbotron jumbotron-fluid"> Configuration</h3>
   <form #sortForm="ngForm" class="sort-form" (ngSubmit)="onSubmit()">
     <div class="btn-group" role="group" name="sortName" ngbRadioGroup aria-label="Radio Buttons"
-      [(ngModel)]="sortValue">
+      [(ngModel)]="sortValue" [disabled]="!previewMode">
       <label ngbButtonLabel class="btn-primary">
         <input ngbButton type="radio" class="btn-check" value="1">Bubble Sort
       </label>
@@ -21,15 +21,16 @@
     </div>
     <div class="form-group">
       <label for="speedSliders">Speed: </label><br>
-      <mat-slider thumbLabel [(value)]="speedValue" min="1" max="5" tickInterval="1" aria-label="units" color="primary" step="1"
+      <mat-slider thumbLabel [disabled]="!previewMode" [(value)]="speedValue" min="1" max="5" tickInterval="1" aria-label="units" color="primary" step="1"
         tickInterval="1" color="primary"></mat-slider>{{speedValue}} speed
     </div>
     <div class="form-group">
       <label for="itemSliders">Input: </label><br>
-      <mat-slider thumbLabel min="3" max="40" value="5" aria-label="units" color="primary" step="1" tickInterval="5"
+      <mat-slider thumbLabel [disabled]="!previewMode" min="3" max="40" value="5" aria-label="units" color="primary" step="1" tickInterval="5"
         color="primary" (change)="inputValueSub($event)"></mat-slider>{{dataKey}} items
     </div>
-      <button type="submit" class="btn btn-primary col-sm-4">Start</button>
+      <button type="submit" class="btn btn-primary col-sm-3" [disabled]="!previewMode">Start</button>
+      <button type="button" class="btn btn-primary col-sm-3" [disabled]="!previewMode" (click)="onClickSuffle()" >Suffle Data</button>
   </form>
 </div>
 <hr>

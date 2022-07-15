@@ -7,47 +7,43 @@ import { InputData } from "./InputData.model";
 })
 export class InputDataService {
   inputDataChanged = new Subject<InputData>();
+  previewModeSub = new Subject<boolean>();
   private inputData: InputData = new InputData(0, [], 3);
   private dataArray: number[] = [];
+  previewMode: boolean = true;
   dataKey: number;
 
-  submitInputData(inputData: InputData) {
-    this.inputData.algo = inputData.algo;
-    this.inputData.speed = inputData.speed;
+  submitInputData(speedValue: number, sortValue: number) {
+    this.previewMode = false;
+    this.previewModeSub.next(this.previewMode);
+    this.inputData.algo = sortValue;
+    this.inputData.speed = speedValue;
     this.inputData.input = this.dataArray;
-    this.inputDataChanged.next(this.inputData)
+    
+    setTimeout(() => {
+      console.log(this.inputData);
+      this.previewMode = true;
+      this.previewModeSub.next(this.previewMode)
+    },5000)
+    
   }
-
-  // setInputData(){
-  //   this.inputData.algo = inputData.algo;
-  //   this.inputData.speed = inputData.speed;
-  //   this.inputData.input = this.dataArray;
-  //   this.inputDataChanged.next(this.inputData)
-  // }
 
   setDataKey(dataKey: number) {
     this.dataKey = dataKey;
     this.spawnDataArray();
     this.inputDataChanged.next(this.inputData);
   }
-
+  
   spawnDataArray() {
     this.dataArray = Array.from({ length: +(this.dataKey) }, () => Math.floor(Math.random() * 40));
     this.inputData.input = this.dataArray;
   }
-
-  // suffleArray() {
-  //   for (var a = [], i = 0; i < 40; ++i) a[i] = i;
-  //   function shuffle(array) {
-  //     var tmp, current, top = array.length;
-  //     if (top) while (--top) {
-  //       current = Math.floor(Math.random() * (top + 1));
-  //       tmp = array[current];
-  //       array[current] = array[top];
-  //       array[top] = tmp;
-  //     }
-  //     return array;
-  //   }
-  //   a = shuffle(a);
-  // }
+  
+  shuffleArray() {
+    for (let i = this.dataArray.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [this.dataArray[i], this.dataArray[j]] = [this.dataArray[j], this.dataArray[i]];
+    }
+    this.inputDataChanged.next(this.inputData);
+}
 }
