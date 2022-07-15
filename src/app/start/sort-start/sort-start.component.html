@@ -29,7 +29,7 @@
       <mat-slider thumbLabel [disabled]="!previewMode" min="3" max="40" value="5" aria-label="units" color="primary" step="1" tickInterval="5"
         color="primary" (change)="inputValueSub($event)"></mat-slider>{{dataKey}} items
     </div>
-      <button type="submit" class="btn btn-primary col-sm-3" [disabled]="!previewMode">Start</button>
+      <button type="submit" class="btn btn-primary col-sm-3" [disabled]="!previewMode || !dataKey">Start</button>
       <button type="button" class="btn btn-primary col-sm-3" [disabled]="!previewMode" (click)="onClickSuffle()" >Suffle Data</button>
   </form>
 </div>

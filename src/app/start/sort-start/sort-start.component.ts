@@ -35,7 +35,6 @@ export class SortStartComponent implements OnInit {
   }
 
   onSubmit() {
-    // this.previewMode = false;
     this.inputDataService.submitInputData(this.speedValue,this.sortValue);
   }
 
