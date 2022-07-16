@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Subject } from "rxjs";
+import { findIndex, Subject } from "rxjs";
 import { InputData } from "./InputData.model";
 
 @Injectable({
@@ -7,6 +7,7 @@ import { InputData } from "./InputData.model";
 })
 export class InputDataService {
   inputDataChanged = new Subject<InputData>();
+  indexDataChanged = new Subject<[number, number]>();
   previewModeSub = new Subject<boolean>();
   private inputData: InputData = new InputData(0, [], 3);
   private dataArray: number[] = [];
@@ -19,9 +20,10 @@ export class InputDataService {
 
     this.inputData.algo = sortValue;
     this.inputData.speed = speedValue;
-    this.inputData.input = this.dataArray; 
+    this.inputData.input = this.dataArray;
 
-    await this.bubbleSorting();
+    // await this.bubbleSort();
+    await this.insertionSort();
 
     this.previewMode = true;
     this.previewModeSub.next(this.previewMode)
@@ -46,7 +48,7 @@ export class InputDataService {
     this.inputDataChanged.next(this.inputData);
   }
 
-  async bubbleSorting() {
+  async bubbleSort() {
     let n = (this.inputData.input).length;
     for (let i = 0; i < (n - 1); i++) {
       let isChanged = false;
@@ -58,8 +60,9 @@ export class InputDataService {
           (this.inputData.input)[j + 1] = (this.inputData.input)[j];
           (this.inputData.input)[j] = temp;
           isChanged = true;
+          await this.checkIndexOf(this.inputData.input[j],this.inputData.input[j])
           this.inputDataChanged.next(this.inputData);
-          await this.letDelay()
+          await this.letDelay();
         }
       }
       if (isChanged == false) {
@@ -68,8 +71,32 @@ export class InputDataService {
     }
     return new Promise(resolve => setTimeout(resolve, 500));
   }
+  async insertionSort() {
+    let n = (this.inputData.input).length;
+    for (let i = 1; i < n; i++) {
+      let key = this.inputData.input[i];
+      let j = (i - 1);
+      while (j >= 0 && this.inputData.input[j] > key) {
+        await this.checkIndexOf(this.inputData.input[j],this.inputData.input[j+1])
+        this.inputData.input[j + 1] = this.inputData.input[j];
+        j--;
+        this.inputDataChanged.next(this.inputData);
+        await this.letDelay();
+      }
+      this.inputData.input[j + 1] = key;
+    }
+    // console.log(a)
+    return new Promise(resolve => setTimeout(resolve, 500));
+  }
 
   letDelay() {
     return new Promise(resolve => setTimeout(resolve, (1000 - 150 * this.inputData.speed)));
+  }
+
+  checkIndexOf(a:number, b:number){
+    let indexa = this.inputData.input.indexOf(a);
+    let indexb = this.inputData.input.indexOf(b);
+    this.indexDataChanged.next([indexa,indexb]);
+    return new Promise(resolve => setTimeout(resolve, 300));
   }
 }

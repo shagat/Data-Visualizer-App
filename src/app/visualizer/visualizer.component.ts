@@ -11,8 +11,10 @@ import { Chart, registerables } from 'chart.js';
 })
 export class VisualizerComponent implements OnInit, OnDestroy {
   dataArraySub = new Subscription;
+  indexDataSub = new Subscription;
   inputData: InputData = new InputData(0, [], 0);
   previewIndexData: number[] = [];
+  activeIndex = [0,0];
   chart: Chart;
 
   constructor(private inputDataService: InputDataService) {
@@ -28,6 +30,10 @@ export class VisualizerComponent implements OnInit, OnDestroy {
       this.previewData()
     }
     )
+    this.indexDataSub = this.inputDataService.indexDataChanged.subscribe((activeIndex) => {
+      this.activeIndex = activeIndex;
+      console.log(this.activeIndex);
+    })
 
     this.chart = new Chart('canvas', {
       type: 'bar',
@@ -38,23 +44,27 @@ export class VisualizerComponent implements OnInit, OnDestroy {
             label: 'Value',
             data: this.inputData.input,
             backgroundColor: [
-              'rgba(255, 99, 132, 0.5)',
-              'rgba(255, 159, 64, 0.5)',
-              'rgba(255, 205, 86, 0.5)',
-              'rgba(75, 192, 192, 0.5)',
-              'rgba(54, 162, 235, 0.5)',
-              'rgba(153, 102, 255, 0.5)',
-              'rgba(201, 203, 207, 0.5)'
+              // 'rgba(255, 99, 132, 0.7)',
+              // 'rgba(255, 159, 64, 0.7)',
+              // 'rgba(255, 205, 86, 0.7)',
+              // 'rgba(75, 192, 192, 0.7)',
+              'rgba(54, 162, 235, 0.7)',
+              // 'rgba(153, 102, 255, 0.7)',
+              // 'rgba(201, 203, 207, 0.7)'
             ],
             borderColor: [
               'rgb(255, 99, 132)',
-              'rgb(255, 159, 64)',
-              'rgb(255, 205, 86)',
-              'rgb(75, 192, 192)',
-              'rgb(54, 162, 235)',
-              'rgb(153, 102, 255)',
-              'rgb(201, 203, 207)'
+              // 'rgb(255, 159, 64)',
+              // 'rgb(255, 205, 86)',
+              // 'rgb(75, 192, 192)',
+              // 'rgb(54, 162, 235)',
+              // 'rgb(153, 102, 255)',
+              // 'rgb(201, 203, 207)'
             ],
+            hoverBackgroundColor:[
+              'rgba(255, 159, 64, 0.7)',
+            ],
+            hoverBorderWidth: 2,
             borderWidth: 1,
           }
         ]
@@ -65,6 +75,12 @@ export class VisualizerComponent implements OnInit, OnDestroy {
 
   previewData() {
     this.chart.config.data.labels = this.previewIndexData;
+    if (this.activeIndex[0] >= 1 || this.activeIndex[1] >= 1){
+      this.chart.setActiveElements([
+        {datasetIndex: 0, index: this.activeIndex[1]},
+        {datasetIndex: 0, index: this.activeIndex[0]},
+      ])
+    }
     this.chart.config.data.datasets[0].data = this.inputData.input;
     this.chart.update();
   }
