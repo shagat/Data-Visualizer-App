@@ -30,12 +30,16 @@ export class SortStartComponent implements OnInit {
     this.inputDataService.setDataKey(this.dataKey)
   }
 
-  onClickSuffle(){
+  onClickSuffle() {
     this.inputDataService.shuffleArray();
   }
 
   onSubmit() {
-    this.inputDataService.submitInputData(this.speedValue,this.sortValue);
+    this.inputDataService.submitInputData(this.speedValue, this.sortValue);
+  }
+
+  onCancel(){
+    this.inputDataService.isCancelled = true;
   }
 
 }

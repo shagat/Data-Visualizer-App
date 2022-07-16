@@ -10,11 +10,11 @@ import { Chart, registerables } from 'chart.js';
   styleUrls: ['./visualizer.component.css']
 })
 export class VisualizerComponent implements OnInit, OnDestroy {
-  dataArraySub = new Subscription;
-  indexDataSub = new Subscription;
+  private dataArraySub = new Subscription;
+  private indexDataSub = new Subscription;
   inputData: InputData = new InputData(0, [], 0);
   previewIndexData: number[] = [];
-  activeIndex = [0,0];
+  activeIndex: number[] = [0, 0];
   chart: Chart;
 
   constructor(private inputDataService: InputDataService) {
@@ -32,7 +32,7 @@ export class VisualizerComponent implements OnInit, OnDestroy {
     )
     this.indexDataSub = this.inputDataService.indexDataChanged.subscribe((activeIndex) => {
       this.activeIndex = activeIndex;
-      console.log(this.activeIndex);
+      // console.log(this.activeIndex);
     })
 
     this.chart = new Chart('canvas', {
@@ -54,17 +54,11 @@ export class VisualizerComponent implements OnInit, OnDestroy {
             ],
             borderColor: [
               'rgb(255, 99, 132)',
-              // 'rgb(255, 159, 64)',
-              // 'rgb(255, 205, 86)',
-              // 'rgb(75, 192, 192)',
-              // 'rgb(54, 162, 235)',
-              // 'rgb(153, 102, 255)',
-              // 'rgb(201, 203, 207)'
             ],
-            hoverBackgroundColor:[
+            hoverBackgroundColor: [
               'rgba(255, 159, 64, 0.7)',
             ],
-            hoverBorderWidth: 2,
+            hoverBorderWidth: 1.5,
             borderWidth: 1,
           }
         ]
@@ -75,10 +69,10 @@ export class VisualizerComponent implements OnInit, OnDestroy {
 
   previewData() {
     this.chart.config.data.labels = this.previewIndexData;
-    if (this.activeIndex[0] >= 1 || this.activeIndex[1] >= 1){
+    if (this.activeIndex[0] >= 1 || this.activeIndex[1] >= 1) {
       this.chart.setActiveElements([
-        {datasetIndex: 0, index: this.activeIndex[1]},
-        {datasetIndex: 0, index: this.activeIndex[0]},
+        { datasetIndex: 0, index: this.activeIndex[1] },
+        { datasetIndex: 0, index: this.activeIndex[0] },
       ])
     }
     this.chart.config.data.datasets[0].data = this.inputData.input;
@@ -86,7 +80,8 @@ export class VisualizerComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.chart.destroy();
+    this.indexDataSub.unsubscribe();
     this.dataArraySub.unsubscribe();
+    this.chart.destroy();
   }
 }
