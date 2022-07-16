@@ -1,5 +1,4 @@
 import { Injectable } from "@angular/core";
-// import { resolve } from "dns";
 import { Subject } from "rxjs";
 import { InputData } from "./InputData.model";
 
@@ -10,7 +9,6 @@ export class InputDataService {
   inputDataChanged = new Subject<InputData>();
   previewModeSub = new Subject<boolean>();
   private inputData: InputData = new InputData(0, [], 3);
-  private inputDataTemp: InputData = new InputData(0, [], 3);
   private dataArray: number[] = [];
   previewMode: boolean = true;
   dataKey: number;
@@ -21,11 +19,9 @@ export class InputDataService {
 
     this.inputData.algo = sortValue;
     this.inputData.speed = speedValue;
-    this.inputData.input = this.dataArray;
-    this.inputDataTemp = this.inputData;
+    this.inputData.input = this.dataArray; 
 
     await this.bubbleSorting();
-    this.inputData = this.inputDataTemp;
 
     this.previewMode = true;
     this.previewModeSub.next(this.previewMode)
@@ -51,15 +47,12 @@ export class InputDataService {
   }
 
   async bubbleSorting() {
-    // console.log(a)
     let n = (this.inputData.input).length;
     for (let i = 0; i < (n - 1); i++) {
       let isChanged = false;
       console.log('Pass: ' + (i + 1))
-      // this.inputDataChanged.next(this.inputData);
       this.letDelay()
       for (let j = 0; j < (n - 1 - i); j++) {
-        // console.log(a[j])
         if ((this.inputData.input)[j + 1] < (this.inputData.input)[j]) {
           let temp = (this.inputData.input)[j + 1];
           (this.inputData.input)[j + 1] = (this.inputData.input)[j];
@@ -73,12 +66,10 @@ export class InputDataService {
         break;
       }
     }
-    console.log('Array length: ' + n)
-    console.log(this.inputData.input);
     return new Promise(resolve => setTimeout(resolve, 500));
   }
 
   letDelay() {
-    return new Promise(resolve => setTimeout(resolve, 800));
+    return new Promise(resolve => setTimeout(resolve, (1000 - 150 * this.inputData.speed)));
   }
 }

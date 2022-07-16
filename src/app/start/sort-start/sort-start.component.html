@@ -30,7 +30,7 @@
         color="primary" (change)="inputValueSub($event)"></mat-slider>{{dataKey}} items
     </div>
       <button type="submit" class="btn btn-primary col-sm-3" [disabled]="!previewMode || !dataKey">Start</button>
-      <button type="button" class="btn btn-primary col-sm-3" [disabled]="!previewMode" (click)="onClickSuffle()" >Suffle Data</button>
+      <button type="button" class="btn btn-primary col-sm-3" [disabled]="!previewMode || !dataKey" (click)="onClickSuffle()" >Suffle Data</button>
   </form>
 </div>
 <hr>
