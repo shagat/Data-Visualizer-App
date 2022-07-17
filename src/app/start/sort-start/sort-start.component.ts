@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { InputDataService } from '../inputData.service';
@@ -9,11 +9,13 @@ import { InputDataService } from '../inputData.service';
   styleUrls: ['./sort-start.component.css']
 })
 export class SortStartComponent implements OnInit {
+  @ViewChild('graphtype', { static: false }) graphtype: HTMLElement;
   inputDataSub = new Subscription;
   speedValue: number = 3;
   sortValue: number = 0;
   dataKey: number = 0;
   previewMode: boolean = true;
+  graphType = 'line';
 
   constructor(private route: ActivatedRoute, private inputDataService: InputDataService) { }
 
@@ -38,8 +40,17 @@ export class SortStartComponent implements OnInit {
     this.inputDataService.submitInputData(this.speedValue, this.sortValue);
   }
 
-  onCancel(){
-    this.inputDataService.isCancelled = true;
+  onCancel() {
+    // this.inputDataService.isCancelled = true;
+    this.inputDataService.onCancel();
+  }
+  graphCall(event: Event) {
+    event
+    console.log(event);
+    console.log(this.graphtype);
+  }
+  clickedOn(){
+    console.log('hello')
   }
 
 }

@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Subject } from "rxjs";
+import { Subject, timeout } from "rxjs";
 import { InputData } from "./InputData.model";
 
 @Injectable({
@@ -12,8 +12,8 @@ export class InputDataService {
   private inputData: InputData = new InputData(0, [], 3);
   private dataArray: number[] = [];
   previewMode: boolean = true;
-  dataKey: number;
-  isCancelled = false;
+  private dataKey: number;
+  
 
   async submitInputData(speedValue: number, sortValue: number) {
     this.previewMode = false;
@@ -145,17 +145,34 @@ export class InputDataService {
     } finally {
       console.log('finished sorting');
       return;
-    }    
-}
+    }
+  }
 
-letDelay() {
-  return new Promise(resolve => setTimeout(resolve, (1000 - 150 * this.inputData.speed)));
-}
+  letDelay() {
+    return new Promise(resolve => setTimeout(
+      resolve, 
+      (1000 - 150 * this.inputData.speed))
+      );
+  }
 
-checkIndexOf(a: number, b: number) {
-  let indexa = this.inputData.input.indexOf(a);
-  let indexb = this.inputData.input.indexOf(b);
-  this.indexDataChanged.next([indexa, indexb]);
-  return new Promise(resolve => setTimeout(resolve, 300));
-}
+  checkIndexOf(a: number, b: number) {
+    let indexa = this.inputData.input.indexOf(a);
+    let indexb = this.inputData.input.indexOf(b);
+    this.indexDataChanged.next([indexa, indexb]);
+    return new Promise(resolve => setTimeout(
+      resolve, 
+      300)
+      );
+    // setTimeout(() => {
+    //   return Promise.resolve()
+    // }, 300);
+  }
+
+  onCancel(){
+    if (confirm('Are you sure you want to cancel operation?')){
+      location.reload();
+      return false;
+    }
+    return false;
+  }
 }

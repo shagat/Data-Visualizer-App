@@ -1,9 +1,16 @@
-.sort-form{
-    background-color: rgba(123, 113, 187, 0.363);
-    padding: 10px;
-    border-radius: 5px;
+.sort-form {
+  background-color: rgba(123, 113, 187, 0.363);
+  padding: 5px;
+  border-radius: 5px;
 }
 
-.btn~.col-sm-3{
+.btn~.col-sm-3 {
+  margin-left: 3px;
+}
+.form-group{
     margin: 5px;
+}
+.radio-input{
+    margin-right: 5px;
+    color: rgba(46, 37, 41, 0.7);
 }
