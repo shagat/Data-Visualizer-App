@@ -13,7 +13,7 @@ export class InputDataService {
   private dataArray: number[] = [];
   previewMode: boolean = true;
   private dataKey: number;
-  
+
 
   async submitInputData(speedValue: number, sortValue: number) {
     this.previewMode = false;
@@ -42,6 +42,10 @@ export class InputDataService {
       case 3:
         console.log('switch case selection sort')
         await this.selectionSort();
+        break;
+      case 4:
+        console.log('switch case quick sort')
+        await this.quickSorting();
         break;
     }
     return;
@@ -148,11 +152,53 @@ export class InputDataService {
     }
   }
 
+  async quickSorting() {
+    let a = this.inputData.input;
+    let lb = 0;
+    let ub = (a.length) - 1;
+
+    await quickSort(a, lb, ub)
+
+    async function quickSort(a: number[], lb: number, ub: number) {
+      if (lb < ub) {
+        let pIndex = await partition(a, lb, ub);
+        quickSort(a, lb, pIndex - 1);
+        quickSort(a, pIndex + 1, ub);
+      }
+    }
+    async function partition(a: number[], lb: number, ub: number) {
+      let pivot = a[lb]
+      let start = lb;
+      let end = ub;
+      while (start < end) {
+        while (a[start] <= pivot) {
+          start++;
+        }
+        while (a[end] > pivot) {
+          end--;
+        }
+        if (start < end) {
+          let temp = a[start];
+          a[start] = a[end];
+          a[end] = temp;
+          await this.letDelay();
+        }
+      }
+      let temp = a[lb];
+      a[lb] = a[end];
+      a[end] = temp;
+      this.inputDataChanged.next(a);
+      await this.letDelay();
+      return end;
+    }
+
+  }
+
   letDelay() {
     return new Promise(resolve => setTimeout(
-      resolve, 
+      resolve,
       (1000 - 150 * this.inputData.speed))
-      );
+    );
   }
 
   checkIndexOf(a: number, b: number) {
@@ -160,16 +206,13 @@ export class InputDataService {
     let indexb = this.inputData.input.indexOf(b);
     this.indexDataChanged.next([indexa, indexb]);
     return new Promise(resolve => setTimeout(
-      resolve, 
+      resolve,
       300)
-      );
-    // setTimeout(() => {
-    //   return Promise.resolve()
-    // }, 300);
+    );
   }
 
-  onCancel(){
-    if (confirm('Are you sure you want to cancel operation?')){
+  onCancel() {
+    if (confirm('Are you sure you want to cancel operation?')) {
       location.reload();
       return false;
     }

@@ -1,5 +1,5 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, ActivatedRouteSnapshot, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { InputDataService } from '../inputData.service';
 
@@ -15,15 +15,14 @@ export class SortStartComponent implements OnInit {
   sortValue: number = 0;
   dataKey: number = 0;
   previewMode: boolean = true;
-  graphType = 'line';
 
-  constructor(private route: ActivatedRoute, private inputDataService: InputDataService) { }
+  constructor(private route: ActivatedRoute, private inputDataService: InputDataService, private router: Router) { }
 
   ngOnInit(): void {
+    this.sortValue = this.route.snapshot.params['id']
     this.inputDataService.previewModeSub.subscribe((previewMode) => {
       this.previewMode = previewMode;
     })
-    this.sortValue = this.route.snapshot.params['id']
   }
 
   inputValueSub(event: { value: number; }) {
@@ -37,6 +36,7 @@ export class SortStartComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log(this.sortValue);
     this.inputDataService.submitInputData(this.speedValue, this.sortValue);
   }
 
@@ -44,13 +44,9 @@ export class SortStartComponent implements OnInit {
     // this.inputDataService.isCancelled = true;
     this.inputDataService.onCancel();
   }
-  graphCall(event: Event) {
-    event
-    console.log(event);
-    console.log(this.graphtype);
-  }
-  clickedOn(){
-    console.log('hello')
+  onBack() {
+    this.router.navigate(['']);
+    return false;
   }
 
 }

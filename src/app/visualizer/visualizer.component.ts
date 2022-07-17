@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { InputDataService } from '../start/inputData.service';
 import { InputData } from '../start/InputData.model';
-import { Chart, registerables } from 'chart.js';
+import { Chart, registerables, ChartType } from 'chart.js';
 
 @Component({
   selector: 'app-visualizer',
@@ -32,7 +32,6 @@ export class VisualizerComponent implements OnInit, OnDestroy {
     )
     this.indexDataSub = this.inputDataService.indexDataChanged.subscribe((activeIndex) => {
       this.activeIndex = activeIndex;
-      // console.log(this.activeIndex);
     })
 
     this.chart = new Chart('canvas', {
