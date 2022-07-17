@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { findIndex, Subject } from "rxjs";
+import { Subject } from "rxjs";
 import { InputData } from "./InputData.model";
 
 @Injectable({
@@ -38,6 +38,10 @@ export class InputDataService {
       case 2:
         console.log('switch case insertion sort')
         await this.insertionSort();
+        break;
+      case 3:
+        console.log('switch case selection sort')
+        await this.selectionSort();
         break;
     }
     return;
@@ -93,30 +97,65 @@ export class InputDataService {
   }
 
   async insertionSort() {
-    let n = (this.inputData.input).length;
-    for (let i = 1; i < n; i++) {
-      let key = this.inputData.input[i];
-      let j = (i - 1);
-      while (j >= 0 && this.inputData.input[j] > key) {
-        await this.checkIndexOf(this.inputData.input[j], this.inputData.input[j + 1])
-        this.inputData.input[j + 1] = this.inputData.input[j];
-        j--;
-        this.inputDataChanged.next(this.inputData);
-        await this.letDelay();
+    try {
+      let n = (this.inputData.input).length;
+      for (let i = 1; i < n; i++) {
+        let key = this.inputData.input[i];
+        let j = (i - 1);
+        while (j >= 0 && this.inputData.input[j] > key) {
+          await this.checkIndexOf(this.inputData.input[j], this.inputData.input[j + 1])
+          this.inputData.input[j + 1] = this.inputData.input[j];
+          j--;
+          this.inputDataChanged.next(this.inputData);
+          await this.letDelay();
+        }
+        this.inputData.input[j + 1] = key;
       }
-      this.inputData.input[j + 1] = key;
+    } catch (error) {
+      console.log(error)
+    } finally {
+      console.log('finished sorting');
+      return;
     }
-    return;
   }
 
-  letDelay() {
-    return new Promise(resolve => setTimeout(resolve, (1000 - 150 * this.inputData.speed)));
-  }
+  async selectionSort() {
+    try {
+      const n = this.inputData.input.length;
+      console.log(n)
+      for (let i = 0; i < n; i++) {
+        let min = i;
+        for (let j = i + 1; j < n; j++) {
+          if (this.inputData.input[j] < this.inputData.input[min]) {
+            min = j;
+          }
+        }
+        if (min != i) {
+          await this.checkIndexOf(this.inputData.input[i], this.inputData.input[min])
+          let temp = this.inputData.input[i]
+          this.inputData.input[i] = this.inputData.input[min]
+          this.inputData.input[min] = temp;
+          this.inputDataChanged.next(this.inputData);
+          await this.letDelay();
+        }
+        // console.log('Pass: ' + i)
+      }
+    } catch (error) {
+      console.log(error)
+    } finally {
+      console.log('finished sorting');
+      return;
+    }    
+}
 
-  checkIndexOf(a: number, b: number) {
-    let indexa = this.inputData.input.indexOf(a);
-    let indexb = this.inputData.input.indexOf(b);
-    this.indexDataChanged.next([indexa, indexb]);
-    return new Promise(resolve => setTimeout(resolve, 300));
-  }
+letDelay() {
+  return new Promise(resolve => setTimeout(resolve, (1000 - 150 * this.inputData.speed)));
+}
+
+checkIndexOf(a: number, b: number) {
+  let indexa = this.inputData.input.indexOf(a);
+  let indexb = this.inputData.input.indexOf(b);
+  this.indexDataChanged.next([indexa, indexb]);
+  return new Promise(resolve => setTimeout(resolve, 300));
+}
 }
