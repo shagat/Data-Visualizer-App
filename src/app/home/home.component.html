@@ -12,47 +12,26 @@
   <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
     <div class="card">
       <div class="card-body">
-        <h4 class="card-title"> Sorting</h4>
-        <div class="card-columns">
-          <div class="card">
-            <div class="card-body">
-              <a routerLink="1/sort-start" class="card-link"> Bubble Sort</a>
-              <a routerLink="2/sort-start" class="card-link"> Insertion Sort</a>
-              <a routerLink="3/sort-start" class="card-link"> Selection Sort</a>
-              <a routerLink="4/sort-start" class="card-link"> Quick Sort</a>
-              <a routerLink="5/sort-start" class="card-link"> Merge Sort</a>
-            </div>
-          </div>
-        </div>
+        <a routerLink="/sort-start" class="card-title text-center">
+          <h4 ngbPopover="Bubble,Insertion,Selection, Quick and Merge Sort" placement="top"
+            triggers="mouseenter:mouseleave" popoverTitle="Sorting Algorithm"> Sorting</h4>
+        </a>
       </div>
     </div>
     <div class="card">
       <div class="card-body">
-        <h4 class="card-title"> Searching</h4>
-        <div class="card-columns">
-          <div class="card">
-            <div class="card-body">
-              <a routerLink="#" class="card-link"> Coming Soon</a>
-              <a routerLink="#" class="card-link"> Coming Soon</a>
-              <a routerLink="#" class="card-link"> Coming Soon</a>
-            </div>
-          </div>
-        </div>
+        <a routerLink="#" class="card-title text-center">
+          <h4 ngbPopover="Not Implemented" placement="top" triggers="mouseenter:mouseleave" popoverTitle="Title">
+            Searching</h4>
+        </a>
       </div>
     </div>
     <div class="card">
       <div class="card-body">
-        <h4 class="card-title"> Path Finding</h4>
-        <div class="card-columns">
-          <div class="card">
-            <div class="card-body">
-              <a routerLink="#" class="card-link"> Coming Soon</a>
-              <a routerLink="#" class="card-link"> Coming Soon</a>
-              <a routerLink="#" class="card-link"> Coming Soon</a>
-              <a routerLink="#" class="card-link"> Coming Soon</a>
-            </div>
-          </div>
-        </div>
+        <a routerLink="#" class="card-title text-center">
+          <h4 ngbPopover="Not Implemented" placement="bottom" triggers="mouseenter:mouseleave" popoverTitle="Title">
+            Path Finding</h4>
+        </a>
       </div>
     </div>
   </div>

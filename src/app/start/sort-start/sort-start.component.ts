@@ -1,4 +1,6 @@
+import { invalid } from '@angular/compiler/src/render3/view/util';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { ActivatedRoute, ActivatedRouteSnapshot, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { InputDataService } from '../inputData.service';
@@ -9,7 +11,7 @@ import { InputDataService } from '../inputData.service';
   styleUrls: ['./sort-start.component.css']
 })
 export class SortStartComponent implements OnInit {
-  @ViewChild('graphtype', { static: false }) graphtype: HTMLElement;
+  @ViewChild('sortForm', { static: false }) sortForm: NgForm;
   inputDataSub = new Subscription;
   speedValue: number = 3;
   sortValue: number = 0;
@@ -19,7 +21,6 @@ export class SortStartComponent implements OnInit {
   constructor(private route: ActivatedRoute, private inputDataService: InputDataService, private router: Router) { }
 
   ngOnInit(): void {
-    this.sortValue = this.route.snapshot.params['id']
     this.inputDataService.previewModeSub.subscribe((previewMode) => {
       this.previewMode = previewMode;
     })
@@ -36,8 +37,15 @@ export class SortStartComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.sortValue);
-    this.inputDataService.submitInputData(this.speedValue, this.sortValue);
+    if (this.sortValue >= 1) {
+      console.log(this.sortValue);
+      this.inputDataService.submitInputData(this.speedValue, this.sortValue);
+    }
+    else {
+      alert('No sorting method selected.')
+      return false;
+    }
+    return false;
   }
 
   onCancel() {

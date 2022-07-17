@@ -1,13 +1,13 @@
 <div class="container text-center">
-  <h3 class="jumbotron"> Configuration</h3> 
+  <h3 class="jumbotron"> Configuration</h3>
   <div class="d-flex flex-row justify-content-end">
     <span><button type="button" class="btn btn-outline" (click)="onBack()">Back</button></span>
   </div>
 
   <form #sortForm="ngForm" class="sort-form" (ngSubmit)="onSubmit()">
 
-    <div class="form-group" role="group" name="sortName" ngbRadioGroup aria-label="Radio Buttons" [ngModel]="sortValue"
-      [disabled]="!previewMode">
+    <div class="form-group" id="sortName" role="group" name="sortName" ngbRadioGroup aria-label="Radio Buttons"
+      [(ngModel)]="sortValue" [disabled]="!previewMode">
       <label ngbButtonLabel class="btn-primary">
         <input ngbButton type="radio" class="btn-check" value="1">Bubble Sort
       </label>
@@ -50,10 +50,10 @@
         step="1" tickInterval="5" color="primary" (change)="inputValueSub($event)"></mat-slider>{{dataKey}}
     </div>
 
-    <button type="submit" class="btn btn-primary col-sm-2" [disabled]="!previewMode || !dataKey">Start</button>
-    <button type="button" class="btn btn-primary col-sm-2" [disabled]="!previewMode || !dataKey"
+    <button type="submit" class="btn btn-primary col-sm-2" [disabled]="previewMode && !dataKey">Start</button>
+    <button type="button" class="btn btn-primary col-sm-2" [disabled]="previewMode && !dataKey"
       (click)="onClickSuffle()">Suffle Data</button>
-    <button type="button" class="btn btn-primary col-sm-2" [disabled]="previewMode || !dataKey"
+    <button type="button" class="btn btn-primary col-sm-2" [disabled]="!previewMode && !dataKey"
       (click)="onCancel()">Cancel</button>
 
   </form>
