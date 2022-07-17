@@ -23,34 +23,24 @@ export class InputDataService {
     this.inputData.speed = speedValue;
     this.inputData.input = this.dataArray;
 
-    await this.bubbleSort();
-    // await this.sortingCordinator();
+    await this.sortingCordinator();
 
     this.previewMode = true;
     this.previewModeSub.next(this.previewMode)
   }
 
-  async sortingCordinator(){
-    switch (this.inputData.algo) {
+  async sortingCordinator() {
+    switch (+this.inputData.algo) {
       case 1:
-        console.log('witch case bubble sort')
+        console.log('switch case bubble sort')
         await this.bubbleSort();
         break;
       case 2:
-        console.log('witch case insertion sort')
+        console.log('switch case insertion sort')
         await this.insertionSort();
         break;
-      case 3:
-        
-        break;
-      case 4:
-        
-        break;
-      case 5:
-        
-        break;
     }
-    return new Promise(resolve => setTimeout(resolve, 200));
+    return;
   }
 
   setDataKey(dataKey: number) {
@@ -81,7 +71,7 @@ export class InputDataService {
         this.letDelay()
         for (let j = 0; j < (n - 1 - i); j++) {
           if ((this.inputData.input)[j + 1] < (this.inputData.input)[j]) {
-            await this.checkIndexOf(this.inputData.input[j], this.inputData.input[j+1])
+            await this.checkIndexOf(this.inputData.input[j], this.inputData.input[j + 1])
             let temp = (this.inputData.input)[j + 1];
             (this.inputData.input)[j + 1] = (this.inputData.input)[j];
             (this.inputData.input)[j] = temp;
@@ -94,9 +84,9 @@ export class InputDataService {
           break;
         }
       }
-    } catch (isCancelled) {
-      confirm('Cancel action?');
-    } finally{
+    } catch (err) {
+      console.log(err);
+    } finally {
       console.log('finished sorting');
       return;
     }
@@ -116,7 +106,6 @@ export class InputDataService {
       }
       this.inputData.input[j + 1] = key;
     }
-    // console.log(a)
     return;
   }
 

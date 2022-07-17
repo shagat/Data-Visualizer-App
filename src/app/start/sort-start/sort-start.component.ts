@@ -26,7 +26,7 @@ export class SortStartComponent implements OnInit {
 
   inputValueSub(event: { value: number; }) {
     this.dataKey = event.value;
-    console.log(event.value);
+    // console.log(event.value);
     this.inputDataService.setDataKey(this.dataKey)
   }
 

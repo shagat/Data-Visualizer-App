@@ -41,7 +41,7 @@ export class VisualizerComponent implements OnInit, OnDestroy {
         labels: this.previewIndexData,
         datasets: [
           {
-            label: 'Value',
+            label: 'Input',
             data: this.inputData.input,
             backgroundColor: [
               // 'rgba(255, 99, 132, 0.7)',
