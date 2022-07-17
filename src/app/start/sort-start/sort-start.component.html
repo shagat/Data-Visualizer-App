@@ -50,10 +50,10 @@
         step="1" tickInterval="5" color="primary" (change)="inputValueSub($event)"></mat-slider>{{dataKey}}
     </div>
 
-    <button type="submit" class="btn btn-primary col-sm-2" [disabled]="previewMode && !dataKey">Start</button>
-    <button type="button" class="btn btn-primary col-sm-2" [disabled]="previewMode && !dataKey"
+    <button type="submit" class="btn btn-primary col-sm-2" [disabled]="!previewMode || !dataKey">Start</button>
+    <button type="button" class="btn btn-primary col-sm-2" [disabled]="!previewMode || !dataKey"
       (click)="onClickSuffle()">Suffle Data</button>
-    <button type="button" class="btn btn-primary col-sm-2" [disabled]="!previewMode && !dataKey"
+    <button type="button" class="btn btn-primary col-sm-2" [disabled]="previewMode"
       (click)="onCancel()">Cancel</button>
 
   </form>
