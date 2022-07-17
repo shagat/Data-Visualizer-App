@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import * as CanvasAngularCharts from '../assets/canvasjs.angular.component'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -13,16 +12,13 @@ import { VisualizerComponent } from './visualizer/visualizer.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MaterialsModule } from 'src/materials.modules';
 import { SortStartComponent } from './start/sort-start/sort-start.component';
-import {  FormsModule } from '@angular/forms';
-import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
-var CanvasJSChart = CanvasAngularCharts.CanvasJSChart;
 
 @NgModule({
   declarations: [
     AppComponent,
-    CanvasJSChart,
     HomeComponent,
     StartComponent,
     SortItemComponent,
@@ -38,7 +34,6 @@ var CanvasJSChart = CanvasAngularCharts.CanvasJSChart;
     HttpClientModule,
     NgbModule,
     MaterialsModule,
-    NgxChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,8 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { InputDataService } from '../start/inputData.service';
 import { InputData } from '../start/InputData.model';
-import { Chart, registerables, ChartType } from 'chart.js';
+import { Chart, registerables } from 'chart.js';
 
 @Component({
   selector: 'app-visualizer',
@@ -16,6 +16,7 @@ export class VisualizerComponent implements OnInit, OnDestroy {
   previewIndexData: number[] = [];
   activeIndex: number[] = [0, 0];
   chart: Chart;
+  timeout1: any;
 
   constructor(private inputDataService: InputDataService) {
     Chart.register(...registerables)
@@ -43,13 +44,7 @@ export class VisualizerComponent implements OnInit, OnDestroy {
             label: 'Input',
             data: this.inputData.input,
             backgroundColor: [
-              // 'rgba(255, 99, 132, 0.7)',
-              // 'rgba(255, 159, 64, 0.7)',
-              // 'rgba(255, 205, 86, 0.7)',
-              // 'rgba(75, 192, 192, 0.7)',
               'rgba(54, 162, 235, 0.7)',
-              // 'rgba(153, 102, 255, 0.7)',
-              // 'rgba(201, 203, 207, 0.7)'
             ],
             borderColor: [
               'rgb(255, 99, 132)',
@@ -67,6 +62,13 @@ export class VisualizerComponent implements OnInit, OnDestroy {
   }
 
   previewData() {
+    if (this.timeout1) {
+      clearTimeout(this.timeout1);
+    }
+    this.timeout1 = setTimeout(() => {
+      this.dataArraySub.unsubscribe();
+      this.chart.clear();
+    }, 25000);
     this.chart.config.data.labels = this.previewIndexData;
     if (this.activeIndex[0] >= 1 || this.activeIndex[1] >= 1) {
       this.chart.setActiveElements([

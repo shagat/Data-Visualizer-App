@@ -1,7 +1,5 @@
-import { invalid } from '@angular/compiler/src/render3/view/util';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
-import { ActivatedRoute, ActivatedRouteSnapshot, Router } from '@angular/router';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { InputDataService } from '../inputData.service';
 
@@ -10,8 +8,7 @@ import { InputDataService } from '../inputData.service';
   templateUrl: './sort-start.component.html',
   styleUrls: ['./sort-start.component.css']
 })
-export class SortStartComponent implements OnInit {
-  @ViewChild('sortForm', { static: false }) sortForm: NgForm;
+export class SortStartComponent implements OnInit, OnDestroy {
   inputDataSub = new Subscription;
   speedValue: number = 3;
   sortValue: number = 0;
@@ -49,12 +46,15 @@ export class SortStartComponent implements OnInit {
   }
 
   onCancel() {
-    // this.inputDataService.isCancelled = true;
     this.inputDataService.onCancel();
   }
+
   onBack() {
     this.router.navigate(['']);
     return false;
+  }
+  ngOnDestroy(): void {
+    this.inputDataSub.unsubscribe();
   }
 
 }

@@ -45,12 +45,15 @@ export class InputDataService {
         break;
       case 4:
         console.log('switch case quick sort')
-        await this.quickSorting();
+        let lb = 0;
+        let ub = (this.inputData.input).length - 1;
+        await this.quickSorting(this.inputData.input, lb, ub);
         break;
     }
     return;
   }
 
+  // Data Manipulation
   setDataKey(dataKey: number) {
     this.dataKey = dataKey;
     this.spawnDataArray();
@@ -70,6 +73,7 @@ export class InputDataService {
     this.inputDataChanged.next(this.inputData);
   }
 
+  // Bubble Sort
   async bubbleSort() {
     try {
       let n = (this.inputData.input).length;
@@ -100,6 +104,7 @@ export class InputDataService {
     }
   }
 
+  // Insertion Sort
   async insertionSort() {
     try {
       let n = (this.inputData.input).length;
@@ -123,6 +128,7 @@ export class InputDataService {
     }
   }
 
+  // Selection Sort
   async selectionSort() {
     try {
       const n = this.inputData.input.length;
@@ -152,48 +158,47 @@ export class InputDataService {
     }
   }
 
-  async quickSorting() {
-    let a = this.inputData.input;
-    let lb = 0;
-    let ub = (a.length) - 1;
-
-    await quickSort(a, lb, ub)
-
-    async function quickSort(a: number[], lb: number, ub: number) {
-      if (lb < ub) {
-        let pIndex = await partition(a, lb, ub);
-        quickSort(a, lb, pIndex - 1);
-        quickSort(a, pIndex + 1, ub);
+  // Quick Sorting
+  async quickSorting(a: number[], lb: number, ub: number) {
+    if (lb < ub) {
+      let pIndex = await this.partition(a, lb, ub);
+      await this.quickSorting(a, lb, pIndex - 1);
+      await this.quickSorting(a, pIndex + 1, ub);
+      return;
+    }
+    return;
+  }
+  async partition(a: number[], lb: number, ub: number) {
+    let pivot = a[lb]
+    let start = lb;
+    let end = ub;
+    while (start < end) {
+      while (a[start] <= pivot) {
+        start++;
+      }
+      while (a[end] > pivot) {
+        end--;
+      }
+      await this.checkIndexOf(this.inputData.input[start], this.inputData.input[end])
+      if (start < end) {
+        let temp = a[start];
+        a[start] = a[end];
+        a[end] = temp;
+        // this.inputData.input = a;
+        this.inputDataChanged.next(this.inputData);
+        await this.letDelay();
       }
     }
-    async function partition(a: number[], lb: number, ub: number) {
-      let pivot = a[lb]
-      let start = lb;
-      let end = ub;
-      while (start < end) {
-        while (a[start] <= pivot) {
-          start++;
-        }
-        while (a[end] > pivot) {
-          end--;
-        }
-        if (start < end) {
-          let temp = a[start];
-          a[start] = a[end];
-          a[end] = temp;
-          await this.letDelay();
-        }
-      }
-      let temp = a[lb];
-      a[lb] = a[end];
-      a[end] = temp;
-      this.inputDataChanged.next(a);
-      await this.letDelay();
-      return end;
-    }
-
+    let temp = a[lb];
+    a[lb] = a[end];
+    a[end] = temp;
+    // this.inputData.input = a;
+    this.inputDataChanged.next(this.inputData);
+    await this.letDelay();
+    return end;
   }
 
+  // Flow Controller Drivers
   letDelay() {
     return new Promise(resolve => setTimeout(
       resolve,
