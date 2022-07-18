@@ -50,8 +50,12 @@ export class InputDataService {
         await this.quickSorting(this.inputData.input, lb, ub);
         break;
       case 5:
-        console.log('switch case heap sort')
+        console.log('switch case merge sort')
         // await this
+        let n = (this.inputData.input).length;
+        let upb = n - 1;
+        let lwb = 0;
+        await this.merge_sort(this.inputData.input, lwb, upb)
         break;
     }
     return;
@@ -164,13 +168,18 @@ export class InputDataService {
 
   // Quick Sorting
   async quickSorting(a: number[], lb: number, ub: number) {
-    if (lb < ub) {
-      let pIndex = await this.partition(a, lb, ub);
-      await this.quickSorting(a, lb, pIndex - 1);
-      await this.quickSorting(a, pIndex + 1, ub);
+    try {
+      if (lb < ub) {
+        let pIndex = await this.partition(a, lb, ub);
+        await this.quickSorting(a, lb, pIndex - 1);
+        await this.quickSorting(a, pIndex + 1, ub);
+      }
+
+    } catch (error) {
+      console.log(error)
+    } finally {
       return;
     }
-    return;
   }
   async partition(a: number[], lb: number, ub: number) {
     let pivot = a[lb]
@@ -200,6 +209,62 @@ export class InputDataService {
     this.inputDataChanged.next(this.inputData);
     await this.letDelay();
     return end;
+  }
+
+  // merge sort
+  async merge_sort(a: number[], lb: number, ub: number) {
+    try {
+      if (lb < ub) {
+        var mid = lb + Math.floor((ub - lb) / 2);
+        // console.log(mid)
+        await this.merge_sort(a, lb, mid)
+        await this.merge_sort(a, mid + 1, ub)
+        await this.merge(a, lb, mid, ub);
+      }
+    } catch (error) {
+      console.log(error)
+    } finally{
+      return;
+    }
+  }
+
+  async merge(a: number[], lb: any, mid: number, ub: number) {
+    let i = lb;
+    let j = mid + 1;
+    let k = lb;
+    let b = [];
+    while (i <= mid && j <= ub) {
+      await this.checkIndexOf(this.inputData.input[i], this.inputData.input[j]);
+      if (a[i] <= a[j]) {
+        b[k] = a[i];
+        i++;
+      } else {
+        b[k] = a[j];
+        j++;
+      }
+      k++;
+    }
+    if (i > mid) {
+      while (j <= ub) {
+        b[k] = a[j]
+        j++;
+        k++;
+      }
+    }
+    if (j > ub) {
+      while (i <= mid) {
+        b[k] = a[i];
+        i++;
+        k++;
+      }
+    }
+    for (k = lb; k <= ub; k++) {
+      a[k] = b[k];
+      // console.log(a, b);
+      this.inputDataChanged.next(this.inputData);
+      await this.letDelay();
+    }
+    return;
   }
 
   // Flow Controller Drivers

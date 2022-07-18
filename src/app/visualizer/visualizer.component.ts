@@ -48,6 +48,7 @@ export class VisualizerComponent implements OnInit, OnDestroy {
       this.chart.clear();
       this.chart.destroy();
       this.chart = null;
+      // this.inputDataService.previewMode = true;
       this.noChart.emit(!this.chart);
     }, 18000);
 
