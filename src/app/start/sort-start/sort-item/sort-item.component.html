@@ -1,6 +1,11 @@
-<div class="backdrop" *ngIf="!inputData ">
-    <div class="container container-vis">
-        <h5 class="text-center" style="color: skyblue;">Give Input!</h5> 
-    </div> 
+<div class="backdrop" *ngIf="!inputData">
+  <div class="container container-vis">
+    <h5 class="text-center" style="color: skyblue;">Give Input!</h5>
+  </div>
 </div>
-<app-visualizer></app-visualizer>
+<div class="backdrop" *ngIf="noChart && inputData">
+  <div class="container container-vis">
+    <h5 class="text-center" style="color: skyblue;">Visualizer Idle!</h5>
+  </div>
+</div>
+<app-visualizer (noChart)="noChartListener($event)"></app-visualizer>

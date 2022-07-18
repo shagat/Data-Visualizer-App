@@ -9,7 +9,7 @@ import { InputDataService } from '../../inputData.service';
   styleUrls: ['./sort-item.component.css']
 })
 export class SortItemComponent implements OnInit, OnDestroy {
-  noChart: boolean;
+  noChart: boolean = true;
   inputData: InputData;
   sortSub = new Subscription;
   constructor(private inputDataService: InputDataService) { }
@@ -20,8 +20,9 @@ export class SortItemComponent implements OnInit, OnDestroy {
     )
     console.log(this.inputData)
   }
-  noChartListener(noChart: boolean){
-    console.log(noChart);
+  noChartListener(noChart: boolean) {
+    this.noChart = noChart;
+    // console.log(noChart);
   }
   ngOnDestroy(): void {
     this.sortSub.unsubscribe();

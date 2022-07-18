@@ -49,6 +49,10 @@ export class InputDataService {
         let ub = (this.inputData.input).length - 1;
         await this.quickSorting(this.inputData.input, lb, ub);
         break;
+      case 5:
+        console.log('switch case heap sort')
+        // await this
+        break;
     }
     return;
   }

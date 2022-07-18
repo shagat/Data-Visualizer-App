@@ -48,9 +48,8 @@ export class VisualizerComponent implements OnInit, OnDestroy {
       this.chart.clear();
       this.chart.destroy();
       this.chart = null;
-      console.log('timeout: ' + !this.chart);
       this.noChart.emit(!this.chart);
-    }, 9000);
+    }, 18000);
 
     if (!this.chart) {
       this.createNewChart();
@@ -69,6 +68,7 @@ export class VisualizerComponent implements OnInit, OnDestroy {
   }
 
   createNewChart() {
+    this.noChart.emit(!this.noChart);
     this.chart = new Chart('canvas', {
       type: 'bar',
       data: {
@@ -94,6 +94,7 @@ export class VisualizerComponent implements OnInit, OnDestroy {
     }
     );
   }
+
   ngOnDestroy(): void {
     this.indexDataSub.unsubscribe();
     this.dataArraySub.unsubscribe();
