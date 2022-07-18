@@ -12,6 +12,7 @@ import { Chart, registerables } from 'chart.js';
 export class VisualizerComponent implements OnInit, OnDestroy {
   private dataArraySub = new Subscription;
   private indexDataSub = new Subscription;
+  @Output('noChart') noChart = new EventEmitter<boolean>();
   inputData: InputData = new InputData(0, [], 0);
   previewIndexData: number[] = [];
   activeIndex: number[] = [0, 0];
@@ -35,6 +36,39 @@ export class VisualizerComponent implements OnInit, OnDestroy {
       this.activeIndex = activeIndex;
     })
 
+
+  }
+
+  previewData() {
+
+    if (this.timeout1) {
+      clearTimeout(this.timeout1);
+    }
+    this.timeout1 = setTimeout(() => {
+      this.chart.clear();
+      this.chart.destroy();
+      this.chart = null;
+      console.log('timeout: ' + !this.chart);
+      this.noChart.emit(!this.chart);
+    }, 9000);
+
+    if (!this.chart) {
+      this.createNewChart();
+    }
+
+    this.chart.config.data.labels = this.previewIndexData;
+    if (this.activeIndex[0] >= 1 && this.activeIndex[1] >= 1) {
+      this.chart.setActiveElements([
+        { datasetIndex: 0, index: this.activeIndex[1] },
+        { datasetIndex: 0, index: this.activeIndex[0] },
+      ])
+    }
+    this.chart.config.data.datasets[0].data = this.inputData.input;
+    console.log('update: ' + !this.chart);
+    this.chart.update();
+  }
+
+  createNewChart() {
     this.chart = new Chart('canvas', {
       type: 'bar',
       data: {
@@ -60,26 +94,6 @@ export class VisualizerComponent implements OnInit, OnDestroy {
     }
     );
   }
-
-  previewData() {
-    if (this.timeout1) {
-      clearTimeout(this.timeout1);
-    }
-    this.timeout1 = setTimeout(() => {
-      this.dataArraySub.unsubscribe();
-      this.chart.clear();
-    }, 25000);
-    this.chart.config.data.labels = this.previewIndexData;
-    if (this.activeIndex[0] >= 1 || this.activeIndex[1] >= 1) {
-      this.chart.setActiveElements([
-        { datasetIndex: 0, index: this.activeIndex[1] },
-        { datasetIndex: 0, index: this.activeIndex[0] },
-      ])
-    }
-    this.chart.config.data.datasets[0].data = this.inputData.input;
-    this.chart.update();
-  }
-
   ngOnDestroy(): void {
     this.indexDataSub.unsubscribe();
     this.dataArraySub.unsubscribe();

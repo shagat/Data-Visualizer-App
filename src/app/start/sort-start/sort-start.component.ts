@@ -25,7 +25,6 @@ export class SortStartComponent implements OnInit, OnDestroy {
 
   inputValueSub(event: { value: number; }) {
     this.dataKey = event.value;
-    // console.log(event.value);
     this.inputDataService.setDataKey(this.dataKey)
   }
 
