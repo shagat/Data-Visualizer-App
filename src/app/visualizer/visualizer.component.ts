@@ -64,7 +64,7 @@ export class VisualizerComponent implements OnInit, OnDestroy {
       ])
     }
     this.chart.config.data.datasets[0].data = this.inputData.input;
-    console.log('update: ' + !this.chart);
+    // console.log('update: ' + !this.chart);
     this.chart.update();
   }
 
@@ -99,6 +99,8 @@ export class VisualizerComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.indexDataSub.unsubscribe();
     this.dataArraySub.unsubscribe();
-    this.chart.destroy();
+    if (this.chart){
+      this.chart.destroy();
+    }
   }
 }

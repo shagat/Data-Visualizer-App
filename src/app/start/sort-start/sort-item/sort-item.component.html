@@ -9,3 +9,9 @@
   </div>
 </div>
 <app-visualizer (noChart)="noChartListener($event)"></app-visualizer>
+<div class="card" *ngIf="timeComplexity">
+  <div class="container container-vis card-body">
+    <h5 class="card-title text-center" style="color:sandybrown;">Time Complexity</h5>
+    <p class="text-center card-body">{{timeComplexity}}</p>
+  </div>
+</div>

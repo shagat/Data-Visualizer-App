@@ -12,19 +12,29 @@ export class SortItemComponent implements OnInit, OnDestroy {
   noChart: boolean = true;
   inputData: InputData;
   sortSub = new Subscription;
+  sortFinished = new Subscription;
+  timeComplexity: string = null;
+  toTC: any;
   constructor(private inputDataService: InputDataService) { }
 
   ngOnInit(): void {
     this.sortSub = this.inputDataService.inputDataChanged.subscribe((inputdata: InputData) =>
       this.inputData = inputdata
     )
-    console.log(this.inputData)
+    this.sortFinished = this.inputDataService.sortingFinished.subscribe((sortingFinishedString: string) => {
+      this.timeComplexity = sortingFinishedString;
+      this.toTC = setTimeout(() => {
+        this.timeComplexity = null;
+      }, 12000);
+    })
   }
+
   noChartListener(noChart: boolean) {
     this.noChart = noChart;
-    // console.log(noChart);
   }
+
   ngOnDestroy(): void {
+    // this.toTC.clearTimeout();
     this.sortSub.unsubscribe();
   }
 

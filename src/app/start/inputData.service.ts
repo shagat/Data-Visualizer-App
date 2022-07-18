@@ -9,6 +9,7 @@ export class InputDataService {
   inputDataChanged = new Subject<InputData>();
   indexDataChanged = new Subject<[number, number]>();
   previewModeSub = new Subject<boolean>();
+  sortingFinished = new Subject<string>();
   private inputData: InputData = new InputData(0, [], 3);
   private dataArray: number[] = [];
   previewMode: boolean = true;
@@ -26,36 +27,40 @@ export class InputDataService {
     await this.sortingCordinator();
 
     this.previewMode = true;
-    this.previewModeSub.next(this.previewMode)
+    this.previewModeSub.next(this.previewMode);
   }
 
   async sortingCordinator() {
     switch (+this.inputData.algo) {
       case 1:
-        console.log('switch case bubble sort')
+        console.log('switch case bubble sort');
         await this.bubbleSort();
+        this.sortingFinished.next('Bubble Sorting Done');
         break;
       case 2:
-        console.log('switch case insertion sort')
+        console.log('switch case insertion sort');
         await this.insertionSort();
+        this.sortingFinished.next('Insertion Sorting Done');
         break;
       case 3:
-        console.log('switch case selection sort')
+        console.log('switch case selection sort');
         await this.selectionSort();
+        this.sortingFinished.next('Selection Sorting Done');
         break;
       case 4:
-        console.log('switch case quick sort')
+        console.log('switch case quick sort');
         let lb = 0;
         let ub = (this.inputData.input).length - 1;
         await this.quickSorting(this.inputData.input, lb, ub);
+        this.sortingFinished.next('Quick Sorting Done');
         break;
       case 5:
-        console.log('switch case merge sort')
-        // await this
+        console.log('switch case merge sort');
         let n = (this.inputData.input).length;
         let upb = n - 1;
         let lwb = 0;
-        await this.merge_sort(this.inputData.input, lwb, upb)
+        await this.merge_sort(this.inputData.input, lwb, upb);
+        this.sortingFinished.next('Merge Sorting Done');
         break;
     }
     return;
@@ -87,7 +92,7 @@ export class InputDataService {
       let n = (this.inputData.input).length;
       for (let i = 0; i < (n - 1); i++) {
         let isChanged = false;
-        console.log('Pass: ' + (i + 1))
+        // console.log('Pass: ' + (i + 1))
         this.letDelay()
         for (let j = 0; j < (n - 1 - i); j++) {
           if ((this.inputData.input)[j + 1] < (this.inputData.input)[j]) {
@@ -140,7 +145,7 @@ export class InputDataService {
   async selectionSort() {
     try {
       const n = this.inputData.input.length;
-      console.log(n)
+      // console.log(n)
       for (let i = 0; i < n; i++) {
         let min = i;
         for (let j = i + 1; j < n; j++) {
@@ -223,7 +228,7 @@ export class InputDataService {
       }
     } catch (error) {
       console.log(error)
-    } finally{
+    } finally {
       return;
     }
   }
@@ -260,7 +265,6 @@ export class InputDataService {
     }
     for (k = lb; k <= ub; k++) {
       a[k] = b[k];
-      // console.log(a, b);
       this.inputDataChanged.next(this.inputData);
       await this.letDelay();
     }
