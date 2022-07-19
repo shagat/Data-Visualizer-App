@@ -13,7 +13,7 @@ export class SortItemComponent implements OnInit, OnDestroy {
   inputData: InputData;
   sortSub = new Subscription;
   sortFinished = new Subscription;
-  timeComplexity: [string, string,string,string] = null;
+  timeComplexity: [string, string, string, string] = null;
   toTC: any;
   constructor(private inputDataService: InputDataService) { }
 

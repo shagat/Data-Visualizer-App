@@ -1,23 +1,21 @@
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 import { SharedModules } from "../shared.modules";
-import { VisualizerComponent } from "../visualizer/visualizer.component"; 
+import { VisualizerComponent } from "../visualizer/visualizer.component";
 import { SortItemComponent } from "./sort-item/sort-item.component";
 import { SortStartComponent } from "./sort-start.component";
-import { StartComponent } from "../start/start.component";
 
 
 @NgModule({
-    declarations:[
-        StartComponent,
+    declarations: [
         SortItemComponent,
         SortStartComponent,
         VisualizerComponent,
     ],
-    imports:[
+    imports: [
         SharedModules,
         RouterModule.forChild([
-            {path: '', component: SortStartComponent}
+            { path: '', component: SortStartComponent }
         ])
     ]
 })

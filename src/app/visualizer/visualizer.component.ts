@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { InputDataService } from '../sort-start/inputData.service'; 
-import { InputData } from '../sort-start/InputData.model'; 
+import { InputDataService } from '../sort-start/inputData.service';
+import { InputData } from '../sort-start/InputData.model';
 import { Chart, registerables } from 'chart.js';
 
 @Component({
@@ -98,7 +98,7 @@ export class VisualizerComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.indexDataSub.unsubscribe();
     this.dataArraySub.unsubscribe();
-    if (this.chart){
+    if (this.chart) {
       this.chart.destroy();
     }
   }

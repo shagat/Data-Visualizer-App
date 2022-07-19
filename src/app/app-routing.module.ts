@@ -6,14 +6,15 @@ const routes: Routes = [
   {
     path: '', component: HomeComponent, pathMatch: 'full'
   },
-  { path: 'sort-start', loadChildren: () => import ('./start/sorting.module')
-  .then (m => m.SortingModule) },
-  // { path: 'viz', component: VisualizerComponent },
+  {
+    path: 'sort-start', loadChildren: () => import('./sort-start/sorting.module')
+      .then(m => m.SortingModule)
+  },
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, {preloadingStrategy: PreloadAllModules})
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
   ],
   exports: [RouterModule]
 })

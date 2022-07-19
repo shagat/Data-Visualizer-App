@@ -35,7 +35,7 @@ export class InputDataService {
       case 1:
         console.log('switch case bubble sort');
         await this.bubbleSort();
-        this.sortingFinished.next(["Bubble Sort","Best: Ω(n)", "Avg: Θ(n^2)", "Worst: O(n^2)"]);
+        this.sortingFinished.next(["Bubble Sort", "Best: Ω(n)", "Avg: Θ(n^2)", "Worst: O(n^2)"]);
         break;
       case 2:
         console.log('switch case insertion sort');
@@ -45,7 +45,7 @@ export class InputDataService {
       case 3:
         console.log('switch case selection sort');
         await this.selectionSort();
-        this.sortingFinished.next(["Selection Sort","Best: Ω(n^2)", "Avg: Θ(n^2)", "Worst: O(n^2)"]);
+        this.sortingFinished.next(["Selection Sort", "Best: Ω(n^2)", "Avg: Θ(n^2)", "Worst: O(n^2)"]);
         break;
       case 4:
         console.log('switch case quick sort');

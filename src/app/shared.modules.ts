@@ -5,7 +5,7 @@ import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { MaterialsModule } from "src/materials.modules";
 
 @NgModule({
-    imports:[
+    imports: [
         NgbModule,
         MaterialsModule,
         CommonModule,
@@ -17,6 +17,6 @@ import { MaterialsModule } from "src/materials.modules";
         CommonModule,
         FormsModule,
     ]
-}) export class SharedModules{
+}) export class SharedModules {
 
 }

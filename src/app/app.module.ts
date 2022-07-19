@@ -7,7 +7,6 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { HeaderComponent } from './header/header.component';
 import { SharedModules } from './shared.modules';
-import {HttpClientModule} from '@angular/common/http'
 
 
 @NgModule({
@@ -19,7 +18,6 @@ import {HttpClientModule} from '@angular/common/http'
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule,
     BrowserAnimationsModule,
     SharedModules
   ],
