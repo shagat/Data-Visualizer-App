@@ -9,7 +9,7 @@ export class InputDataService {
   inputDataChanged = new Subject<InputData>();
   indexDataChanged = new Subject<[number, number]>();
   previewModeSub = new Subject<boolean>();
-  sortingFinished = new Subject<string>();
+  sortingFinished = new Subject<[string, string, string, string]>();
   private inputData: InputData = new InputData(0, [], 3);
   private dataArray: number[] = [];
   previewMode: boolean = true;
@@ -35,24 +35,24 @@ export class InputDataService {
       case 1:
         console.log('switch case bubble sort');
         await this.bubbleSort();
-        this.sortingFinished.next('Bubble Sorting Done');
+        this.sortingFinished.next(["Bubble Sort","Best: Ω(n)", "Avg: Θ(n^2)", "Worst: O(n^2)"]);
         break;
       case 2:
         console.log('switch case insertion sort');
         await this.insertionSort();
-        this.sortingFinished.next('Insertion Sorting Done');
+        this.sortingFinished.next(["Insertion Sort", "Best: Ω(n)", "Avg: Θ(n^2)", "Worst: O(n^2)"]);
         break;
       case 3:
         console.log('switch case selection sort');
         await this.selectionSort();
-        this.sortingFinished.next('Selection Sorting Done');
+        this.sortingFinished.next(["Selection Sort","Best: Ω(n^2)", "Avg: Θ(n^2)", "Worst: O(n^2)"]);
         break;
       case 4:
         console.log('switch case quick sort');
         let lb = 0;
         let ub = (this.inputData.input).length - 1;
         await this.quickSorting(this.inputData.input, lb, ub);
-        this.sortingFinished.next('Quick Sorting Done');
+        this.sortingFinished.next(["Quick Sort", "Best: Ω(n log(n))", "Avg: Θ(n log(n))", "Worst: O(n^2)"]);
         break;
       case 5:
         console.log('switch case merge sort');
@@ -60,7 +60,7 @@ export class InputDataService {
         let upb = n - 1;
         let lwb = 0;
         await this.merge_sort(this.inputData.input, lwb, upb);
-        this.sortingFinished.next('Merge Sorting Done');
+        this.sortingFinished.next(["Merge Sort", "Best: Ω(n log(n))", "Avg: Θ(n log(n))", "Worst: O(n log(n))"]);
         break;
     }
     return;
@@ -275,7 +275,7 @@ export class InputDataService {
   letDelay() {
     return new Promise(resolve => setTimeout(
       resolve,
-      (1000 - 150 * this.inputData.speed))
+      (900 - 150 * this.inputData.speed))
     );
   }
 

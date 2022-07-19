@@ -12,7 +12,7 @@ const routes: Routes = [
     ]
   },
   { path: 'sort-start', component: SortStartComponent },
-  { path: 'viz', component: VisualizerComponent },
+  // { path: 'viz', component: VisualizerComponent },
 ];
 
 @NgModule({

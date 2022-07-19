@@ -34,7 +34,7 @@ export class SortStartComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     if (this.sortValue >= 1) {
-      console.log(this.sortValue);
+      // console.log(this.sortValue);
       this.inputDataService.submitInputData(this.speedValue, this.sortValue);
     }
     else {

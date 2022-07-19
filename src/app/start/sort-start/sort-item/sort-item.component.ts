@@ -13,7 +13,7 @@ export class SortItemComponent implements OnInit, OnDestroy {
   inputData: InputData;
   sortSub = new Subscription;
   sortFinished = new Subscription;
-  timeComplexity: string = null;
+  timeComplexity: [string, string,string,string] = null;
   toTC: any;
   constructor(private inputDataService: InputDataService) { }
 
@@ -21,11 +21,11 @@ export class SortItemComponent implements OnInit, OnDestroy {
     this.sortSub = this.inputDataService.inputDataChanged.subscribe((inputdata: InputData) =>
       this.inputData = inputdata
     )
-    this.sortFinished = this.inputDataService.sortingFinished.subscribe((sortingFinishedString: string) => {
+    this.sortFinished = this.inputDataService.sortingFinished.subscribe((sortingFinishedString: [string, string, string, string]) => {
       this.timeComplexity = sortingFinishedString;
       this.toTC = setTimeout(() => {
         this.timeComplexity = null;
-      }, 12000);
+      }, 20000);
     })
   }
 
