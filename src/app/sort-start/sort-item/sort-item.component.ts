@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { InputData } from '../../InputData.model';
-import { InputDataService } from '../../inputData.service';
+import { InputData } from '../InputData.model';
+import { InputDataService } from '../inputData.service';
 
 @Component({
   selector: 'app-sort-item',

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { InputDataService } from '../start/inputData.service';
-import { InputData } from '../start/InputData.model';
+import { InputDataService } from '../sort-start/inputData.service'; 
+import { InputData } from '../sort-start/InputData.model'; 
 import { Chart, registerables } from 'chart.js';
 
 @Component({

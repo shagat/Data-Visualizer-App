@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { InputDataService } from '../inputData.service';
+import { InputDataService } from './inputData.service';
 
 @Component({
   selector: 'app-sort-start',
