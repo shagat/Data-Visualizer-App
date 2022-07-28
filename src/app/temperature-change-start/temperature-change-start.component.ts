@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { TemperatureChangeService } from './temperature-change.service';
 
 @Component({
   selector: 'app-temperature-change-start',
@@ -85,10 +86,16 @@ export class TemperatureChangeStartComponent {
     {name: 'Wyoming', abbreviation: 'WY'}
   ];
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder,private tempService: TemperatureChangeService) {}
 
   onSubmit(): void {
     alert('Thanks!');
-    console.log(this.addressForm)
+    // console.log(this.addressForm);
+    this.tempService.getData();
+  }
+
+  onClickGet(){
+    this.tempService.getData();
+    this.tempService.displayData();
   }
 }

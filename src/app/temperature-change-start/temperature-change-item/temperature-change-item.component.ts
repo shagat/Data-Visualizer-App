@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
+
 @Component({
   selector: 'app-temperature-change-item',
   templateUrl: './temperature-change-item.component.html',

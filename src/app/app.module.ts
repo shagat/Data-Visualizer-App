@@ -15,6 +15,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatCardModule } from '@angular/material/card';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TemperatureChangeItemComponent } from './temperature-change-start/temperature-change-item/temperature-change-item.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import { TemperatureChangeItemComponent } from './temperature-change-start/tempe
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     SharedModules,
     MatInputModule,
     MatButtonModule,
