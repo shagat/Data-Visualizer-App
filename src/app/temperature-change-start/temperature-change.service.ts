@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { WEATHER_API } from 'src/environments/keys';
-import { catchError, Subject, tap, throwError } from 'rxjs';
+import { catchError, tap, throwError } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class TemperatureChangeService {
@@ -25,8 +25,6 @@ export class TemperatureChangeService {
         )
       );
   }
-  displayData() {
-    console.log(this.ResData);
-  }
+
   constructor(private httpClient: HttpClient) {}
 }

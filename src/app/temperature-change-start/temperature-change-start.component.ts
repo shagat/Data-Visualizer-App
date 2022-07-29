@@ -1,8 +1,6 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { catchError, tap, throwError, pipe, Observable } from 'rxjs';
-import { WEATHER_API } from 'src/environments/keys';
+import { Observable } from 'rxjs';
 import { TemperatureChangeService } from './temperature-change.service';
 
 @Component({
@@ -10,7 +8,8 @@ import { TemperatureChangeService } from './temperature-change.service';
   templateUrl: './temperature-change-start.component.html',
   styleUrls: ['./temperature-change-start.component.css'],
 })
-export class TemperatureChangeStartComponent {
+export class TemperatureChangeStartComponent implements AfterViewInit{
+  // @ViewChild('btnSend') btnSend: ElementRef;
   addressForm = this.fb.group({
     company: null,
     firstName: [null, Validators.required],
@@ -97,23 +96,25 @@ export class TemperatureChangeStartComponent {
   constructor(
     private fb: FormBuilder,
     private tempService: TemperatureChangeService,
+    private elementRef: ElementRef
   ) {}
 
+  ngAfterViewInit(): void {
+    this.elementRef.nativeElement.querySelector('btnSend').addEventListner('click', this.onSendReq.bind(this))
+  }
   onSubmit(): void {
     alert('Thanks!');
-    // console.log(this.addressForm);
-    this.tempService.getData();
+    // this.tempService.getData();
   }
 
   onSendReq() {
-    let sendObs: Observable<{}>;
-    sendObs = this.tempService.getData();
-    sendObs.subscribe(resData => {
-      console.log(resData);
-    }), err => {
-      console.log(err);
-    }
+    // let sendObs: Observable<{}>;
+    // sendObs = this.tempService.getData();
+    // sendObs.subscribe(resData => {
+    //   console.log(resData);
+    // }), (err: any) => {
+    //   console.log(err);
+    // }
+    console.log('sent req')
   }
-
-  getData() {}
 }
