@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { WEATHER_API } from 'src/environments/keys';
 import { catchError, throwError } from 'rxjs';
 
@@ -10,9 +10,8 @@ export class TemperatureChangeService {
   getData() {
     return this.httpClient
       .post<{}>(
-        'https://api.openweathermap.org/data/3.0/onecall/timemachine?lat=28.704060&lon=77.102493&dt=1643803200&appid=' +
-          WEATHER_API,
-        {}
+        'https://api.weatherapi.com/v1/history.json?key=' + WEATHER_API,{},
+        {params: {q:'New Delhi', dt:'2010-01-01'}}
       )
       .pipe(
         catchError((err) =>
