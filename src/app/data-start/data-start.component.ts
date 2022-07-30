@@ -1,16 +1,19 @@
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { catchError, Observable, throwError } from 'rxjs';
-import { WEATHER_API } from 'src/environments/keys';
-import { TemperatureChangeService } from './temperature-change.service';
+import { Subscription } from 'rxjs';
+import { TemperatureChangeService } from '../temperature-change-start/temperature-change.service';
+import { DataService } from './data.service';
 
 @Component({
-  selector: 'app-temperature-change-start',
-  templateUrl: './temperature-change-start.component.html',
-  styleUrls: ['./temperature-change-start.component.css'],
+  selector: 'app-data-start',
+  templateUrl: './data-start.component.html',
+  styleUrls: ['./data-start.component.css']
 })
-export class TemperatureChangeStartComponent{
+
+export class DataStartComponent implements OnInit {
+  dataSub = new Subscription();
+  dataGSDP = {};
   addressForm = this.fb.group({
     company: null,
     firstName: [null, Validators.required],
@@ -40,16 +43,23 @@ export class TemperatureChangeStartComponent{
 
   constructor(
     private fb: FormBuilder,
-    private tempService: TemperatureChangeService,
+    private dataService: DataService,
     private httpClient: HttpClient
   ) {}
+
+  ngOnInit(): void {
+    this.dataSub = this.dataService.dataSubject.subscribe((resData) => {
+      this.dataGSDP = resData
+      console.log(this.dataGSDP);
+    })
+  }
 
   onSubmit(): void {
     alert('Thanks!');
   }
 
   onSendReq() {
-    //...
-    //get data from the http get request
+    console.log('sent req');
+    this.dataService.getData();
   }
 }

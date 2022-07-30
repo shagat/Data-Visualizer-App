@@ -16,6 +16,9 @@ import { MatCardModule } from '@angular/material/card';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TemperatureChangeItemComponent } from './temperature-change-start/temperature-change-item/temperature-change-item.component';
 import { HttpClientModule } from '@angular/common/http';
+import { DataStartComponent } from './data-start/data-start.component';
+import { DataStartItemComponent } from './data-start/data-start-item/data-start-item.component';
+import { DataStartVisualizerComponent } from './data-start/data-start-visualizer/data-start-visualizer.component';
 
 
 @NgModule({
@@ -25,6 +28,9 @@ import { HttpClientModule } from '@angular/common/http';
     HeaderComponent,
     TemperatureChangeStartComponent,
     TemperatureChangeItemComponent,
+    DataStartComponent,
+    DataStartItemComponent,
+    DataStartVisualizerComponent,
   ],
   imports: [
     BrowserModule,
