@@ -7,11 +7,10 @@ import { DataService } from './data.service';
 @Component({
   selector: 'app-data-start',
   templateUrl: './data-start.component.html',
-  styleUrls: ['./data-start.component.css']
+  styleUrls: ['./data-start.component.css'],
 })
-
 export class DataStartComponent implements OnInit {
-  dataSub = new Subscription;
+  dataSub = new Subscription();
   dataGSDP = {};
   addressForm = this.fb.group({
     company: null,
@@ -34,23 +33,20 @@ export class DataStartComponent implements OnInit {
 
   hasUnitNumber = false;
 
-  states : Observable<[]>;
+  // states: Observable<{}>;
+  states = [];
 
-  constructor(
-    private fb: FormBuilder,
-    private dataService: DataService
-  ) {}
+  constructor(private fb: FormBuilder, private dataService: DataService) {}
 
   ngOnInit(): void {
     this.dataSub = this.dataService.dataSubject.subscribe((res) => {
-      res
-      console.log(this.states)
-    })
-
+      this.states.push(res['state_uts']);
+      console.log(this.states);
+    });
   }
 
   onSubmit(): void {
-    alert('Thanks!');
+    // alert('Thanks!');
   }
 
   onSendReq() {
