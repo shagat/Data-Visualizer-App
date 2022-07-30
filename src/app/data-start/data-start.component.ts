@@ -1,8 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs';
-import { TemperatureChangeService } from '../temperature-change-start/temperature-change.service';
+import { Subscription, map, Observable } from 'rxjs';
 import { DataService } from './data.service';
 
 @Component({
@@ -12,7 +11,7 @@ import { DataService } from './data.service';
 })
 
 export class DataStartComponent implements OnInit {
-  dataSub = new Subscription();
+  dataSub = new Subscription;
   dataGSDP = {};
   addressForm = this.fb.group({
     company: null,
@@ -35,23 +34,19 @@ export class DataStartComponent implements OnInit {
 
   hasUnitNumber = false;
 
-  states = [
-    { name: 'Massachusetts', abbreviation: 'MA' },
-    { name: 'Michigan', abbreviation: 'MI' },
-    { name: 'Minnesota', abbreviation: 'MN' },
-  ];
+  states : Observable<[]>;
 
   constructor(
     private fb: FormBuilder,
-    private dataService: DataService,
-    private httpClient: HttpClient
+    private dataService: DataService
   ) {}
 
   ngOnInit(): void {
-    this.dataSub = this.dataService.dataSubject.subscribe((resData) => {
-      this.dataGSDP = resData
-      console.log(this.dataGSDP);
+    this.dataSub = this.dataService.dataSubject.subscribe((res) => {
+      res
+      console.log(this.states)
     })
+
   }
 
   onSubmit(): void {

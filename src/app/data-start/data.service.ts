@@ -12,12 +12,13 @@ export class DataService {
 
   getData() {
     return this.httpClient
-      .get<{}>(this.url_api + DATA_GOV_API, {
-        params: { format: 'json', limit: '100' },
+      .get<{}>(this.url_api + DATA_GOV_API , {
+        params: { format: 'json', limit: '100', filter: 'id' },
       })
       .pipe(
-        map((res) => {
-          this.dataSubject.next(res);
+        map((obj) => {
+          this.ResData = obj['records'];
+          this.dataSubject.next(this.ResData);
         }),catchError((error) => {
           throw new Error(error);
       })
