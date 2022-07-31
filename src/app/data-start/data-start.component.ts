@@ -13,28 +13,19 @@ export class DataStartComponent implements OnInit {
   dataSub = new Subscription();
   dataGSDP = {};
   addressForm = this.fb.group({
-    company: null,
-    firstName: [null, Validators.required],
-    lastName: [null, Validators.required],
-    address: [null, Validators.required],
-    address2: null,
-    city: [null, Validators.required],
     state: [null, Validators.required],
-    postalCode: [
-      null,
-      Validators.compose([
-        Validators.required,
-        Validators.minLength(5),
-        Validators.maxLength(5),
-      ]),
-    ],
     shipping: ['free', Validators.required],
   });
 
   hasUnitNumber = false;
 
   // states: Observable<{}>;
-  states = [];
+  states = [
+    { name: 'Andhra Pradesh', abbreviation: 'AP' },
+    { name: 'Arunachal Pradesh',abbreviation: 'AR' },
+    { name: 'Assam',abbreviation: 'AS' },
+    { name: 'Bihar', abbreviation: 'BR' },
+  ];
 
   constructor(private fb: FormBuilder, private dataService: DataService) {}
 
@@ -46,11 +37,14 @@ export class DataStartComponent implements OnInit {
   }
 
   onSubmit(): void {
+    let res = this.dataService.getData(this.addressForm.value.state);
+    // console.log(this.addressForm.value.state)
+    console.log(res);
     // alert('Thanks!');
   }
 
   onSendReq() {
     console.log('sent req');
-    this.dataService.getData();
+    this.dataService.fetchData();
   }
 }

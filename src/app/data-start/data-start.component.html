@@ -1,37 +1,21 @@
 <form [formGroup]="addressForm" novalidate (ngSubmit)="onSubmit()">
   <mat-card class="shipping-card">
     <mat-card-header>
-      <mat-card-title>Shipping Information</mat-card-title>
+      <mat-card-title>Indian State Information Visualizer</mat-card-title>
     </mat-card-header>
     <mat-card-content>
       <div class="row">
         <div class="col">
           <mat-form-field class="full-width">
-            <input matInput placeholder="Company" formControlName="company" />
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <mat-form-field class="full-width">
-            <input matInput placeholder="City" formControlName="city" />
-            <mat-error
-              *ngIf="addressForm.controls['city'].hasError('required')"
-            >
-              City is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <div class="col">
-          <mat-form-field class="full-width">
             <mat-select placeholder="State" formControlName="state">
-              <mat-option *ngFor="let state of states">
-                {{ state }}
+              <mat-option
+                *ngFor="let state of states"
+                [value]="state.name">
+                {{ state.name }}
               </mat-option>
             </mat-select>
             <mat-error
-              *ngIf="addressForm.controls['state'].hasError('required')"
-            >
+              *ngIf="addressForm.controls['state'].hasError('required')">
               State is <strong>required</strong>
             </mat-error>
           </mat-form-field>
@@ -39,29 +23,13 @@
       </div>
       <div class="row">
         <div class="col">
-          <mat-form-field class="full-width">
-            <input
-              matInput
-              #postalCode
-              maxlength="5"
-              placeholder="Postal Code"
-              type="number"
-              formControlName="postalCode"
-            />
-            <mat-hint align="end">{{ postalCode.value.length }} / 5</mat-hint>
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
           <mat-radio-group formControlName="shipping">
-            <mat-radio-button value="free">Free Shipping</mat-radio-button>
+            <mat-radio-button value="gsdp"
+              >Gross State Domestic Product (GSDP)</mat-radio-button>
             <mat-radio-button value="priority"
-              >Priority Shipping</mat-radio-button
-            >
+              >Priority Shipping</mat-radio-button>
             <mat-radio-button value="nextday"
-              >Next Day Shipping</mat-radio-button
-            >
+              >Next Day Shipping</mat-radio-button>
           </mat-radio-group>
         </div>
       </div>
@@ -73,8 +41,7 @@
         color="primary"
         type="button"
         id="btnSend"
-        (click)="onSendReq()"
-      >
+        (click)="onSendReq()">
         Send
       </button>
     </mat-card-actions>
