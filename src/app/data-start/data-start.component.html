@@ -10,8 +10,8 @@
             <mat-select placeholder="State" formControlName="state">
               <mat-option
                 *ngFor="let state of states"
-                [value]="state.name">
-                {{ state.name }}
+                [value]="state">
+                {{ state }}
               </mat-option>
             </mat-select>
             <mat-error

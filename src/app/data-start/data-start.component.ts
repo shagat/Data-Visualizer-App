@@ -21,30 +21,47 @@ export class DataStartComponent implements OnInit {
 
   // states: Observable<{}>;
   states = [
-    { name: 'Andhra Pradesh', abbreviation: 'AP' },
-    { name: 'Arunachal Pradesh',abbreviation: 'AR' },
-    { name: 'Assam',abbreviation: 'AS' },
-    { name: 'Bihar', abbreviation: 'BR' },
+    // { name: 'Andhra Pradesh', abbreviation: 'AP' },
+    // { name: 'Arunachal Pradesh',abbreviation: 'AR' },
+    // { name: 'Assam',abbreviation: 'AS' },
+    // { name: 'Bihar', abbreviation: 'BR' },
+    'Andhra Pradesh',
+    'Arunachal Pradesh',
+    'Assam',
+    'Bihar'
   ];
 
   constructor(private fb: FormBuilder, private dataService: DataService) {}
 
   ngOnInit(): void {
     this.dataSub = this.dataService.dataSubject.subscribe((res) => {
-      this.states.push(res['state_uts']);
+      // this.states.push(res['state_uts']);
       console.log(this.states);
     });
   }
 
   onSubmit(): void {
-    let res = this.dataService.getData(this.addressForm.value.state);
+
+    let index = this.states.indexOf(this.addressForm.value.state);
     // console.log(this.addressForm.value.state)
-    console.log(res);
+    let res = this.dataService.getData(index);
+    console.log(res + 'from submit');
+    this.convertJtoA(res)
     // alert('Thanks!');
   }
 
   onSendReq() {
     console.log('sent req');
     this.dataService.fetchData();
+  }
+
+  convertJtoA(json_data:{}){
+    var result = []
+    for (let i in json_data){
+      result.push([i, json_data[i]])
+    }
+    console.log(result);
+    console.log(result[12][0]);
+    return result
   }
 }

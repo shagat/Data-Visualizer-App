@@ -29,9 +29,10 @@ export class DataService {
       .subscribe();
   }
 
-  getData(index: string){
+  getData(index: number){
     console.log(this.ResData);
-    return (this.ResData['state_uts'].indexOf('Assam'));
+    // console.log(this.ResData[2]);
+    return (this.ResData[index]);
   }
 
   constructor(private httpClient: HttpClient) {}
