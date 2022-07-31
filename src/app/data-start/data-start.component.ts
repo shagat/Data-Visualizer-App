@@ -1,7 +1,6 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Subscription, map, Observable } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { DataService } from './data.service';
 
 @Component({
@@ -17,19 +16,7 @@ export class DataStartComponent implements OnInit {
     shipping: ['free', Validators.required],
   });
 
-  hasUnitNumber = false;
-
-  // states: Observable<{}>;
-  states = [
-    // { name: 'Andhra Pradesh', abbreviation: 'AP' },
-    // { name: 'Arunachal Pradesh',abbreviation: 'AR' },
-    // { name: 'Assam',abbreviation: 'AS' },
-    // { name: 'Bihar', abbreviation: 'BR' },
-    'Andhra Pradesh',
-    'Arunachal Pradesh',
-    'Assam',
-    'Bihar'
-  ];
+  states = ['Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar'];
 
   constructor(private fb: FormBuilder, private dataService: DataService) {}
 
@@ -41,13 +28,9 @@ export class DataStartComponent implements OnInit {
   }
 
   onSubmit(): void {
-
     let index = this.states.indexOf(this.addressForm.value.state);
-    // console.log(this.addressForm.value.state)
     let res = this.dataService.getData(index);
     console.log(res + 'from submit');
-    this.convertJtoA(res)
-    // alert('Thanks!');
   }
 
   onSendReq() {
@@ -55,13 +38,5 @@ export class DataStartComponent implements OnInit {
     this.dataService.fetchData();
   }
 
-  convertJtoA(json_data:{}){
-    var result = []
-    for (let i in json_data){
-      result.push([i, json_data[i]])
-    }
-    console.log(result);
-    console.log(result[12][0]);
-    return result
-  }
+
 }

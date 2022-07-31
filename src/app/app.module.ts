@@ -18,7 +18,7 @@ import { TemperatureChangeItemComponent } from './temperature-change-start/tempe
 import { HttpClientModule } from '@angular/common/http';
 import { DataStartComponent } from './data-start/data-start.component';
 import { DataStartItemComponent } from './data-start/data-start-item/data-start-item.component';
-import { DataStartVisualizerComponent } from './data-start/data-start-visualizer/data-start-visualizer.component';
+import { VisualizerDataComponent } from './data-start/visualizer-data/visualizer-data.component';
 
 
 @NgModule({
@@ -30,7 +30,7 @@ import { DataStartVisualizerComponent } from './data-start/data-start-visualizer
     TemperatureChangeItemComponent,
     DataStartComponent,
     DataStartItemComponent,
-    DataStartVisualizerComponent,
+    VisualizerDataComponent,
   ],
   imports: [
     BrowserModule,
