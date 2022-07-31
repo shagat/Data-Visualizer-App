@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
+import { Subscription } from 'rxjs';
+import { DataService } from '../data.service';
 @Component({
   selector: 'app-visualizer-data',
   templateUrl: './visualizer-data.component.html',
@@ -9,11 +11,16 @@ export class VisualizerDataComponent implements OnInit {
   chart: Chart;
   previewIndexData = [1,2,3,4,5,6,7,8,9,10]
   inputData = [23,12,123,123,12,312,3,123,12,313]
-  constructor() {
+  dataSub = new Subscription;
+
+  constructor(private dataService: DataService) {
     Chart.register(...registerables)
   }
 
   ngOnInit(): void {
+    this.dataSub = this.dataService.dataSubject.subscribe((res) => {
+      console.log(res +'from visualizer');
+    })
     this.createNewChart()
   }
   createNewChart() {

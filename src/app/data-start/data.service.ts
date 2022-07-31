@@ -6,9 +6,11 @@ import { catchError, map, Subject, tap, throwError } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class DataService {
   public ResData = [];
-  dataSubject = new Subject<{}>();
+  dataSubject = new Subject<string[]>();
   url_api =
     'https://api.data.gov.in/resource/adb4b1da-159f-46b3-a9c0-0545fe9ddda0?api-key=';
+
+  constructor(private httpClient: HttpClient) {}
 
   fetchData() {
     return this.httpClient
@@ -19,7 +21,6 @@ export class DataService {
         map((obj) => {
           obj['records'].forEach((e: object) => {
             this.ResData.push(e);
-            // this.dataSubject.next(e);
           });
         }),
         catchError((error) => {
@@ -29,11 +30,17 @@ export class DataService {
       .subscribe();
   }
 
-  getData(index: number){
+  getData(index: number) {
     console.log(this.ResData);
-    // console.log(this.ResData[2]);
-    return (this.ResData[index]);
+    this.ResData = this.convertSingleJSONtoArray(this.ResData[index]);
+    this.dataSubject.next(this.ResData);
   }
 
-  constructor(private httpClient: HttpClient) {}
+  convertSingleJSONtoArray(json_data: {}) {
+    var result = [];
+    for (let i in json_data) {
+      result.push([i, json_data[i]]);
+    }
+    return result;
+  }
 }

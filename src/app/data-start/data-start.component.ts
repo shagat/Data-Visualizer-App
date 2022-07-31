@@ -22,15 +22,12 @@ export class DataStartComponent implements OnInit {
 
   ngOnInit(): void {
     this.dataSub = this.dataService.dataSubject.subscribe((res) => {
-      // this.states.push(res['state_uts']);
-      console.log(this.states);
     });
   }
 
   onSubmit(): void {
     let index = this.states.indexOf(this.addressForm.value.state);
     let res = this.dataService.getData(index);
-    console.log(res + 'from submit');
   }
 
   onSendReq() {
