@@ -21,13 +21,12 @@ export class DataStartComponent implements OnInit {
   constructor(private fb: FormBuilder, private dataService: DataService) {}
 
   ngOnInit(): void {
-    this.dataSub = this.dataService.dataSubject.subscribe((res) => {
-    });
+    // this.dataSub = this.dataService.dataSubject.subscribe();
   }
 
   onSubmit(): void {
     let index = this.states.indexOf(this.addressForm.value.state);
-    let res = this.dataService.getData(index);
+    this.dataService.getData(index);
   }
 
   onSendReq() {

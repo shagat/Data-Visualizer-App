@@ -20,6 +20,7 @@ export class VisualizerDataComponent implements OnInit {
   ngOnInit(): void {
     this.dataSub = this.dataService.dataSubject.subscribe((res) => {
       console.log(res +'from visualizer');
+      this.chart.update();
     })
     this.createNewChart()
   }
