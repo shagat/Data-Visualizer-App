@@ -23,17 +23,19 @@ export class DataService {
       })
       .pipe(
         map((obj) => {
+          console.log(obj);
+          let l: number = obj['field'].length;
           this.data1.title = obj['title'];
           this.data2.title = obj['title'];
-          let l: number = obj['field'].length;
-          // console.log((obj['field'][1]['name']));
-          // console.log((obj['field'][l-1]['name']));
-          // console.log((obj['field'][(l- l + 1)]['name']));
-          this.data1.datasetLabel = obj['field'][l - l + 1]['name'];
-          this.data2.datasetLabel = obj['field'][l - 1]['name'];
-          this.data1.datasetLabel.replace('0', '');
-          this.data2.datasetLabel.replace(/[0-9]+/g, '');
-          console.log(this.data1.datasetLabel, this.data2.datasetLabel);
+          this.data1.datasetLabel = obj['field'][l - 1]['name'];
+          this.data2.datasetLabel = obj['field'][l - l + 1]['name'];
+          this.data1.datasetLabel = this.data1.datasetLabel
+            .replace(/[0-9]+/g, '')
+            .replace('-', ' ');
+          this.data2.datasetLabel = this.data2.datasetLabel
+            .replace(/[0-9]+/g, '')
+            .replace('-', ' ');
+          // console.log(this.data1.datasetLabel, this.data2.datasetLabel);
           return obj['records'];
         }),
         tap((obj) => {
@@ -52,19 +54,16 @@ export class DataService {
   getLabelAndData(res: any) {
     this.data1.datasetLabel = this.data1.datasetLabel + res[0][1];
     this.data2.datasetLabel = this.data2.datasetLabel + res[0][1];
+    console.log(res[1][1]);
     res.forEach((e, index) => {
       if (index > 11) {
         // console.log(e);
         this.data1.data.push(e[1]);
-        this.data1.label.push('20' + index);
+        this.data1.label.push(e[0].replace(/[a-zA-Z]+/g,'').replaceAll('_',' '));
       } else if (index > 0) {
         // console.log(e);
         this.data2.data.push(e[1]);
-        if (index > 9) {
-          this.data2.label.push('20' + index);
-        } else {
-          this.data2.label.push('200' + index);
-        }
+          this.data2.label.push(e[0].replace(/[a-zA-Z]+/g,'').replaceAll('_',' '));
       }
     });
     // console.log(this.data); Raw data afer filter
@@ -75,6 +74,8 @@ export class DataService {
     let result = this.convertSingleJSONtoArray(this.ResData[index]);
     this.getLabelAndData(result);
     this.dataSubject.next([this.data1, this.data2]);
+    this.data1 = new Data('t', '', [], []);
+    this.data2 = new Data('t', '', [], []);
   }
 
   convertSingleJSONtoArray(json_data: {}) {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 import { Subscription } from 'rxjs';
 import { Data } from '../Data.model';
@@ -22,10 +22,8 @@ export class VisualizerDataComponent implements OnInit {
 
   ngOnInit(): void {
     this.dataSub = this.dataService.dataSubject.subscribe((res) => {
-      console.log(res.length);
       this.data1 = res[0];
       this.data2 = res[1];
-      // this.chart.update();
     });
   }
   generateChart() {
@@ -37,6 +35,7 @@ export class VisualizerDataComponent implements OnInit {
       // this.data_chart2.update();
     }
   }
+
   createNewChart() {
     this.data_chart1 = new Chart('data_canvas1', {
       type: 'line',
