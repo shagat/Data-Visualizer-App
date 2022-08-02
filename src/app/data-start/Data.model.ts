@@ -1,7 +1,8 @@
 export class Data {
   constructor(
     public title: string,
-    public label: number[],
+    public datasetLabel: string,
+    public label: string[],
     public data: number[]
   ) {}
 }

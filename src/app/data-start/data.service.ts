@@ -7,7 +7,7 @@ import { Data } from './Data.model';
 @Injectable({ providedIn: 'root' })
 export class DataService {
   public ResData = [];
-  private data = new Data('title', [0], [0]);
+  private data = new Data('','',[],[]);
   dataSubject = new Subject<Data>();
   url_api =
     'https://api.data.gov.in/resource/adb4b1da-159f-46b3-a9c0-0545fe9ddda0?api-key=';
@@ -24,6 +24,7 @@ export class DataService {
         map((obj) => {
           this.data.title = obj['title'];
           console.log(this.data.title);
+          console.log(obj);
           return obj['records'];
         }),
         tap((obj) => {
@@ -40,10 +41,11 @@ export class DataService {
   }
 
   getLabelAndData(res: any) {
+    this.data.datasetLabel = res[0][1];
     res.forEach((e, index) => {
       if (index > 11) {
         this.data.data.push(e[1]);
-        this.data.label.push(+index);
+        this.data.label.push('20'+index);
       }
     });
     console.log(this.data);

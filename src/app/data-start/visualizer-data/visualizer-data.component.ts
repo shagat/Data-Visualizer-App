@@ -9,14 +9,14 @@ import { DataService } from '../data.service';
   styleUrls: ['./visualizer-data.component.css'],
 })
 export class VisualizerDataComponent implements OnInit {
-  chart: Chart;
+  data_chart: Chart;
   data = new Data(
     'title',
-    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-    [23, 12, 123, 123, 12, 312, 3, 123, 12, 313]
+    '',
+    ['1', '2', '3', '4'],
+    [23, 12, 123, 123]
   );
-  // previewIndexData = this.data.label
-  // inputData = this.data.data
+
   dataSub = new Subscription();
 
   constructor(private dataService: DataService) {
@@ -30,21 +30,21 @@ export class VisualizerDataComponent implements OnInit {
     });
   }
   generateChart() {
-    if (!this.chart) {
+    if (!this.data_chart) {
       this.createNewChart();
     } else {
-      this.chart.clear();
-      this.chart.update();
+      this.data_chart.clear();
+      this.data_chart.update();
     }
   }
   createNewChart() {
-    this.chart = new Chart('data_canvas', {
-      type: 'bar',
+    this.data_chart = new Chart('data_canvas', {
+      type: 'line',
       data: {
         labels: this.data.label,
         datasets: [
           {
-            label: this.data.title,
+            label: this.data.datasetLabel,
             data: this.data.data,
             backgroundColor: ['rgba(54, 162, 235, 0.7)'],
             borderColor: ['rgb(255, 99, 132)'],
@@ -54,6 +54,18 @@ export class VisualizerDataComponent implements OnInit {
           },
         ],
       },
+      options:{
+        responsive: true,
+        plugins:{
+          legend:{
+            position:'top'
+          },
+          title:{
+            display:true,
+            text:this.data.title
+          }
+        }
+      }
     });
   }
 }
