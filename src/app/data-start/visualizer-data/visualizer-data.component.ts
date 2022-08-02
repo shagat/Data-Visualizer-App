@@ -9,13 +9,10 @@ import { DataService } from '../data.service';
   styleUrls: ['./visualizer-data.component.css'],
 })
 export class VisualizerDataComponent implements OnInit {
-  data_chart: Chart;
-  data = new Data(
-    'title',
-    '',
-    ['1', '2', '3', '4'],
-    [23, 12, 123, 123]
-  );
+  data_chart1: Chart;
+  data_chart2: Chart;
+  data1 = new Data('', '', ['1', '2', '3', '4'], [23, 12, 123, 123]);
+  data2 = new Data('', '', ['1', '2', '3', '4'], [23, 12, 123, 123]);
 
   dataSub = new Subscription();
 
@@ -25,27 +22,30 @@ export class VisualizerDataComponent implements OnInit {
 
   ngOnInit(): void {
     this.dataSub = this.dataService.dataSubject.subscribe((res) => {
-      this.data = res;
+      console.log(res.length);
+      this.data1 = res[0];
+      this.data2 = res[1];
       // this.chart.update();
     });
   }
   generateChart() {
-    if (!this.data_chart) {
+    if (!this.data_chart1) {
       this.createNewChart();
     } else {
-      this.data_chart.clear();
-      this.data_chart.update();
+      // this.data_chart1.clear();
+      this.data_chart1.update();
+      // this.data_chart2.update();
     }
   }
   createNewChart() {
-    this.data_chart = new Chart('data_canvas', {
+    this.data_chart1 = new Chart('data_canvas1', {
       type: 'line',
       data: {
-        labels: this.data.label,
+        labels: this.data1.label,
         datasets: [
           {
-            label: this.data.datasetLabel,
-            data: this.data.data,
+            label: this.data1.datasetLabel,
+            data: this.data1.data,
             backgroundColor: ['rgba(54, 162, 235, 0.7)'],
             borderColor: ['rgb(255, 99, 132)'],
             hoverBackgroundColor: ['rgba(255, 159, 64, 0.7)'],
@@ -54,18 +54,48 @@ export class VisualizerDataComponent implements OnInit {
           },
         ],
       },
-      options:{
+      options: {
         responsive: true,
-        plugins:{
-          legend:{
-            position:'top'
+        plugins: {
+          legend: {
+            position: 'top',
           },
-          title:{
-            display:true,
-            text:this.data.title
-          }
-        }
-      }
+          title: {
+            display: true,
+            text: this.data1.title,
+          },
+        },
+      },
+    });
+    //..Another Chart
+    this.data_chart2 = new Chart('data_canvas2', {
+      type: 'line',
+      data: {
+        labels: this.data2.label,
+        datasets: [
+          {
+            label: this.data2.datasetLabel,
+            data: this.data2.data,
+            backgroundColor: ['rgba(54, 162, 235, 0.7)'],
+            borderColor: ['rgb(255, 99, 132)'],
+            hoverBackgroundColor: ['rgba(255, 159, 64, 0.7)'],
+            hoverBorderWidth: 1.5,
+            borderWidth: 1,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: this.data2.title,
+          },
+        },
+      },
     });
   }
 }
