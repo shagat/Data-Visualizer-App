@@ -12,8 +12,8 @@ export class DataStartComponent implements OnInit {
   dataSub = new Subscription();
   dataGSDP = {};
   addressForm = this.fb.group({
-    state: [null, Validators.required],
-    shipping: ['free', Validators.required],
+    state: ['Assam', Validators.required],
+    shipping: ['gsdp', Validators.required],
   });
 
   states = ['Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar'];
