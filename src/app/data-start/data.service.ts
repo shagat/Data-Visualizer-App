@@ -7,8 +7,8 @@ import { Data } from './Data.model';
 @Injectable({ providedIn: 'root' })
 export class DataService {
   public ResData = [];
-  private data1 = new Data('t', '', [], []);
-  private data2 = new Data('t', '', [], []);
+  private data1 = new Data('', '', [], []);
+  private data2 = new Data('', '', [], []);
   dataSubject = new Subject<[Data, Data]>();
   url_api =
     'https://api.data.gov.in/resource/adb4b1da-159f-46b3-a9c0-0545fe9ddda0?api-key=';
@@ -23,7 +23,6 @@ export class DataService {
       })
       .pipe(
         map((obj) => {
-          console.log(obj);
           let l: number = obj['field'].length;
           this.data1.title = obj['title'];
           this.data2.title = obj['title'];
@@ -35,7 +34,6 @@ export class DataService {
           this.data2.datasetLabel = this.data2.datasetLabel
             .replace(/[0-9]+/g, '')
             .replace('-', ' ');
-          // console.log(this.data1.datasetLabel, this.data2.datasetLabel);
           return obj['records'];
         }),
         tap((obj) => {
@@ -54,16 +52,20 @@ export class DataService {
   getLabelAndData(res: any) {
     this.data1.datasetLabel = this.data1.datasetLabel + res[0][1];
     this.data2.datasetLabel = this.data2.datasetLabel + res[0][1];
-    console.log(res[1][1]);
+    // console.log(res[1][1]);
     res.forEach((e, index) => {
       if (index > 11) {
         // console.log(e);
         this.data1.data.push(e[1]);
-        this.data1.label.push(e[0].replace(/[a-zA-Z]+/g,'').replaceAll('_',' '));
+        this.data1.label.push(
+          e[0].replace(/[a-zA-Z]+/g, '').replaceAll('_', ' ')
+        );
       } else if (index > 0) {
         // console.log(e);
         this.data2.data.push(e[1]);
-          this.data2.label.push(e[0].replace(/[a-zA-Z]+/g,'').replaceAll('_',' '));
+        this.data2.label.push(
+          e[0].replace(/[a-zA-Z]+/g, '').replaceAll('_', ' ')
+        );
       }
     });
     // console.log(this.data); Raw data afer filter
@@ -71,11 +73,10 @@ export class DataService {
   }
 
   getData(index: number) {
+    // console.log(!this.data1)
     let result = this.convertSingleJSONtoArray(this.ResData[index]);
     this.getLabelAndData(result);
     this.dataSubject.next([this.data1, this.data2]);
-    this.data1 = new Data('t', '', [], []);
-    this.data2 = new Data('t', '', [], []);
   }
 
   convertSingleJSONtoArray(json_data: {}) {
@@ -84,5 +85,11 @@ export class DataService {
       result.push([i, json_data[i]]);
     }
     return result;
+  }
+
+  clearData() {
+    this.data1 = new Data('', '', [], []);
+    this.data2 = new Data('', '', [], []);
+    console.log('Data cleared')
   }
 }

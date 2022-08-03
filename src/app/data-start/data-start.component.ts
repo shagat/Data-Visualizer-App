@@ -16,7 +16,41 @@ export class DataStartComponent implements OnInit {
     shipping: ['gsdp', Validators.required],
   });
 
-  states = ['Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar'];
+  states = [
+    'Andhra Pradesh',
+    'Arunachal Pradesh',
+    'Assam',
+    'Bihar',
+    'Chhattisgarh',
+    'Goa',
+    'Haryana',
+    'Himachal Pradesh',
+    'Jammu & Kashmir',
+    'Jharkhand',
+    'Karnataka',
+    'Kerala',
+    'Madhya Pradesh',
+    'Maharastra',
+    'Manipur',
+    'Meghalaya',
+    'Mizoram',
+    'Nagaland',
+    'Odisha',
+    'Punjab',
+    'Rajasthan',
+    'Sikkim',
+    'Tamil Nadu',
+    'Telangana',
+    'Tripura',
+    'Uttar Pradesh',
+    'Uttarakhand',
+    'West Bengal',
+    'Andaman & Nicobar Islands',
+    'Chandigarh',
+    'Delhi',
+    'Jammu & Kasmir-U.T.',
+    'Puducherry',
+  ];
 
   constructor(private fb: FormBuilder, private dataService: DataService) {}
 
@@ -26,6 +60,7 @@ export class DataStartComponent implements OnInit {
 
   onSubmit(): void {
     let index = this.states.indexOf(this.addressForm.value.state);
+    // console.log(index);
     this.dataService.getData(index);
   }
 
@@ -33,6 +68,4 @@ export class DataStartComponent implements OnInit {
     console.log('sent req');
     this.dataService.fetchData();
   }
-
-
 }

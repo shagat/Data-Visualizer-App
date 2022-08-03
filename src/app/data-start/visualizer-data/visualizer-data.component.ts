@@ -1,6 +1,7 @@
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 import { Subscription } from 'rxjs';
+
 import { Data } from '../Data.model';
 import { DataService } from '../data.service';
 @Component({
@@ -8,30 +9,37 @@ import { DataService } from '../data.service';
   templateUrl: './visualizer-data.component.html',
   styleUrls: ['./visualizer-data.component.css'],
 })
-export class VisualizerDataComponent implements OnInit {
+export class VisualizerDataComponent implements OnInit, OnDestroy {
   data_chart1: Chart;
   data_chart2: Chart;
-  data1 = new Data('', '', ['1', '2', '3', '4'], [23, 12, 123, 123]);
-  data2 = new Data('', '', ['1', '2', '3', '4'], [23, 12, 123, 123]);
+  data1 = new Data('', '', [], []);
+  data2 = new Data('', '', [], []);
 
-  dataSub = new Subscription();
+  private dataSub = new Subscription();
 
   constructor(private dataService: DataService) {
     Chart.register(...registerables);
   }
 
   ngOnInit(): void {
+    this.createNewChart();
     this.dataSub = this.dataService.dataSubject.subscribe((res) => {
+      console.log(res);
       this.data1 = res[0];
       this.data2 = res[1];
     });
   }
   generateChart() {
     if (!this.data_chart1) {
-      this.createNewChart();
-    } else {
-      // this.data_chart1.clear();
+      console.log('Generate If');
       this.data_chart1.update();
+      this.data_chart2.update();
+      this.dataService.clearData();
+    } else {
+      console.log('Generate Else');
+      this.data_chart1.update();
+      this.data_chart2.update();
+      this.dataService.clearData();
       // this.data_chart2.update();
     }
   }
@@ -96,5 +104,12 @@ export class VisualizerDataComponent implements OnInit {
         },
       },
     });
+  }
+  ngOnDestroy(): void {
+    this.dataSub.unsubscribe();
+    if (this.data_chart1) {
+      this.data_chart1.destroy();
+      this.data_chart2.destroy();
+    }
   }
 }

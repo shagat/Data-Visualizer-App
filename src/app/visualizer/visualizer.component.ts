@@ -1,17 +1,24 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { Subscription } from 'rxjs';
+import { Chart, registerables } from 'chart.js';
+
 import { InputDataService } from '../sort-start/inputData.service';
 import { InputData } from '../sort-start/InputData.model';
-import { Chart, registerables } from 'chart.js';
 
 @Component({
   selector: 'app-visualizer',
   templateUrl: './visualizer.component.html',
-  styleUrls: ['./visualizer.component.css']
+  styleUrls: ['./visualizer.component.css'],
 })
 export class VisualizerComponent implements OnInit, OnDestroy {
-  private dataArraySub = new Subscription;
-  private indexDataSub = new Subscription;
+  private dataArraySub = new Subscription();
+  private indexDataSub = new Subscription();
   @Output('noChart') noChart = new EventEmitter<boolean>();
   inputData: InputData = new InputData(0, [], 0);
   previewIndexData: number[] = [];
@@ -20,27 +27,27 @@ export class VisualizerComponent implements OnInit, OnDestroy {
   timeout1: any;
 
   constructor(private inputDataService: InputDataService) {
-    Chart.register(...registerables)
+    Chart.register(...registerables);
   }
 
   ngOnInit(): void {
-    this.dataArraySub = this.inputDataService.inputDataChanged.subscribe((inputData: InputData) => {
-      this.inputData.input = inputData.input;
-      this.previewIndexData = inputData.input.map((value, index) => {
-        return index
-      })
-      this.previewData()
-    }
-    )
-    this.indexDataSub = this.inputDataService.indexDataChanged.subscribe((activeIndex) => {
-      this.activeIndex = activeIndex;
-    })
-
-
+    this.dataArraySub = this.inputDataService.inputDataChanged.subscribe(
+      (inputData: InputData) => {
+        this.inputData.input = inputData.input;
+        this.previewIndexData = inputData.input.map((value, index) => {
+          return index;
+        });
+        this.previewData();
+      }
+    );
+    this.indexDataSub = this.inputDataService.indexDataChanged.subscribe(
+      (activeIndex) => {
+        this.activeIndex = activeIndex;
+      }
+    );
   }
 
   previewData() {
-
     if (this.timeout1) {
       clearTimeout(this.timeout1);
     }
@@ -60,7 +67,7 @@ export class VisualizerComponent implements OnInit, OnDestroy {
       this.chart.setActiveElements([
         { datasetIndex: 0, index: this.activeIndex[1] },
         { datasetIndex: 0, index: this.activeIndex[0] },
-      ])
+      ]);
     }
     this.chart.config.data.datasets[0].data = this.inputData.input;
     // console.log('update: ' + !this.chart);
@@ -77,22 +84,15 @@ export class VisualizerComponent implements OnInit, OnDestroy {
           {
             label: 'Input',
             data: this.inputData.input,
-            backgroundColor: [
-              'rgba(54, 162, 235, 0.7)',
-            ],
-            borderColor: [
-              'rgb(255, 99, 132)',
-            ],
-            hoverBackgroundColor: [
-              'rgba(255, 159, 64, 0.7)',
-            ],
+            backgroundColor: ['rgba(54, 162, 235, 0.7)'],
+            borderColor: ['rgb(255, 99, 132)'],
+            hoverBackgroundColor: ['rgba(255, 159, 64, 0.7)'],
             hoverBorderWidth: 1.5,
             borderWidth: 1,
-          }
-        ]
+          },
+        ],
       },
-    }
-    );
+    });
   }
 
   ngOnDestroy(): void {
