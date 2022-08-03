@@ -11,14 +11,15 @@ export class DataService {
   private data1 = new Data('', '', [], []);
   private data2 = new Data('', '', [], []);
   dataSubject = new Subject<[Data, Data]>();
-  url_api =
+  url_api_gsdp =
     'https://api.data.gov.in/resource/adb4b1da-159f-46b3-a9c0-0545fe9ddda0?api-key=';
+  url_api_2 = 'https://api.data.gov.in/resource/a12ac9a7-99a9-4808-b987-42ed0223385e?api-key='
 
   constructor(private httpClient: HttpClient) {}
 
   fetchData() {
     return this.httpClient
-      .get<{}>(this.url_api + DATA_GOV_API, {
+      .get<{}>(this.url_api_gsdp + DATA_GOV_API, {
         params: { format: 'json', limit: '35' },
       })
       .pipe(
@@ -30,6 +31,8 @@ export class DataService {
           obj.forEach((e: object) => {
             this.resData.push(e);
           });
+          // console.log(this.resData)
+          // console.log(this.resObj)
         }),
         catchError((error) => {
           throw new Error(error);
@@ -44,13 +47,11 @@ export class DataService {
     this.data2.datasetLabel = this.data2.datasetLabel + res[0][1];
     res.forEach((e:{}, index:number) => {
       if (index > 11) {
-        // console.log(e);
         this.data1.data.push(e[1]);
         this.data1.label.push(
           e[0].replace(/[a-zA-Z]+/g, '').replaceAll('_', ' ')
         );
       } else if (index > 0) {
-        // console.log(e);
         this.data2.data.push(e[1]);
         this.data2.label.push(
           e[0].replace(/[a-zA-Z]+/g, '').replaceAll('_', ' ')
@@ -62,7 +63,6 @@ export class DataService {
   }
 
   getData(index: number) {
-    // console.log(!this.data1)
     let result = this.convertSingleJSONtoArray(this.resData[index]);
     this.getLabelAndData(result);
     this.dataSubject.next([this.data1, this.data2]);
