@@ -22,21 +22,25 @@ export class VisualizerDataComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.createNewChart();
     this.dataSub = this.dataService.dataSubject.subscribe((res) => {
-      console.log(res);
       this.data1 = res[0];
       this.data2 = res[1];
+      console.log(this.data1, this.data2);
     });
   }
   generateChart() {
     if (!this.data_chart1) {
       console.log('Generate If');
-      this.data_chart1.update();
-      this.data_chart2.update();
+      this.createNewChart();
       this.dataService.clearData();
     } else {
       console.log('Generate Else');
+      this.data_chart1.config.data.datasets[0].data = this.data1.data;
+      this.data_chart2.config.data.datasets[0].data = this.data2.data;
+      this.data_chart1.config.data.datasets[0].label = this.data1.datasetLabel;
+      this.data_chart2.config.data.datasets[0].label = this.data2.datasetLabel;
+      this.data_chart1.config.options.plugins.title.text = this.data1.title;
+      this.data_chart2.config.options.plugins.title.text = this.data2.title;
       this.data_chart1.update();
       this.data_chart2.update();
       this.dataService.clearData();

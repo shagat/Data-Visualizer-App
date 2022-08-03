@@ -23,6 +23,7 @@ export class DataService {
       })
       .pipe(
         map((obj) => {
+          // Fetch operation gets OBJ from where we get title and datasetLabel
           let l: number = obj['field'].length;
           this.data1.title = obj['title'];
           this.data2.title = obj['title'];
@@ -90,6 +91,6 @@ export class DataService {
   clearData() {
     this.data1 = new Data('', '', [], []);
     this.data2 = new Data('', '', [], []);
-    console.log('Data cleared')
+    console.log('Data cleared');
   }
 }
