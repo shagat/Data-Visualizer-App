@@ -11,7 +11,7 @@ import { DataService } from './data.service';
 export class DataStartComponent implements OnInit {
   dataSub = new Subscription();
   dataGSDP = {};
-  addressForm = this.fb.group({
+  stateForm = this.fb.group({
     state: ['Assam', Validators.required],
     shipping: ['gsdp', Validators.required],
   });
@@ -23,6 +23,7 @@ export class DataStartComponent implements OnInit {
     'Bihar',
     'Chhattisgarh',
     'Goa',
+    'Gujarat',
     'Haryana',
     'Himachal Pradesh',
     'Jammu & Kashmir',
@@ -59,7 +60,7 @@ export class DataStartComponent implements OnInit {
   }
 
   onSubmit(): void {
-    let index = this.states.indexOf(this.addressForm.value.state);
+    let index = this.states.indexOf(this.stateForm.value.state);
     // console.log(index);
     this.dataService.getData(index);
   }

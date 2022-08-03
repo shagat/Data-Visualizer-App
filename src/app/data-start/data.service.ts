@@ -6,7 +6,8 @@ import { Data } from './Data.model';
 
 @Injectable({ providedIn: 'root' })
 export class DataService {
-  public ResData = [];
+  private resObj: {};
+  public resData = [];
   private data1 = new Data('', '', [], []);
   private data2 = new Data('', '', [], []);
   dataSubject = new Subject<[Data, Data]>();
@@ -16,32 +17,19 @@ export class DataService {
   constructor(private httpClient: HttpClient) {}
 
   fetchData() {
-    let resData = [];
     return this.httpClient
       .get<{}>(this.url_api + DATA_GOV_API, {
         params: { format: 'json', limit: '35' },
       })
       .pipe(
         map((obj) => {
-          // Fetch operation gets OBJ from where we get title and datasetLabel
-          let l: number = obj['field'].length;
-          this.data1.title = obj['title'];
-          this.data2.title = obj['title'];
-          this.data1.datasetLabel = obj['field'][l - 1]['name'];
-          this.data2.datasetLabel = obj['field'][l - l + 1]['name'];
-          this.data1.datasetLabel = this.data1.datasetLabel
-            .replace(/[0-9]+/g, '')
-            .replace('-', ' ');
-          this.data2.datasetLabel = this.data2.datasetLabel
-            .replace(/[0-9]+/g, '')
-            .replace('-', ' ');
+          this.resObj = obj;
           return obj['records'];
         }),
         tap((obj) => {
           obj.forEach((e: object) => {
-            resData.push(e);
+            this.resData.push(e);
           });
-          this.ResData = resData;
         }),
         catchError((error) => {
           throw new Error(error);
@@ -51,10 +39,10 @@ export class DataService {
   }
 
   getLabelAndData(res: any) {
+    this.fetchNameTitle();
     this.data1.datasetLabel = this.data1.datasetLabel + res[0][1];
     this.data2.datasetLabel = this.data2.datasetLabel + res[0][1];
-    // console.log(res[1][1]);
-    res.forEach((e, index) => {
+    res.forEach((e:{}, index:number) => {
       if (index > 11) {
         // console.log(e);
         this.data1.data.push(e[1]);
@@ -75,7 +63,7 @@ export class DataService {
 
   getData(index: number) {
     // console.log(!this.data1)
-    let result = this.convertSingleJSONtoArray(this.ResData[index]);
+    let result = this.convertSingleJSONtoArray(this.resData[index]);
     this.getLabelAndData(result);
     this.dataSubject.next([this.data1, this.data2]);
   }
@@ -92,5 +80,19 @@ export class DataService {
     this.data1 = new Data('', '', [], []);
     this.data2 = new Data('', '', [], []);
     console.log('Data cleared');
+  }
+
+  fetchNameTitle() {
+    let l: number = this.resObj['field'].length;
+    this.data1.title = this.resObj['title'];
+    this.data2.title = this.resObj['title'];
+    this.data1.datasetLabel = this.resObj['field'][l - 1]['name'];
+    this.data2.datasetLabel = this.resObj['field'][l - l + 1]['name'];
+    this.data1.datasetLabel = this.data1.datasetLabel
+      .replace(/[0-9]+/g, '')
+      .replace('-', ' ');
+    this.data2.datasetLabel = this.data2.datasetLabel
+      .replace(/[0-9]+/g, '')
+      .replace('-', ' ');
   }
 }

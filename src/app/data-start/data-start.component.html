@@ -1,7 +1,7 @@
 <div class="container">
 
 
-<form [formGroup]="addressForm" novalidate (ngSubmit)="onSubmit()">
+<form [formGroup]="stateForm" novalidate (ngSubmit)="onSubmit()">
   <mat-card class="shipping-card">
     <mat-card-header>
       <mat-card-title>Indian State Information Visualizer</mat-card-title>
@@ -18,7 +18,7 @@
               </mat-option>
             </mat-select>
             <mat-error
-              *ngIf="addressForm.controls['state'].hasError('required')">
+              *ngIf="stateForm.controls['state'].hasError('required')">
               State is <strong>required</strong>
             </mat-error>
           </mat-form-field>
