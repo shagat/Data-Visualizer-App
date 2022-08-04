@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { DATA_GOV_API } from 'src/environments/keys';
 import { catchError, map, Subject, tap } from 'rxjs';
+
+import { DATA_GOV_API } from 'src/environments/keys';
 import { Data } from './Data.model';
 
 @Injectable({ providedIn: 'root' })
@@ -61,13 +62,13 @@ export class DataService {
     return;
   }
 
-  getData(index: number) {
+  getData(index: string) {
+    console.log(this.resData);
     this.resData.every((e) => {
-      if (e['state_uts'] == index) {
+      if (e['state_uts'].includes(index)) {
         let result = this.convertSingleJSONtoArray(e);
         this.getLabelAndData(result);
         this.dataSubject.next([this.data1, this.data2]);
-        console.log('Data found');
         return false;
       }
       console.log('still going on');

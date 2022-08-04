@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
+
 import { DataService } from './data.service';
 
 @Component({
@@ -12,7 +13,7 @@ export class DataStartComponent implements OnInit {
   dataSub = new Subscription();
   dataGSDP = {};
   stateForm = this.fb.group({
-    state: ['Assam', Validators.required],
+    state: [Validators.required],
     shipping: ['gsdp', Validators.required],
   });
 
@@ -49,7 +50,7 @@ export class DataStartComponent implements OnInit {
     'Andaman & Nicobar Islands',
     'Chandigarh',
     'Delhi',
-    'Jammu & Kasmir-U.T.',
+    'Jammu & Kashmir-U.T.',
     'Puducherry',
   ];
 
