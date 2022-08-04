@@ -60,8 +60,8 @@ export class DataStartComponent implements OnInit {
   }
 
   onSubmit(): void {
-    let index = this.states.indexOf(this.stateForm.value.state);
-    // console.log(index);
+    let index = (this.stateForm.value.state);
+    console.log(index);
     this.dataService.getData(index);
   }
 
