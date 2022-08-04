@@ -8,6 +8,16 @@
     <mat-card-content>
       <div class="row">
         <div class="col">
+          <mat-radio-group formControlName="shipping">
+            <mat-radio-button value="gsdp"
+              >Gross State Domestic Product (GSDP)</mat-radio-button>
+            <mat-radio-button value="CPI"
+              >Consumer Price Index (CPI)</mat-radio-button>
+          </mat-radio-group>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
           <mat-form-field class="full-width">
             <mat-select placeholder="State" formControlName="state">
               <mat-option
@@ -23,18 +33,7 @@
           </mat-form-field>
         </div>
       </div>
-      <div class="row">
-        <div class="col">
-          <mat-radio-group formControlName="shipping">
-            <mat-radio-button value="gsdp"
-              >Gross State Domestic Product (GSDP)</mat-radio-button>
-            <mat-radio-button value="priority"
-              >Priority Shipping</mat-radio-button>
-            <mat-radio-button value="nextday"
-              >Next Day Shipping</mat-radio-button>
-          </mat-radio-group>
-        </div>
-      </div>
+
     </mat-card-content>
     <mat-card-actions>
       <button mat-raised-button class="btn btn-primary" type="submit">Submit</button>
