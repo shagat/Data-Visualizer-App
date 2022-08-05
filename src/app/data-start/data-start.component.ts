@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 import { DataService } from './data.service';
 
@@ -11,7 +11,7 @@ import { DataService } from './data.service';
 })
 export class DataStartComponent implements OnInit {
   dataSub = new Subscription();
-  compareToggle: boolean = false;
+  twoStates: boolean = false;
   dataGSDP = {};
   stateForm = this.fb.group({
     state: ['', Validators.required],
@@ -94,15 +94,20 @@ export class DataStartComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private dataService: DataService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.dataService.twoStatesSubject.subscribe((res) => {
+      this.twoStates = res;
+    })
+  }
 
   onSubmit(): void {
     let index = this.stateForm.value.state;
     let index2 = this.stateForm.value.secStates;
     console.log(index, index2);
-    if(index == index2){
-      alert('Same input given.')
-      return;
+    if(index == index2 && this.onBeingCompared){
+      window.alert('Given same input')
+      // this.dataService.getData(index);
+      // this.dataService.getData(index2);
     } else{
       console.log('Done');
       this.dataService.getData(index);
@@ -116,6 +121,6 @@ export class DataStartComponent implements OnInit {
 
   onBeingCompared() {
     this.stateForm.addControl('secStates', new FormControl('',Validators.required))
-    this.compareToggle = !this.compareToggle;
+    this.dataService.toggleTwoStates();
   }
 }
