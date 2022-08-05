@@ -15,9 +15,7 @@ export class DataStartComponent implements OnInit {
   dataGSDP = {};
   stateForm = this.fb.group({
     state: ['', Validators.required],
-    secState: [
-      '', this.checkSecStateSimilarity.bind(this),
-    ],
+    secStates: [],
     shipping: ['gsdp', Validators.required],
   });
 
@@ -98,25 +96,17 @@ export class DataStartComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  checkSecStateSimilarity(
-    control: FormControl
-  ): Promise<any> | Observable<any> {
-    const promise = new Promise<{ [s: string]: boolean }>((resolve, reject) => {
-      if (
-        control.value == this.stateForm.value.state
-      ) {
-        resolve({ twoSameStates: true });
-      } else {
-        resolve(null);
-      }
-    });
-    return promise;
-  }
-
   onSubmit(): void {
     let index = this.stateForm.value.state;
-    console.log(index);
-    this.dataService.getData(index);
+    let index2 = this.stateForm.value.secStates;
+    console.log(index, index2);
+    if(index == index2){
+      alert('Same input given.')
+      return;
+    } else{
+      console.log('Done');
+      this.dataService.getData(index);
+    }
   }
 
   onSendReq() {
@@ -125,6 +115,7 @@ export class DataStartComponent implements OnInit {
   }
 
   onBeingCompared() {
+    this.stateForm.addControl('secStates', new FormControl('',Validators.required))
     this.compareToggle = !this.compareToggle;
   }
 }

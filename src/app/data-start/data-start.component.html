@@ -36,7 +36,7 @@
       <div class="row" *ngIf="compareToggle">
         <div class="col">
           <mat-form-field class="full-width">
-            <mat-select placeholder="Second state" formControlName="secState">
+            <mat-select placeholder="Second state" formControlName="secStates">
               <mat-option
               *ngFor="let secState of secStates"
               [value]="secState">
@@ -44,7 +44,7 @@
             </mat-option>
           </mat-select>
           <mat-error
-          *ngIf="stateForm.controls['secState'].hasError('twoSameStates')">
+          *ngIf="stateForm.controls['secStates'].hasError('twoSameStates')">
           Both the states are <strong>same</strong>
         </mat-error>
           </mat-form-field>
@@ -60,7 +60,7 @@
         type="button"
         id="btnSend"
         (click)="onBeingCompared()">
-        Compare two states
+        Compare
       </button>
       <!-- <button
         mat-raised-button
