@@ -19,47 +19,45 @@ export class DataService {
 
     constructor(private httpClient: HttpClient) {}
 
-    // fetchData() {
-    //   return this.httpClient
-    //     .get<{}>(this.url_api_2 + DATA_GOV_API, {
-    //       params: { format: 'json', limit: '35' },
-    //     })
-    //     .pipe(
-    //       map((obj) => {
-    //         this.resObj = obj;
-    //         return obj['records'];
-    //       }),
-    //       tap((obj) => {
-    //         obj.forEach((e: object) => {
-    //           this.resData.push(e);
-    //         });
-    //       }),
-    //       catchError((error) => {
-    //         throw new Error(error);
-    //       })
-    //     )
-    //     .subscribe();
-    // }
-
-  fetchData() {
-    return this.httpClient
-      .get<{}>(this.url_api_2 + DATA_GOV_API, {
-        params: { format: 'json', limit: '50' },
-      })
-      .pipe(
-        map((obj) => {
-          console.log(obj)
-          return obj['records'];
-        }),
-        tap((obj) => {
-          console.log(obj)
-        }),
-        catchError((error) => {
-          throw new Error(error);
+    fetchData() {
+      return this.httpClient
+        .get<{}>(this.url_api_gsdp + DATA_GOV_API, {
+          params: { format: 'json', limit: '35' },
         })
-      )
-      .subscribe();
-  }
+        .pipe(
+          map((obj) => {
+            this.resObj = obj;
+            return obj['records'];
+          }),
+          tap((obj) => {
+            obj.forEach((e: object) => {
+              this.resData.push(e);
+            });
+          }),
+          catchError((error) => {
+            throw new Error(error);
+          })
+        )
+    }
+
+  // fetchData() {
+  //   return this.httpClient
+  //     .get<{}>(this.url_api_2 + DATA_GOV_API, {
+  //       params: { format: 'json', limit: '50' },
+  //     })
+  //     .pipe(
+  //       map((obj) => {
+  //         console.log(obj)
+  //         return obj['records'];
+  //       }),
+  //       tap((obj) => {
+  //         console.log(obj)
+  //       }),
+  //       catchError((error) => {
+  //         throw new Error(error);
+  //       })
+  //     )
+  // }
 
   getLabelAndData(res: any) {
     this.fetchNameTitle();
@@ -87,14 +85,18 @@ export class DataService {
     this.resData.every((e) => {
       if (e['state_uts'].includes(index)) {
         let result = this.convertSingleJSONtoArray(e);
-        console.log(result);
-        // this.getLabelAndData(result);
-        // this.dataSubject.next([this.data1, this.data2]);
+        // console.log(result);
+        this.getLabelAndData(result);
+        this.dataSubject.next([this.data1, this.data2]);
         return false;
       }
       console.log('still going on');
       return true;
     });
+  }
+
+  getResData(){
+    return this.resData.slice();
   }
 
   convertSingleJSONtoArray(json_data: {}) {

@@ -25,6 +25,7 @@ export class VisualizerDataComponent implements OnInit, OnDestroy {
     this.dataSub = this.dataService.dataSubject.subscribe((res) => {
       this.data1 = res[0];
       this.data2 = res[1];
+      this.generateChart();
     });
   }
   generateChart() {

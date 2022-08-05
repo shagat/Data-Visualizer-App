@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { DataResolverService } from './data-start/data-start-resolver.service';
 import { DataStartComponent } from './data-start/data-start.component';
 import { HomeComponent } from './home/home.component';
 
@@ -14,6 +15,7 @@ const routes: Routes = [
   {
     path: 'data-start',
     component: DataStartComponent,
+    resolve: [DataResolverService],
   },
   {
     path: 'temp-start',
