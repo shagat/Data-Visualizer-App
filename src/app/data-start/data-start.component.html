@@ -33,10 +33,39 @@
           </mat-form-field>
         </div>
       </div>
+      <div class="row" *ngIf="compareToggle">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-select placeholder="Second state" formControlName="secState">
+              <mat-option
+              *ngFor="let secState of secStates"
+              [value]="secState">
+              {{ secState }}
+            </mat-option>
+          </mat-select>
+          <mat-error
+          *ngIf="stateForm.controls['state'].hasError('required')">
+          State is <strong>required</strong>
+        </mat-error>
+        <mat-error
+          *ngIf="stateForm.get('secState').errors['twoSameStates']">
+          State is <strong>same</strong>
+        </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
 
     </mat-card-content>
     <mat-card-actions>
       <button mat-raised-button class="btn btn-primary" type="submit">Submit</button>
+      <button
+        mat-raised-button
+        class="btn btn-primary"
+        type="button"
+        id="btnSend"
+        (click)="onBeingCompared()">
+        Compare two states
+      </button>
       <!-- <button
         mat-raised-button
         class="btn btn-primary"

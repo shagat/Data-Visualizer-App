@@ -81,7 +81,7 @@ export class DataService {
   }
 
   getData(index: string) {
-    console.log(this.resData);
+    // console.log(this.resData);
     this.resData.every((e) => {
       if (e['state_uts'].includes(index)) {
         let result = this.convertSingleJSONtoArray(e);
