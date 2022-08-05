@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 import { DataService } from './data.service';
 
@@ -14,8 +14,10 @@ export class DataStartComponent implements OnInit {
   compareToggle: boolean = false;
   dataGSDP = {};
   stateForm = this.fb.group({
-    state: [Validators.required],
-    secState: [Validators.required, this.checkSecStateSimilarity.bind(this)],
+    state: ['', Validators.required],
+    secState: [
+      '', this.checkSecStateSimilarity.bind(this),
+    ],
     shipping: ['gsdp', Validators.required],
   });
 
@@ -96,14 +98,19 @@ export class DataStartComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  checkSecStateSimilarity(control: FormControl): { [s: string]: boolean } {
-    if (
-      control.value === 'Assam'
-      // control.value === this.stateForm.value.secState
-    ) {
-      return { 'twoSameStates': true };
-    }
-    return null;
+  checkSecStateSimilarity(
+    control: FormControl
+  ): Promise<any> | Observable<any> {
+    const promise = new Promise<{ [s: string]: boolean }>((resolve, reject) => {
+      if (
+        control.value == this.stateForm.value.state
+      ) {
+        resolve({ twoSameStates: true });
+      } else {
+        resolve(null);
+      }
+    });
+    return promise;
   }
 
   onSubmit(): void {

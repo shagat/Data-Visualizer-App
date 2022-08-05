@@ -44,12 +44,8 @@
             </mat-option>
           </mat-select>
           <mat-error
-          *ngIf="stateForm.controls['state'].hasError('required')">
-          State is <strong>required</strong>
-        </mat-error>
-        <mat-error
-          *ngIf="stateForm.get('secState').errors['twoSameStates']">
-          State is <strong>same</strong>
+          *ngIf="stateForm.controls['secState'].hasError('twoSameStates')">
+          Both the states are <strong>same</strong>
         </mat-error>
           </mat-form-field>
         </div>
@@ -57,7 +53,7 @@
 
     </mat-card-content>
     <mat-card-actions>
-      <button mat-raised-button class="btn btn-primary" type="submit">Submit</button>
+      <button mat-raised-button class="btn btn-primary" type="submit" [disabled]="stateForm.invalid && stateForm.touched">Submit</button>
       <button
         mat-raised-button
         class="btn btn-primary"

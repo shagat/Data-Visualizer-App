@@ -85,12 +85,10 @@ export class DataService {
     this.resData.every((e) => {
       if (e['state_uts'].includes(index)) {
         let result = this.convertSingleJSONtoArray(e);
-        // console.log(result);
         this.getLabelAndData(result);
         this.dataSubject.next([this.data1, this.data2]);
         return false;
       }
-      console.log('still going on');
       return true;
     });
   }
