@@ -16,7 +16,7 @@ export class DataService {
   private secData2 = new Data('', '', [], []);
   private tempData1 = new Data('', '', [], []);
   private tempData2 = new Data('', '', [], []);
-  dataSubject = new Subject<[Data, Data]>();
+  dataSubject = new Subject<[Data, Data,Data,Data]>();
   twoStatesSubject = new Subject<boolean>();
 
   url_api_gsdp =
@@ -108,7 +108,7 @@ export class DataService {
         this.data1 = this.tempData1;
         this.data2 = this.tempData2;
         console.log([this.data1, this.data2]);
-        this.dataSubject.next([this.data1, this.data2]);
+        this.dataSubject.next([this.data1, this.data2,this.secData1,this.secData2]);
         return false;
       }
       return true;

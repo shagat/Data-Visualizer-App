@@ -10,12 +10,14 @@ import { DataService } from '../data.service';
   styleUrls: ['./visualizer-data.component.css'],
 })
 export class VisualizerDataComponent implements OnInit, OnDestroy {
+  private twoStates: boolean = false;
   data_chart1: Chart;
   data_chart2: Chart;
   data1 = new Data('', '', [], []);
   data2 = new Data('', '', [], []);
 
   private dataSub = new Subscription();
+  private twoDataSub = new Subscription();
 
   constructor(private dataService: DataService) {
     Chart.register(...registerables);
@@ -23,11 +25,16 @@ export class VisualizerDataComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.dataSub = this.dataService.dataSubject.subscribe((res) => {
+      console.log(res.length);
       this.data1 = res[0];
       this.data2 = res[1];
-      this.generateChart();
+      // this.generateChart();
+    });
+    this.twoDataSub = this.dataService.twoStatesSubject.subscribe((twores) => {
+      this.twoStates = twores;
     });
   }
+
   generateChart() {
     if (!this.data_chart1) {
       console.log('Generate If');
@@ -35,17 +42,20 @@ export class VisualizerDataComponent implements OnInit, OnDestroy {
       this.dataService.clearData();
     } else {
       console.log('Generate Else');
-      this.data_chart1.config.data.datasets[0].data = this.data1.data;
-      this.data_chart2.config.data.datasets[0].data = this.data2.data;
-      this.data_chart1.config.data.datasets[0].label = this.data1.datasetLabel;
-      this.data_chart2.config.data.datasets[0].label = this.data2.datasetLabel;
-      this.data_chart1.config.options.plugins.title.text = this.data1.title;
-      this.data_chart2.config.options.plugins.title.text = this.data2.title;
+      this.setChartData();
       this.data_chart1.update();
       this.data_chart2.update();
       this.dataService.clearData();
-      // this.data_chart2.update();
     }
+  }
+
+  setChartData() {
+    this.data_chart1.config.data.datasets[0].data = this.data1.data;
+    this.data_chart2.config.data.datasets[0].data = this.data2.data;
+    this.data_chart1.config.data.datasets[0].label = this.data1.datasetLabel;
+    this.data_chart2.config.data.datasets[0].label = this.data2.datasetLabel;
+    this.data_chart1.config.options.plugins.title.text = this.data1.title;
+    this.data_chart2.config.options.plugins.title.text = this.data2.title;
   }
 
   createNewChart() {
@@ -111,6 +121,7 @@ export class VisualizerDataComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy(): void {
     this.dataSub.unsubscribe();
+    this.twoDataSub.unsubscribe();
     if (this.data_chart1) {
       this.data_chart1.destroy();
       this.data_chart2.destroy();
