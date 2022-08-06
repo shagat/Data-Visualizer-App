@@ -114,8 +114,7 @@ export class DataStartComponent implements OnInit {
         return;
       } else {
         console.log('Done two inputs');
-        this.dataService.getData(index);
-        this.dataService.getData(index2);
+        this.dataService.getTwoData(index, index2);
       }
     } else {
       console.log('Done one inputs');
