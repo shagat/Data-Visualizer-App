@@ -97,19 +97,28 @@ export class DataStartComponent implements OnInit {
   ngOnInit(): void {
     this.dataService.twoStatesSubject.subscribe((res) => {
       this.twoStates = res;
-    })
+    });
   }
 
   onSubmit(): void {
     let index = this.stateForm.value.state;
     let index2 = this.stateForm.value.secStates;
     console.log(index, index2);
-    if(index == index2 && this.onBeingCompared){
-      window.alert('Given same input')
-      // this.dataService.getData(index);
-      // this.dataService.getData(index2);
-    } else{
-      console.log('Done');
+    console.log(this.twoStates);
+    if (this.twoStates) {
+      if (index == index2) {
+        window.alert('Given same input');
+        return;
+      } else if (index == null || index2 == null) {
+        window.alert('Input required');
+        return;
+      } else {
+        console.log('Done two inputs');
+        this.dataService.getData(index);
+        this.dataService.getData(index2);
+      }
+    } else {
+      console.log('Done one inputs');
       this.dataService.getData(index);
     }
   }
@@ -120,7 +129,10 @@ export class DataStartComponent implements OnInit {
   }
 
   onBeingCompared() {
-    this.stateForm.addControl('secStates', new FormControl('',Validators.required))
+    this.stateForm.addControl(
+      'secStates',
+      new FormControl('', Validators.required)
+    );
     this.dataService.toggleTwoStates();
   }
 }
