@@ -134,10 +134,11 @@ export class DataService {
         this.clearTemp();
       }
     });
-    console.log(result);
-    console.log(result2);
-    console.log(this.data1, this.data2);
-    console.log(this.secData1, this.secData2);
+    // console.log(result);
+    // console.log(result2);
+    // console.log(this.data1, this.data2);
+    // console.log(this.secData1, this.secData2);
+    this.dataSubject.next([this.data1,this.data2,this.secData1,this.secData2]);
   }
 
   getResData() {
