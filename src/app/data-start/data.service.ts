@@ -156,6 +156,8 @@ export class DataService {
   clearData() {
     this.data1 = new Data('', '', [], []);
     this.data2 = new Data('', '', [], []);
+    this.secData1 = new Data('', '', [], []);
+    this.secData2 = new Data('', '', [], []);
     console.log('Data cleared');
   }
 
