@@ -14,6 +14,8 @@ export class VisualizerDataComponent implements OnInit, OnDestroy {
   private twoDataSub = new Subscription();
   data_chart1: Chart;
   data_chart2: Chart;
+  ChartOptions1: ChartData;
+  ChartOptions2: ChartData;
 
   private data1 = new Data('', '', [], []);
   private data2 = new Data('', '', [], []);
@@ -55,12 +57,9 @@ export class VisualizerDataComponent implements OnInit, OnDestroy {
   }
 
   createNewChart() {
-    let ChartOptions1: ChartData;
-    let ChartOptions2: ChartData;
-
     if (this.twoStates) {
-      console.log('new 2 Charts generated')
-      let ChartOptions1 = {
+      console.log('new 2 Charts generated');
+      this.ChartOptions1 = {
         labels: this.data1.label,
         datasets: [
           {
@@ -71,6 +70,7 @@ export class VisualizerDataComponent implements OnInit, OnDestroy {
             hoverBackgroundColor: ['rgba(255, 159, 64, 0.7)'],
             hoverBorderWidth: 1.5,
             borderWidth: 1,
+            order: 1
           },
           {
             label: this.secData1.datasetLabel,
@@ -80,10 +80,11 @@ export class VisualizerDataComponent implements OnInit, OnDestroy {
             hoverBackgroundColor: ['rgba(255, 159, 64, 0.7)'],
             hoverBorderWidth: 1.5,
             borderWidth: 1,
+            order: 0
           },
         ],
       };
-      ChartOptions2 = {
+      this.ChartOptions2 = {
         labels: this.data2.label,
         datasets: [
           {
@@ -94,6 +95,7 @@ export class VisualizerDataComponent implements OnInit, OnDestroy {
             hoverBackgroundColor: ['rgba(255, 159, 64, 0.7)'],
             hoverBorderWidth: 1.5,
             borderWidth: 1,
+            order: 1
           },
           {
             label: this.secData2.datasetLabel,
@@ -103,12 +105,13 @@ export class VisualizerDataComponent implements OnInit, OnDestroy {
             hoverBackgroundColor: ['rgba(255, 159, 64, 0.7)'],
             hoverBorderWidth: 1.5,
             borderWidth: 1,
+            order: 0
           },
         ],
       };
     } else {
-      console.log('new Chart generated')
-      ChartOptions1 = {
+      console.log('new Chart generated');
+      this.ChartOptions1 = {
         labels: this.data1.label,
         datasets: [
           {
@@ -123,7 +126,7 @@ export class VisualizerDataComponent implements OnInit, OnDestroy {
         ],
       };
 
-      ChartOptions2 = {
+      this.ChartOptions2 = {
         labels: this.data2.label,
         datasets: [
           {
@@ -141,7 +144,7 @@ export class VisualizerDataComponent implements OnInit, OnDestroy {
 
     this.data_chart1 = new Chart('data_canvas1', {
       type: 'line',
-      data: ChartOptions1,
+      data: this.ChartOptions1,
       options: {
         responsive: true,
         plugins: {
@@ -159,7 +162,7 @@ export class VisualizerDataComponent implements OnInit, OnDestroy {
     //..Another Chart
     this.data_chart2 = new Chart('data_canvas2', {
       type: 'line',
-      data: ChartOptions2,
+      data: this.ChartOptions2,
       options: {
         responsive: true,
         plugins: {
@@ -176,28 +179,28 @@ export class VisualizerDataComponent implements OnInit, OnDestroy {
   }
 
   async setChartData() {
-    if(this.twoStates){
+    if (this.twoStates) {
       this.data_chart1.config.data.datasets[0].data = this.data1.data;
       this.data_chart2.config.data.datasets[0].data = this.data2.data;
-      this.data_chart1.config.data.datasets[0].data = this.secData1.data;
-      this.data_chart2.config.data.datasets[0].data = this.secData2.data;
-      this.data_chart1.config.data.datasets[0].label = this.secData1.datasetLabel;
-      this.data_chart2.config.data.datasets[0].label = this.secData2.datasetLabel;
+      this.data_chart1.config.data.datasets[1].data = this.secData1.data;
+      this.data_chart2.config.data.datasets[1].data = this.secData2.data;
+      this.data_chart1.config.data.datasets[1].label =
+        this.secData1.datasetLabel;
+      this.data_chart2.config.data.datasets[1].label =
+        this.secData2.datasetLabel;
       this.data_chart1.config.data.datasets[0].label = this.data1.datasetLabel;
       this.data_chart2.config.data.datasets[0].label = this.data2.datasetLabel;
       this.data_chart1.config.options.plugins.title.text = this.data1.title;
       this.data_chart2.config.options.plugins.title.text = this.data2.title;
-
-    }else {
+    } else {
       this.data_chart1.config.data.datasets[0].data = this.data1.data;
       this.data_chart2.config.data.datasets[0].data = this.data2.data;
       this.data_chart1.config.data.datasets[0].label = this.data1.datasetLabel;
       this.data_chart2.config.data.datasets[0].label = this.data2.datasetLabel;
       this.data_chart1.config.options.plugins.title.text = this.data1.title;
       this.data_chart2.config.options.plugins.title.text = this.data2.title;
-
     }
-    return
+    return;
   }
 
   ngOnDestroy(): void {

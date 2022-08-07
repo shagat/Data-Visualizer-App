@@ -16,7 +16,7 @@ export class DataService {
   private secData2 = new Data('', '', [], []);
   private tempData1 = new Data('', '', [], []);
   private tempData2 = new Data('', '', [], []);
-  dataSubject = new Subject<[Data, Data,Data,Data]>();
+  dataSubject = new Subject<[Data, Data, Data, Data]>();
   twoStatesSubject = new Subject<boolean>();
 
   url_api_gsdp =
@@ -108,9 +108,16 @@ export class DataService {
         this.data1 = this.tempData1;
         this.data2 = this.tempData2;
         console.log([this.data1, this.data2]);
-        this.dataSubject.next([this.data1, this.data2,this.secData1,this.secData2]);
+        this.dataSubject.next([
+          this.data1,
+          this.data2,
+          this.secData1,
+          this.secData2,
+        ]);
         return false;
       }
+      this.clearTemp();
+      this.clearData();
       return true;
     });
   }
@@ -122,23 +129,28 @@ export class DataService {
       if (e['state_uts'].includes(index)) {
         result = this.convertSingleJSONtoArray(e);
         this.getLabelAndData(result);
-        this.data1 = this.tempData1
-        this.data2 = this.tempData2
-        this.clearTemp();
+        this.data1 = this.tempData1;
+        this.data2 = this.tempData2;
       }
       if (e['state_uts'].includes(index2)) {
         result2 = this.convertSingleJSONtoArray(e);
         this.getLabelAndData(result2);
-        this.secData1 = this.tempData1
-        this.secData2 = this.tempData2
-        this.clearTemp();
+        this.secData1 = this.tempData1;
+        this.secData2 = this.tempData2;
       }
     });
     // console.log(result);
     // console.log(result2);
     // console.log(this.data1, this.data2);
     // console.log(this.secData1, this.secData2);
-    this.dataSubject.next([this.data1,this.data2,this.secData1,this.secData2]);
+    this.dataSubject.next([
+      this.data1,
+      this.data2,
+      this.secData1,
+      this.secData2,
+    ]);
+    this.clearTemp();
+    this.clearData();
   }
 
   getResData() {
