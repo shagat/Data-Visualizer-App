@@ -137,6 +137,7 @@ export class DataService {
         this.getLabelAndData(result2);
         this.secData1 = this.tempData1;
         this.secData2 = this.tempData2;
+        this.clearTemp();
       }
     });
     // console.log(result);
@@ -149,7 +150,6 @@ export class DataService {
       this.secData1,
       this.secData2,
     ]);
-    this.clearTemp();
     this.clearData();
   }
 

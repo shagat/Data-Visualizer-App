@@ -31,6 +31,7 @@ export class VisualizerDataComponent implements OnInit, OnDestroy {
     this.dataSub = this.dataService.dataSubject
       .pipe(
         tap((res) => {
+
           this.data1 = res[0];
           this.data2 = res[1];
           this.secData1 = res[2];
@@ -75,7 +76,7 @@ export class VisualizerDataComponent implements OnInit, OnDestroy {
           {
             label: this.secData1.datasetLabel,
             data: this.secData1.data,
-            backgroundColor: ['rgba(54, 162, 235, 0.7)'],
+            backgroundColor: ['rgb(255, 99, 132, 0.7)'],
             borderColor: ['rgb(255, 99, 132)'],
             hoverBackgroundColor: ['rgba(255, 159, 64, 0.7)'],
             hoverBorderWidth: 1.5,
@@ -100,7 +101,7 @@ export class VisualizerDataComponent implements OnInit, OnDestroy {
           {
             label: this.secData2.datasetLabel,
             data: this.secData2.data,
-            backgroundColor: ['rgba(54, 162, 235, 0.7)'],
+            backgroundColor: ['rgb(255, 99, 132, 0.7)'],
             borderColor: ['rgb(255, 99, 132)'],
             hoverBackgroundColor: ['rgba(255, 159, 64, 0.7)'],
             hoverBorderWidth: 1.5,
@@ -181,23 +182,23 @@ export class VisualizerDataComponent implements OnInit, OnDestroy {
   async setChartData() {
     if (this.twoStates) {
       this.data_chart1.config.data.datasets[0].data = this.data1.data;
-      this.data_chart2.config.data.datasets[0].data = this.data2.data;
       this.data_chart1.config.data.datasets[1].data = this.secData1.data;
-      this.data_chart2.config.data.datasets[1].data = this.secData2.data;
       this.data_chart1.config.data.datasets[1].label =
         this.secData1.datasetLabel;
+        this.data_chart1.config.data.datasets[0].label = this.data1.datasetLabel;
+        this.data_chart1.config.options.plugins.title.text = this.data1.title;
+      this.data_chart2.config.data.datasets[0].data = this.data2.data;
+      this.data_chart2.config.data.datasets[1].data = this.secData2.data;
       this.data_chart2.config.data.datasets[1].label =
-        this.secData2.datasetLabel;
-      this.data_chart1.config.data.datasets[0].label = this.data1.datasetLabel;
+      this.secData2.datasetLabel;
       this.data_chart2.config.data.datasets[0].label = this.data2.datasetLabel;
-      this.data_chart1.config.options.plugins.title.text = this.data1.title;
       this.data_chart2.config.options.plugins.title.text = this.data2.title;
     } else {
       this.data_chart1.config.data.datasets[0].data = this.data1.data;
-      this.data_chart2.config.data.datasets[0].data = this.data2.data;
       this.data_chart1.config.data.datasets[0].label = this.data1.datasetLabel;
-      this.data_chart2.config.data.datasets[0].label = this.data2.datasetLabel;
       this.data_chart1.config.options.plugins.title.text = this.data1.title;
+      this.data_chart2.config.data.datasets[0].data = this.data2.data;
+      this.data_chart2.config.data.datasets[0].label = this.data2.datasetLabel;
       this.data_chart2.config.options.plugins.title.text = this.data2.title;
     }
     return;
