@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, Type } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Chart, ChartData, registerables } from 'chart.js';
 import { Subscription, tap } from 'rxjs';
 
@@ -70,7 +70,7 @@ export class VisualizerDataComponent implements OnInit, OnDestroy {
             hoverBackgroundColor: ['rgba(255, 159, 64, 0.7)'],
             hoverBorderWidth: 1.5,
             borderWidth: 1,
-            order: 1
+            order: 1,
           },
           {
             label: this.secData1.datasetLabel,
@@ -80,7 +80,7 @@ export class VisualizerDataComponent implements OnInit, OnDestroy {
             hoverBackgroundColor: ['rgba(255, 159, 64, 0.7)'],
             hoverBorderWidth: 1.5,
             borderWidth: 1,
-            order: 0
+            order: 0,
           },
         ],
       };
@@ -95,7 +95,7 @@ export class VisualizerDataComponent implements OnInit, OnDestroy {
             hoverBackgroundColor: ['rgba(255, 159, 64, 0.7)'],
             hoverBorderWidth: 1.5,
             borderWidth: 1,
-            order: 1
+            order: 1,
           },
           {
             label: this.secData2.datasetLabel,
@@ -105,7 +105,7 @@ export class VisualizerDataComponent implements OnInit, OnDestroy {
             hoverBackgroundColor: ['rgba(255, 159, 64, 0.7)'],
             hoverBorderWidth: 1.5,
             borderWidth: 1,
-            order: 0
+            order: 0,
           },
         ],
       };
@@ -144,7 +144,31 @@ export class VisualizerDataComponent implements OnInit, OnDestroy {
 
     this.data_chart1 = new Chart('data_canvas1', {
       type: 'line',
-      data: this.ChartOptions1,
+      data: {
+        labels: this.data2.label,
+        datasets: [
+          {
+            label: this.data1.datasetLabel,
+            data: this.data1.data,
+            backgroundColor: ['rgba(54, 162, 235, 0.7)'],
+            borderColor: ['rgb(255, 99, 132)'],
+            hoverBackgroundColor: ['rgba(255, 159, 64, 0.7)'],
+            hoverBorderWidth: 1.5,
+            borderWidth: 1,
+            order: 1,
+          },
+          {
+            label: this.secData1.datasetLabel,
+            data: this.secData1.data,
+            backgroundColor: ['rgba(54, 162, 235, 0.7)'],
+            borderColor: ['rgb(255, 99, 132)'],
+            hoverBackgroundColor: ['rgba(255, 159, 64, 0.7)'],
+            hoverBorderWidth: 1.5,
+            borderWidth: 1,
+            order: 0,
+          },
+        ],
+      },
       options: {
         responsive: true,
         plugins: {
@@ -162,7 +186,31 @@ export class VisualizerDataComponent implements OnInit, OnDestroy {
     //..Another Chart
     this.data_chart2 = new Chart('data_canvas2', {
       type: 'line',
-      data: this.ChartOptions2,
+      data: {
+        labels: this.data2.label,
+        datasets: [
+          {
+            label: this.data2.datasetLabel,
+            data: this.data2.data,
+            backgroundColor: ['rgba(54, 162, 235, 0.7)'],
+            borderColor: ['rgb(255, 99, 132)'],
+            hoverBackgroundColor: ['rgba(255, 159, 64, 0.7)'],
+            hoverBorderWidth: 1.5,
+            borderWidth: 1,
+            order: 1,
+          },
+          {
+            label: this.secData2.datasetLabel,
+            data: this.secData2.data,
+            backgroundColor: ['rgba(54, 162, 235, 0.7)'],
+            borderColor: ['rgb(255, 99, 132)'],
+            hoverBackgroundColor: ['rgba(255, 159, 64, 0.7)'],
+            hoverBorderWidth: 1.5,
+            borderWidth: 1,
+            order: 0,
+          },
+        ],
+      },
       options: {
         responsive: true,
         plugins: {
@@ -180,23 +228,28 @@ export class VisualizerDataComponent implements OnInit, OnDestroy {
 
   async setChartData() {
     if (this.twoStates) {
+      //For Chart 1:--
+      this.data_chart1.config.options.plugins.title.text = this.data1.title;
       this.data_chart1.config.data.datasets[0].data = this.data1.data;
-      this.data_chart2.config.data.datasets[0].data = this.data2.data;
       this.data_chart1.config.data.datasets[1].data = this.secData1.data;
-      this.data_chart2.config.data.datasets[1].data = this.secData2.data;
+      this.data_chart1.config.data.datasets[0].label = this.data1.datasetLabel;
       this.data_chart1.config.data.datasets[1].label =
         this.secData1.datasetLabel;
+
+      //For Chart 2:--
+      this.data_chart2.config.options.plugins.title.text = this.data2.title;
+      this.data_chart2.config.data.datasets[0].data = this.data2.data;
+      this.data_chart2.config.data.datasets[1].data = this.secData2.data;
+      this.data_chart2.config.data.datasets[0].label = this.data2.datasetLabel;
       this.data_chart2.config.data.datasets[1].label =
         this.secData2.datasetLabel;
-      this.data_chart1.config.data.datasets[0].label = this.data1.datasetLabel;
-      this.data_chart2.config.data.datasets[0].label = this.data2.datasetLabel;
-      this.data_chart1.config.options.plugins.title.text = this.data1.title;
-      this.data_chart2.config.options.plugins.title.text = this.data2.title;
     } else {
       this.data_chart1.config.data.datasets[0].data = this.data1.data;
       this.data_chart2.config.data.datasets[0].data = this.data2.data;
+
       this.data_chart1.config.data.datasets[0].label = this.data1.datasetLabel;
       this.data_chart2.config.data.datasets[0].label = this.data2.datasetLabel;
+
       this.data_chart1.config.options.plugins.title.text = this.data1.title;
       this.data_chart2.config.options.plugins.title.text = this.data2.title;
     }

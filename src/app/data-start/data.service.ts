@@ -131,25 +131,28 @@ export class DataService {
         this.getLabelAndData(result);
         this.data1 = this.tempData1;
         this.data2 = this.tempData2;
+        this.clearTemp();
       }
       if (e['state_uts'].includes(index2)) {
         result2 = this.convertSingleJSONtoArray(e);
         this.getLabelAndData(result2);
         this.secData1 = this.tempData1;
         this.secData2 = this.tempData2;
+        this.clearTemp();
       }
     });
-    // console.log(result);
-    // console.log(result2);
-    // console.log(this.data1, this.data2);
-    // console.log(this.secData1, this.secData2);
     this.dataSubject.next([
       this.data1,
       this.data2,
       this.secData1,
       this.secData2,
     ]);
-    this.clearTemp();
+    // console.log(this.data1)
+    // console.log(this.data2)
+    // console.log(this.secData2)
+    // console.log(this.secData2)
+    // console.log(this.tempData1)
+    // console.log(this.tempData2)
     this.clearData();
   }
 

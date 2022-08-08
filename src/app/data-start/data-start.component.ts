@@ -104,7 +104,6 @@ export class DataStartComponent implements OnInit {
     let index = this.stateForm.value.state;
     let index2 = this.stateForm.value.secStates;
     console.log(index, index2);
-    console.log(this.twoStates);
     if (this.twoStates) {
       if (index == index2) {
         window.alert('Given same input');
