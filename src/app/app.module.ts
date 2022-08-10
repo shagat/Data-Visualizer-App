@@ -19,6 +19,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { DataStartComponent } from './data-start/data-start.component';
 import { DataStartItemComponent } from './data-start/data-start-item/data-start-item.component';
 import { VisualizerDataComponent } from './data-start/visualizer-data/visualizer-data.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 
 @NgModule({
@@ -28,9 +29,7 @@ import { VisualizerDataComponent } from './data-start/visualizer-data/visualizer
     HeaderComponent,
     TemperatureChangeStartComponent,
     TemperatureChangeItemComponent,
-    DataStartComponent,
-    DataStartItemComponent,
-    VisualizerDataComponent,
+    PageNotFoundComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,12 +37,7 @@ import { VisualizerDataComponent } from './data-start/visualizer-data/visualizer
     BrowserAnimationsModule,
     HttpClientModule,
     SharedModules,
-    MatInputModule,
-    MatButtonModule,
-    MatSelectModule,
-    MatRadioModule,
-    MatCardModule,
-    ReactiveFormsModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]

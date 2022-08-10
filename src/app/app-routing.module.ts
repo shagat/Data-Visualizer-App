@@ -1,10 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { DataResolverService } from './data-start/data-start-resolver.service';
-import { DataStartComponent } from './data-start/data-start.component';
 import { HomeComponent } from './home/home.component';
-
-import { TemperatureChangeStartComponent } from './temperature-change-start/temperature-change-start.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 const routes: Routes = [
   {
@@ -14,17 +11,22 @@ const routes: Routes = [
   },
   {
     path: 'data-start',
-    component: DataStartComponent,
-    resolve: [DataResolverService],
+    loadChildren: () =>
+      import('./data-start/data-start-module').then((m) => m.DataStartModule),
   },
   {
     path: 'temp-start',
-    component: TemperatureChangeStartComponent,
+    // component: TemperatureChangeStartComponent,
+    redirectTo: 'page-not-found',
   },
   {
     path: 'sort-start',
     loadChildren: () =>
       import('./sort-start/sorting.module').then((m) => m.SortingModule),
+  },
+  {
+    path: 'page-not-found',
+    component: PageNotFoundComponent,
   },
 ];
 

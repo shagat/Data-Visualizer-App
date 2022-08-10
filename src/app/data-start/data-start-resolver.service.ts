@@ -19,10 +19,8 @@ export class DataResolverService implements Resolve<Data[]> {
   ): Data[] | Observable<Data[]> | Promise<Data[]> {
     const data = this.dataService.getResData();
     if (data.length === 0) {
-      // console.log('This is the Data of a Resolver')
       return this.dataService.fetchData();
     } else {
-      // console.log('This is the Data of a Resolver')
       return data;
     }
   }

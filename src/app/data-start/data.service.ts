@@ -47,25 +47,6 @@ export class DataService {
       );
   }
 
-  // fetchData() {
-  //   return this.httpClient
-  //     .get<{}>(this.url_api_2 + DATA_GOV_API, {
-  //       params: { format: 'json', limit: '50' },
-  //     })
-  //     .pipe(
-  //       map((obj) => {
-  //         console.log(obj)
-  //         return obj['records'];
-  //       }),
-  //       tap((obj) => {
-  //         console.log(obj)
-  //       }),
-  //       catchError((error) => {
-  //         throw new Error(error);
-  //       })
-  //     )
-  // }
-
   getLabelAndData(res: any) {
     this.fetchNameTitle();
     this.tempData1.datasetLabel = this.tempData1.datasetLabel + res[0][1];

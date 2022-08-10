@@ -31,7 +31,6 @@ export class VisualizerDataComponent implements OnInit, OnDestroy {
     this.dataSub = this.dataService.dataSubject
       .pipe(
         tap((res) => {
-
           this.data1 = res[0];
           this.data2 = res[1];
           this.secData1 = res[2];
@@ -236,8 +235,8 @@ export class VisualizerDataComponent implements OnInit, OnDestroy {
       this.data_chart2.config.data.datasets[1].data = this.secData2.data;
       this.data_chart1.config.data.datasets[1].label =
         this.secData1.datasetLabel;
-        this.data_chart1.config.data.datasets[0].label = this.data1.datasetLabel;
-        this.data_chart1.config.options.plugins.title.text = this.data1.title;
+      this.data_chart1.config.data.datasets[0].label = this.data1.datasetLabel;
+      this.data_chart1.config.options.plugins.title.text = this.data1.title;
       this.data_chart2.config.data.datasets[0].data = this.data2.data;
       this.data_chart2.config.data.datasets[1].data = this.secData2.data;
       this.data_chart2.config.data.datasets[1].label =
