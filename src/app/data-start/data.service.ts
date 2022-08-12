@@ -88,7 +88,7 @@ export class DataService {
         this.getLabelAndData(result);
         this.data1 = this.tempData1;
         this.data2 = this.tempData2;
-        console.log([this.data1, this.data2]);
+        // console.log([this.data1, this.data2]);
         this.dataSubject.next([
           this.data1,
           this.data2,

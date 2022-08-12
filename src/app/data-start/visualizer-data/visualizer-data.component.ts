@@ -49,9 +49,12 @@ export class VisualizerDataComponent implements OnInit, OnDestroy {
       this.createNewChart();
       this.dataService.clearData();
     } else {
+      this.data_chart1.clear();
+      this.data_chart2.clear();
       await this.setChartData();
       this.data_chart1.update();
       this.data_chart2.update();
+      this.clearData();
       this.dataService.clearData();
     }
   }
@@ -257,6 +260,12 @@ export class VisualizerDataComponent implements OnInit, OnDestroy {
     return;
   }
 
+  clearData() {
+    this.data1 = new Data('', '', [], []);
+    this.data2 = new Data('', '', [], []);
+    this.secData1 = new Data('', '', [], []);
+    this.secData2 = new Data('', '', [], []);
+  }
   ngOnDestroy(): void {
     this.dataSub.unsubscribe();
     this.twoDataSub.unsubscribe();
