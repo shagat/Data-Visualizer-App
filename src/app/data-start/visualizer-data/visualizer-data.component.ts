@@ -37,6 +37,7 @@ export class VisualizerDataComponent implements OnInit, OnDestroy {
     this.dataSub = this.dataService.dataSubject
       .pipe(
         tap((res) => {
+          // console.log(res);
           this.data1 = res[0];
           this.data2 = res[1];
           this.secData1 = res[2];
@@ -116,7 +117,7 @@ export class VisualizerDataComponent implements OnInit, OnDestroy {
         ],
       };
     }
-
+    //Create a new chart
     this.data_chart1 = new Chart('data_canvas1', {
       type: 'line',
       data: {

@@ -82,13 +82,14 @@ export class DataService {
   }
 
   getData(index: string) {
+    this.clearTemp();
+    this.clearData();
     this.resData.every((e) => {
       if (e['state_uts'].includes(index)) {
         let result = this.convertSingleJSONtoArray(e);
         this.getLabelAndData(result);
         this.data1 = this.tempData1;
         this.data2 = this.tempData2;
-        // console.log([this.data1, this.data2]);
         this.dataSubject.next([
           this.data1,
           this.data2,
@@ -97,8 +98,6 @@ export class DataService {
         ]);
         return false;
       }
-      this.clearTemp();
-      this.clearData();
       return true;
     });
   }
@@ -106,6 +105,8 @@ export class DataService {
   getTwoData(index: string, index2: string) {
     let result = [];
     let result2 = [];
+    this.clearTemp();
+    this.clearData();
     this.resData.forEach((e) => {
       if (e['state_uts'].includes(index)) {
         result = this.convertSingleJSONtoArray(e);
@@ -128,8 +129,6 @@ export class DataService {
       this.secData1,
       this.secData2,
     ]);
-    this.clearTemp();
-    this.clearData();
   }
 
   getResData() {
@@ -145,11 +144,14 @@ export class DataService {
   }
 
   clearData() {
-    this.data1 = new Data('', '', [], []);
-    this.data2 = new Data('', '', [], []);
-    this.secData1 = new Data('', '', [], []);
-    this.secData2 = new Data('', '', [], []);
-    console.log('Data cleared');
+    if (this.data1.data.length == 0) {
+      this.data1 = new Data('', '', [], []);
+      this.data2 = new Data('', '', [], []);
+      this.secData1 = new Data('', '', [], []);
+      this.secData2 = new Data('', '', [], []);
+      console.log('Data cleared!');
+    }
+    console.log('No data to clear!');
   }
 
   clearTemp() {
