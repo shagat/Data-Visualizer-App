@@ -133,4 +133,9 @@ export class DataStartComponent implements OnInit {
     );
     this.dataService.toggleTwoStates();
   }
+
+  onClickFetch(){
+    console.log('Sent req');
+    this.dataService.fetchDataTwo();
+  }
 }
