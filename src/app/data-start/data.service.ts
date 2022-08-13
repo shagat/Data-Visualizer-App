@@ -57,7 +57,8 @@ export class DataService {
         }),
         tap((res) => {res.forEach(element => {
           // res.keys(element);
-          console.log(element);
+          console.log(Object.keys(element));
+          console.log(Object.values(element));
         });
         }),
         catchError((error) => {
