@@ -12,10 +12,16 @@ import { DataService } from '../data.service';
 export class VisualizerDataComponent implements OnInit, OnDestroy {
   private dataSub = new Subscription();
   private twoDataSub = new Subscription();
+
+  //Chart Configurations...
   data_chart1: Chart;
   data_chart2: Chart;
   ChartOptions1: ChartData;
   ChartOptions2: ChartData;
+  chart_1_bgColor: string = 'rgba(0, 255, 0, 0.7)';
+  chart_2_bgColor: string = 'rgba(255, 0, 0, 0.7)';
+  chart_1_borderColor: string = 'rgb(255, 99, 132)';
+  chart_2_borderColor: string = 'rgb(255, 99, 132)';
 
   private data1 = new Data('', '', [], []);
   private data2 = new Data('', '', [], []);
@@ -68,22 +74,10 @@ export class VisualizerDataComponent implements OnInit, OnDestroy {
           {
             label: this.data1.datasetLabel,
             data: this.data1.data,
-            backgroundColor: ['rgba(54, 162, 235, 0.7)'],
-            borderColor: ['rgb(255, 99, 132)'],
-            hoverBackgroundColor: ['rgba(255, 159, 64, 0.7)'],
-            hoverBorderWidth: 1.5,
-            borderWidth: 1,
-            order: 1,
           },
           {
             label: this.secData1.datasetLabel,
             data: this.secData1.data,
-            backgroundColor: ['rgb(255, 99, 132, 0.7)'],
-            borderColor: ['rgb(255, 99, 132)'],
-            hoverBackgroundColor: ['rgba(255, 159, 64, 0.7)'],
-            hoverBorderWidth: 1.5,
-            borderWidth: 1,
-            order: 0,
           },
         ],
       };
@@ -93,22 +87,10 @@ export class VisualizerDataComponent implements OnInit, OnDestroy {
           {
             label: this.data2.datasetLabel,
             data: this.data2.data,
-            backgroundColor: ['rgba(54, 162, 235, 0.7)'],
-            borderColor: ['rgb(255, 99, 132)'],
-            hoverBackgroundColor: ['rgba(255, 159, 64, 0.7)'],
-            hoverBorderWidth: 1.5,
-            borderWidth: 1,
-            order: 1,
           },
           {
             label: this.secData2.datasetLabel,
             data: this.secData2.data,
-            backgroundColor: ['rgb(255, 99, 132, 0.7)'],
-            borderColor: ['rgb(255, 99, 132)'],
-            hoverBackgroundColor: ['rgba(255, 159, 64, 0.7)'],
-            hoverBorderWidth: 1.5,
-            borderWidth: 1,
-            order: 0,
           },
         ],
       };
@@ -120,11 +102,6 @@ export class VisualizerDataComponent implements OnInit, OnDestroy {
           {
             label: this.data1.datasetLabel,
             data: this.data1.data,
-            backgroundColor: ['rgba(54, 162, 235, 0.7)'],
-            borderColor: ['rgb(255, 99, 132)'],
-            hoverBackgroundColor: ['rgba(255, 159, 64, 0.7)'],
-            hoverBorderWidth: 1.5,
-            borderWidth: 1,
           },
         ],
       };
@@ -135,11 +112,6 @@ export class VisualizerDataComponent implements OnInit, OnDestroy {
           {
             label: this.data2.datasetLabel,
             data: this.data2.data,
-            backgroundColor: ['rgba(54, 162, 235, 0.7)'],
-            borderColor: ['rgb(255, 99, 132)'],
-            hoverBackgroundColor: ['rgba(255, 159, 64, 0.7)'],
-            hoverBorderWidth: 1.5,
-            borderWidth: 1,
           },
         ],
       };
@@ -153,8 +125,8 @@ export class VisualizerDataComponent implements OnInit, OnDestroy {
           {
             label: this.data1.datasetLabel,
             data: this.data1.data,
-            backgroundColor: ['rgba(54, 162, 235, 0.7)'],
-            borderColor: ['rgb(255, 99, 132)'],
+            backgroundColor: [this.chart_1_bgColor],
+            borderColor: [this.chart_1_borderColor],
             hoverBackgroundColor: ['rgba(255, 159, 64, 0.7)'],
             hoverBorderWidth: 1.5,
             borderWidth: 1,
@@ -163,8 +135,8 @@ export class VisualizerDataComponent implements OnInit, OnDestroy {
           {
             label: this.secData1.datasetLabel,
             data: this.secData1.data,
-            backgroundColor: ['rgba(54, 162, 235, 0.7)'],
-            borderColor: ['rgb(255, 99, 132)'],
+            backgroundColor: [this.chart_2_bgColor],
+            borderColor: [this.chart_2_borderColor],
             hoverBackgroundColor: ['rgba(255, 159, 64, 0.7)'],
             hoverBorderWidth: 1.5,
             borderWidth: 1,
@@ -195,8 +167,8 @@ export class VisualizerDataComponent implements OnInit, OnDestroy {
           {
             label: this.data2.datasetLabel,
             data: this.data2.data,
-            backgroundColor: ['rgba(54, 162, 235, 0.7)'],
-            borderColor: ['rgb(255, 99, 132)'],
+            backgroundColor: [this.chart_1_bgColor],
+            borderColor: [this.chart_1_borderColor],
             hoverBackgroundColor: ['rgba(255, 159, 64, 0.7)'],
             hoverBorderWidth: 1.5,
             borderWidth: 1,
@@ -205,8 +177,8 @@ export class VisualizerDataComponent implements OnInit, OnDestroy {
           {
             label: this.secData2.datasetLabel,
             data: this.secData2.data,
-            backgroundColor: ['rgba(54, 162, 235, 0.7)'],
-            borderColor: ['rgb(255, 99, 132)'],
+            backgroundColor: [this.chart_2_bgColor],
+            borderColor: [this.chart_2_borderColor],
             hoverBackgroundColor: ['rgba(255, 159, 64, 0.7)'],
             hoverBorderWidth: 1.5,
             borderWidth: 1,
@@ -249,6 +221,14 @@ export class VisualizerDataComponent implements OnInit, OnDestroy {
       this.data_chart1.config.options.plugins.title.text = this.data1.title;
       this.data_chart2.config.options.plugins.title.text = this.data2.title;
     } else {
+      //...Clear the second Chart when loading the first Chart
+      this.data_chart1.config.data.datasets[1].data = [];
+      this.data_chart2.config.data.datasets[1].data = [];
+      this.data_chart1.config.data.datasets[1].label = '';
+      this.data_chart2.config.data.datasets[1].data = [];
+      this.data_chart2.config.data.datasets[1].label = '';
+      //...
+
       this.data_chart1.config.data.datasets[0].data = this.data1.data;
       this.data_chart2.config.data.datasets[0].data = this.data2.data;
 
