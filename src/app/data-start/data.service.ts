@@ -4,10 +4,11 @@ import { catchError, map, Subject, tap } from 'rxjs';
 
 import { DATA_GOV_API } from 'src/environments/keys';
 import { Data } from './Data.model';
+import { DataStartOption } from './dataStart.model';
 
 @Injectable({ providedIn: 'root' })
 export class DataService {
-  twoStates = false;
+  dataStartOptions = new DataStartOption(false, false)
   private resObj: {};
   public resData = [];
   private data1 = new Data('', '', [], []);
@@ -17,7 +18,7 @@ export class DataService {
   private tempData1 = new Data('', '', [], []);
   private tempData2 = new Data('', '', [], []);
   dataSubject = new Subject<[Data, Data, Data, Data]>();
-  twoStatesSubject = new Subject<boolean>();
+  twoStatesSubject = new Subject<DataStartOption>();
 
   url_api_gsdp =
     'https://api.data.gov.in/resource/adb4b1da-159f-46b3-a9c0-0545fe9ddda0?api-key=';
@@ -180,7 +181,7 @@ export class DataService {
   }
 
   toggleTwoStates() {
-    this.twoStates = !this.twoStates;
-    this.twoStatesSubject.next(this.twoStates);
+    this.dataStartOptions.twoStates = !this.dataStartOptions.twoStates;
+    this.twoStatesSubject.next(this.dataStartOptions);
   }
 }

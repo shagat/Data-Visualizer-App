@@ -4,6 +4,7 @@ import { Subscription, tap } from 'rxjs';
 
 import { Data } from '../Data.model';
 import { DataService } from '../data.service';
+import { DataStartOption } from '../dataStart.model';
 @Component({
   selector: 'app-visualizer-data',
   templateUrl: './visualizer-data.component.html',
@@ -11,7 +12,7 @@ import { DataService } from '../data.service';
 })
 export class VisualizerDataComponent implements OnInit, OnDestroy {
   private dataSub = new Subscription();
-  private twoDataSub = new Subscription();
+  private dataStartOptionsSub = new Subscription();
 
   //Chart Configurations...
   data_chart1: Chart;
@@ -27,7 +28,7 @@ export class VisualizerDataComponent implements OnInit, OnDestroy {
   private data2 = new Data('', '', [], []);
   private secData1 = new Data('', '', [], []);
   private secData2 = new Data('', '', [], []);
-  private twoStates: boolean = false;
+  private dataStartOptions = new DataStartOption(false, false);
 
   constructor(private dataService: DataService) {
     Chart.register(...registerables);
@@ -46,8 +47,8 @@ export class VisualizerDataComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe();
-    this.twoDataSub = this.dataService.twoStatesSubject.subscribe((twores) => {
-      this.twoStates = twores;
+    this.dataStartOptionsSub = this.dataService.twoStatesSubject.subscribe((twores) => {
+      this.dataStartOptions = twores;
     });
   }
 
@@ -67,7 +68,7 @@ export class VisualizerDataComponent implements OnInit, OnDestroy {
   }
 
   createNewChart() {
-    if (this.twoStates) {
+    if (this.dataStartOptions.twoStates) {
       console.log('new 2 Charts generated');
       this.ChartOptions1 = {
         labels: this.data1.label,
@@ -203,7 +204,7 @@ export class VisualizerDataComponent implements OnInit, OnDestroy {
   }
 
   async setChartData() {
-    if (this.twoStates) {
+    if (this.dataStartOptions.twoStates) {
       //For Chart 1:--
       this.data_chart1.config.options.plugins.title.text = this.data1.title;
       this.data_chart1.config.data.datasets[0].data = this.data1.data;
@@ -249,7 +250,7 @@ export class VisualizerDataComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy(): void {
     this.dataSub.unsubscribe();
-    this.twoDataSub.unsubscribe();
+    this.dataStartOptionsSub.unsubscribe();
     if (this.data_chart1) {
       this.data_chart1.destroy();
       this.data_chart2.destroy();

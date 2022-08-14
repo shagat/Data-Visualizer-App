@@ -11,8 +11,8 @@
           <mat-radio-group formControlName="shipping">
             <mat-radio-button value="gsdp"
               >Gross State Domestic Product (GSDP)</mat-radio-button>
-            <!-- <mat-radio-button value="CPI"
-              >Consumer Price Index (CPI)</mat-radio-button> -->
+            <mat-radio-button value="CPI"
+              >Consumer Price Index (CPI)</mat-radio-button>
           </mat-radio-group>
         </div>
       </div>
@@ -33,7 +33,7 @@
           </mat-form-field>
         </div>
       </div>
-      <div class="row" *ngIf="twoStates">
+      <div class="row" *ngIf="dataStartOptions.twoStates">
         <div class="col">
           <mat-form-field class="full-width">
             <mat-select placeholder="Second state" formControlName="secStates">

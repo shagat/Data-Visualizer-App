@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 import { DataService } from './data.service';
+import { DataStartOption } from './dataStart.model';
 
 @Component({
   selector: 'app-data-start',
@@ -11,7 +12,7 @@ import { DataService } from './data.service';
 })
 export class DataStartComponent implements OnInit {
   dataSub = new Subscription();
-  twoStates: boolean = false;
+  dataStartOptions = new DataStartOption(false, false)
   dataGSDP = {};
   stateForm = this.fb.group({
     state: ['', Validators.required],
@@ -96,7 +97,7 @@ export class DataStartComponent implements OnInit {
 
   ngOnInit(): void {
     this.dataService.twoStatesSubject.subscribe((res) => {
-      this.twoStates = res;
+      this.dataStartOptions = res;
     });
   }
 
@@ -104,7 +105,7 @@ export class DataStartComponent implements OnInit {
     let index = this.stateForm.value.state;
     let index2 = this.stateForm.value.secStates;
     console.log(index, index2);
-    if (this.twoStates) {
+    if (this.dataStartOptions.twoStates) {
       if (index == index2) {
         window.alert('Given same input');
         return;
@@ -113,11 +114,11 @@ export class DataStartComponent implements OnInit {
         return;
       } else {
         console.log('Done two inputs');
-        this.dataService.getTwoData(index, index2);
+        // this.dataService.getTwoData(index, index2);
       }
     } else {
       console.log('Done one inputs');
-      this.dataService.getData(index);
+      // this.dataService.getData(index);
     }
   }
 
