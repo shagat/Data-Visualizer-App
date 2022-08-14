@@ -1,7 +1,7 @@
 <div class="container">
 
 <form [formGroup]="stateForm" novalidate (ngSubmit)="onSubmit()">
-  <mat-card class="shipping-card">
+  <mat-card class="main-card">
     <mat-card-header>
       <mat-card-title>Indian State Information Visualizer</mat-card-title>
     </mat-card-header>
@@ -16,61 +16,63 @@
           </mat-radio-group>
         </div>
       </div>
-      <div class="row">
-        <div class="col">
-          <mat-form-field class="full-width">
-            <mat-select placeholder="State" formControlName="state">
-              <mat-option
-                *ngFor="let state of states"
-                [value]="state">
-                {{ state }}
+
+      <div class="gsdp-card" *ngIf="!dataStartOptions.optionCPI">
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <mat-select placeholder="State" formControlName="state">
+                <mat-option
+                  *ngFor="let state of states"
+                  [value]="state">
+                  {{ state }}
+                </mat-option>
+              </mat-select>
+              <mat-error
+                *ngIf="stateForm.controls['state'].hasError('required')">
+                State is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row" *ngIf="dataStartOptions.twoStates">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <mat-select placeholder="Second state" formControlName="secStates">
+                <mat-option
+                *ngFor="let secState of secStates"
+                [value]="secState">
+                {{ secState }}
               </mat-option>
             </mat-select>
             <mat-error
-              *ngIf="stateForm.controls['state'].hasError('required')">
-              State is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
+            *ngIf="stateForm.controls['secStates'].hasError('twoSameStates')">
+            Both the states are <strong>same</strong>
+          </mat-error>
+            </mat-form-field>
+          </div>
         </div>
+        <mat-card-actions>
+          <button mat-raised-button class="btn btn-primary" type="submit" [disabled]="stateForm.invalid && stateForm.touched">Submit</button>
+          <button
+            mat-raised-button
+            class="btn btn-primary"
+            type="button"
+            id="btnSend"
+            (click)="onBeingCompared()">
+            Compare
+          </button>
+        </mat-card-actions>
       </div>
-      <div class="row" *ngIf="dataStartOptions.twoStates">
-        <div class="col">
-          <mat-form-field class="full-width">
-            <mat-select placeholder="Second state" formControlName="secStates">
-              <mat-option
-              *ngFor="let secState of secStates"
-              [value]="secState">
-              {{ secState }}
-            </mat-option>
-          </mat-select>
-          <mat-error
-          *ngIf="stateForm.controls['secStates'].hasError('twoSameStates')">
-          Both the states are <strong>same</strong>
-        </mat-error>
-          </mat-form-field>
-        </div>
-      </div>
-
     </mat-card-content>
-    <mat-card-actions>
-      <button mat-raised-button class="btn btn-primary" type="submit" [disabled]="stateForm.invalid && stateForm.touched">Submit</button>
-      <button
-        mat-raised-button
-        class="btn btn-primary"
-        type="button"
-        id="btnSend"
-        (click)="onBeingCompared()">
-        Compare
-      </button>
-      <button
-        mat-raised-button
-        class="btn btn-primary"
-        type="button"
-        id="btnSend"
-        (click)="onClickFetch()">
-        Fetch
-      </button>
-    </mat-card-actions>
+    <button
+      mat-raised-button
+      class="btn btn-primary"
+      type="button"
+      id="btnSend"
+      (click)="onClickFetch()">
+      Fetch
+  </button>
   </mat-card>
 </form>
 <app-data-start-item></app-data-start-item>
