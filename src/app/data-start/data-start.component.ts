@@ -12,14 +12,16 @@ import { DataStartOption } from './dataStart.model';
 })
 export class DataStartComponent implements OnInit {
   dataSub = new Subscription();
-  dataStartOptions = new DataStartOption(false, false)
+  dataStartOptions = new DataStartOption(false, false);
   dataGSDP = {};
   stateForm = this.fb.group({
-    state: ['', Validators.required],
+    gsdpCPI: ['false'],
+    state: [''],
     secStates: [],
-    shipping: ['gsdp', Validators.required],
+    cpiArea: [],
   });
 
+  areas = ['Rural', 'Urban', 'Rural+Urban'];
   states = [
     'Andhra Pradesh',
     'Arunachal Pradesh',
@@ -101,25 +103,28 @@ export class DataStartComponent implements OnInit {
     });
   }
 
+  // onSubmit(): void {
+  //   let index = this.stateForm.value.state;
+  //   let index2 = this.stateForm.value.secStates;
+  //   console.log(index, index2);
+  //   if (this.dataStartOptions.twoStates) {
+  //     if (index == index2) {
+  //       window.alert('Given same input');
+  //       return;
+  //     } else if (index == null || index2 == null) {
+  //       window.alert('Input required');
+  //       return;
+  //     } else {
+  //       console.log('Done two inputs');
+  //       // this.dataService.getTwoData(index, index2);
+  //     }
+  //   } else {
+  //     console.log('Done one inputs');
+  //     // this.dataService.getData(index);
+  //   }
+  // }
   onSubmit(): void {
-    let index = this.stateForm.value.state;
-    let index2 = this.stateForm.value.secStates;
-    console.log(index, index2);
-    if (this.dataStartOptions.twoStates) {
-      if (index == index2) {
-        window.alert('Given same input');
-        return;
-      } else if (index == null || index2 == null) {
-        window.alert('Input required');
-        return;
-      } else {
-        console.log('Done two inputs');
-        // this.dataService.getTwoData(index, index2);
-      }
-    } else {
-      console.log('Done one inputs');
-      // this.dataService.getData(index);
-    }
+    console.log(this.stateForm.value);
   }
 
   onSendReq() {
@@ -135,7 +140,27 @@ export class DataStartComponent implements OnInit {
     this.dataService.toggleTwoStates();
   }
 
-  onClickFetch(){
+  onRadioGSPD() {
+    this.dataStartOptions.optionCPI = false;
+    this.stateForm.removeControl('cpiArea');
+    this.stateForm.addControl(
+      'state',
+      new FormControl('', Validators.required)
+    );
+    console.log('change to the radio of GSDP');
+  }
+  onRadioCPI() {
+    this.dataStartOptions.optionCPI = true;
+    this.stateForm.removeControl('state');
+    this.stateForm.addControl(
+      'cpiArea',
+      new FormControl('', Validators.required)
+    );
+    console.log('change to the radio of CPI');
+    // this.stateForm.
+  }
+
+  onClickFetch() {
     console.log('Sent req');
     this.dataService.fetchDataTwo();
   }
