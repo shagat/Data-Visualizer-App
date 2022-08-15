@@ -1,5 +1,5 @@
 <div class="container">
-  <form [formGroup]="stateForm" novalidate (ngSubmit)="onSubmit()">
+  <form [formGroup]="mainForm" novalidate (ngSubmit)="onSubmit()">
     <mat-card class="main-card">
       <mat-card-header>
         <mat-card-title>Indian State Information Visualizer</mat-card-title>
@@ -27,7 +27,7 @@
                   </mat-option>
                 </mat-select>
                 <mat-error
-                  *ngIf="stateForm.controls['cpiArea'].hasError('required')"
+                  *ngIf="mainForm.controls['cpiArea'].hasError('required')"
                 >
                   Area is <strong>required</strong>
                 </mat-error>
@@ -41,7 +41,7 @@
                   </mat-option>
                 </mat-select>
                 <mat-error
-                  *ngIf="stateForm.controls['cpiYear'].hasError('required')"
+                  *ngIf="mainForm.controls['cpiYear'].hasError('required')"
                 >
                   CPI Year is <strong>required</strong>
                 </mat-error>
@@ -68,7 +68,7 @@
                   </mat-option>
                 </mat-select>
                 <mat-error
-                  *ngIf="stateForm.controls['state'].hasError('required')"
+                  *ngIf="mainForm.controls['state'].hasError('required')"
                 >
                   State is <strong>required</strong>
                 </mat-error>
@@ -91,7 +91,7 @@
                 </mat-select>
                 <mat-error
                   *ngIf="
-                    stateForm.controls['secStates'].hasError('twoSameStates')
+                    mainForm.controls['secStates'].hasError('twoSameStates')
                   "
                 >
                   Both the states are <strong>same</strong>
@@ -105,7 +105,7 @@
             mat-raised-button
             class="btn btn-primary"
             type="submit"
-            [disabled]="stateForm.invalid && stateForm.touched"
+            [disabled]="mainForm.invalid && mainForm.touched"
           >
             Submit
           </button>

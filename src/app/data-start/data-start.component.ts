@@ -14,7 +14,7 @@ export class DataStartComponent implements OnInit {
   dataSub = new Subscription();
   dataStartOptions = new DataStartOption(false, false);
   dataGSDP = {};
-  stateForm = this.fb.group({
+  mainForm = this.fb.group({
     isCPIChecked: ['false'],
     state: [''],
     secStates: [],
@@ -121,8 +121,8 @@ export class DataStartComponent implements OnInit {
   }
 
   // onSubmit(): void {
-  //   let index = this.stateForm.value.state;
-  //   let index2 = this.stateForm.value.secStates;
+  //   let index = this.mainForm.value.state;
+  //   let index2 = this.mainForm.value.secStates;
   //   console.log(index, index2);
   //   if (this.dataStartOptions.twoStates) {
   //     if (index == index2) {
@@ -141,7 +141,7 @@ export class DataStartComponent implements OnInit {
   //   }
   // }
   onSubmit(): void {
-    console.log(this.stateForm.value);
+    console.log(this.mainForm.value);
   }
 
   onSendReq() {
@@ -150,7 +150,7 @@ export class DataStartComponent implements OnInit {
   }
 
   onBeingCompared() {
-    this.stateForm.addControl(
+    this.mainForm.addControl(
       'secStates',
       new FormControl('', Validators.required)
     );
@@ -159,28 +159,24 @@ export class DataStartComponent implements OnInit {
 
   onRadioGSPD() {
     this.dataStartOptions.optionCPI = false;
-    this.stateForm.removeControl('cpiArea');
-    this.stateForm.addControl(
-      'state',
-      new FormControl('', Validators.required)
-    );
+    this.mainForm.removeControl('cpiArea');
+    this.mainForm.removeControl('cpiYear');
+    this.mainForm.removeControl('cpiMonth');
+    this.mainForm.addControl('state', new FormControl('', Validators.required));
     console.log('change to the radio of GSDP');
   }
 
   onRadioCPI() {
     this.dataStartOptions.optionCPI = true;
-    this.stateForm.removeControl('state');
-    this.stateForm.addControl(
-      'cpiArea',
-      new FormControl('', Validators.required)
-    );
-    this.stateForm.addControl(
-      'cpiYear',
-      new FormControl('2013', Validators.required)
-    );
-    this.stateForm.addControl('cpiMonth', new FormControl('all'));
+    this.mainForm.removeControl('state');
+    this.mainForm.removeControl('secState');
+    this.mainForm = this.fb.group({
+      ...this.mainForm.controls,
+      cpiArea: ['', Validators.required],
+      cpiYear: ['', Validators.required],
+      cpiMonth: [''],
+    });
     console.log('change to the radio of CPI');
-    // this.stateForm.
   }
 
   onClickFetch() {
