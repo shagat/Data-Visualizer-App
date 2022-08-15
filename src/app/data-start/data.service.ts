@@ -8,10 +8,13 @@ import { DataStartOption } from './dataStart.model';
 
 @Injectable({ providedIn: 'root' })
 export class DataService {
-  dataStartOptions = new DataStartOption(false, false)
+  dataStartOptions = new DataStartOption(false, false);
   private resDataObj: {};
+  private resCPIDataObj: {};
   public resDataData = [];
-  public resCPIData = [];
+  public resCPIDataRural = [];
+  public resCPIDataUrban = [];
+  public resCPIDataRuralUrban = [];
   private data1 = new Data('', '', [], []);
   private data2 = new Data('', '', [], []);
   private secData1 = new Data('', '', [], []);
@@ -55,19 +58,29 @@ export class DataService {
       })
       .pipe(
         map((res) => {
-          console.log(res);
+          // console.log(res);
+          this.resCPIDataObj = res;
           return res['records'];
         }),
-        tap(
-          (res) => {
-            this.resCPIData = res;
-
-          }
-        ),
+        tap((res) => {
+          res.forEach((e: { sector: string; }) => {
+            if (e.sector === 'Rural') {
+              this.resCPIDataRural.push(e);
+            } else if (e.sector === 'Urban') {
+              this.resCPIDataUrban.push(e);
+            } else {
+              this.resCPIDataRuralUrban.push(e);
+            }
+          });
+          console.log(this.resCPIDataRural)
+          // console.log('THIS IS FOR URBAN', this.resCPIDataUrban)
+          // console.log('THIS IS THE REST', this.resCPIDataRuralUrban)
+        }),
         catchError((error) => {
           throw new Error(error);
         })
-      ).subscribe();
+      )
+      .subscribe();
   }
 
   getLabelAndData(res: any) {
