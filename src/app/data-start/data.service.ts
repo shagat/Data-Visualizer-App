@@ -9,8 +9,9 @@ import { DataStartOption } from './dataStart.model';
 @Injectable({ providedIn: 'root' })
 export class DataService {
   dataStartOptions = new DataStartOption(false, false)
-  private resObj: {};
-  public resData = [];
+  private resDataObj: {};
+  public resDataData = [];
+  public resCPIData = [];
   private data1 = new Data('', '', [], []);
   private data2 = new Data('', '', [], []);
   private secData1 = new Data('', '', [], []);
@@ -34,12 +35,12 @@ export class DataService {
       })
       .pipe(
         map((obj) => {
-          this.resObj = obj;
+          this.resDataObj = obj;
           return obj['records'];
         }),
         tap((obj) => {
           obj.forEach((e: object) => {
-            this.resData.push(e);
+            this.resDataData.push(e);
           });
         }),
         catchError((error) => {
@@ -57,14 +58,12 @@ export class DataService {
           console.log(res);
           return res['records'];
         }),
-        // tap(
-        //   (res) => {res.forEach(element => {
-        //   // res.keys(element);
-        //   console.log(Object.keys(element));
-        //   console.log(Object.values(element));
-        // });
-        // }
-        // ),
+        tap(
+          (res) => {
+            this.resCPIData = res;
+
+          }
+        ),
         catchError((error) => {
           throw new Error(error);
         })
@@ -92,11 +91,11 @@ export class DataService {
   }
 
   fetchNameTitle() {
-    let l: number = this.resObj['field'].length;
-    this.tempData1.title = this.resObj['title'];
-    this.tempData2.title = this.resObj['title'];
-    this.tempData1.datasetLabel = this.resObj['field'][l - 1]['name'];
-    this.tempData2.datasetLabel = this.resObj['field'][l - l + 1]['name'];
+    let l: number = this.resDataObj['field'].length;
+    this.tempData1.title = this.resDataObj['title'];
+    this.tempData2.title = this.resDataObj['title'];
+    this.tempData1.datasetLabel = this.resDataObj['field'][l - 1]['name'];
+    this.tempData2.datasetLabel = this.resDataObj['field'][l - l + 1]['name'];
     this.tempData1.datasetLabel = this.tempData1.datasetLabel
       .replace(/[0-9]+/g, '')
       .replace('-', ' ');
@@ -108,7 +107,27 @@ export class DataService {
   getData(index: string) {
     this.clearTemp();
     this.clearData();
-    this.resData.every((e) => {
+    this.resDataData.every((e) => {
+      if (e['state_uts'].includes(index)) {
+        let result = this.convertSingleJSONtoArray(e);
+        this.getLabelAndData(result);
+        this.data1 = this.tempData1;
+        this.data2 = this.tempData2;
+        this.dataSubject.next([
+          this.data1,
+          this.data2,
+          this.secData1,
+          this.secData2,
+        ]);
+        return false;
+      }
+      return true;
+    });
+  }
+  getCPIData(index: string) {
+    this.clearTemp();
+    this.clearData();
+    this.resDataData.every((e) => {
       if (e['state_uts'].includes(index)) {
         let result = this.convertSingleJSONtoArray(e);
         this.getLabelAndData(result);
@@ -131,7 +150,7 @@ export class DataService {
     let result2 = [];
     this.clearTemp();
     this.clearData();
-    this.resData.forEach((e) => {
+    this.resDataData.forEach((e) => {
       if (e['state_uts'].includes(index)) {
         result = this.convertSingleJSONtoArray(e);
         this.getLabelAndData(result);
@@ -156,7 +175,7 @@ export class DataService {
   }
 
   getResData() {
-    return this.resData.slice();
+    return this.resDataData.slice();
   }
 
   convertSingleJSONtoArray(json_data: {}) {

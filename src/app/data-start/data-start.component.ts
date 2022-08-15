@@ -120,29 +120,29 @@ export class DataStartComponent implements OnInit {
     });
   }
 
-  // onSubmit(): void {
-  //   let index = this.mainForm.value.state;
-  //   let index2 = this.mainForm.value.secStates;
-  //   console.log(index, index2);
-  //   if (this.dataStartOptions.twoStates) {
-  //     if (index == index2) {
-  //       window.alert('Given same input');
-  //       return;
-  //     } else if (index == null || index2 == null) {
-  //       window.alert('Input required');
-  //       return;
-  //     } else {
-  //       console.log('Done two inputs');
-  //       // this.dataService.getTwoData(index, index2);
-  //     }
-  //   } else {
-  //     console.log('Done one inputs');
-  //     // this.dataService.getData(index);
-  //   }
-  // }
   onSubmit(): void {
-    console.log(this.mainForm.value);
+    let index = this.mainForm.value.state;
+    let index2 = this.mainForm.value.secStates;
+    console.log(index, index2);
+    if (this.dataStartOptions.twoStates) {
+      if (index == index2) {
+        window.alert('Given same input');
+        return;
+      } else if (index == null || index2 == null) {
+        window.alert('Input required');
+        return;
+      } else {
+        console.log('Done two inputs');
+        // this.dataService.getTwoData(index, index2);
+      }
+    } else {
+      console.log('Done one inputs');
+      // this.dataService.getData(index);
+    }
   }
+  // onSubmit(): void {
+  //   console.log(this.mainForm.value);
+  // }
 
   onSendReq() {
     console.log('sent req');
