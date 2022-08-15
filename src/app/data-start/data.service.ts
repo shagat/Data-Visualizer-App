@@ -50,18 +50,21 @@ export class DataService {
   fetchDataTwo() {
     return this.httpClient
       .get<{}>(this.url_api_2 + DATA_GOV_API, {
-        params: { format: 'json', limit: '50' },
+        params: { format: 'json', limit: '321' },
       })
       .pipe(
         map((res) => {
+          console.log(res);
           return res['records'];
         }),
-        tap((res) => {res.forEach(element => {
-          // res.keys(element);
-          console.log(Object.keys(element));
-          console.log(Object.values(element));
-        });
-        }),
+        // tap(
+        //   (res) => {res.forEach(element => {
+        //   // res.keys(element);
+        //   console.log(Object.keys(element));
+        //   console.log(Object.values(element));
+        // });
+        // }
+        // ),
         catchError((error) => {
           throw new Error(error);
         })

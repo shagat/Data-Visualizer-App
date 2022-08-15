@@ -7,7 +7,7 @@
       <mat-card-content>
         <div class="row">
           <div class="col">
-            <mat-radio-group formControlName="gsdpCPI">
+            <mat-radio-group formControlName="isCPIChecked">
               <mat-radio-button (change)="onRadioGSPD()" value="false"
                 >Gross State Domestic Product (GSDP)</mat-radio-button
               >
@@ -31,6 +31,29 @@
                 >
                   Area is <strong>required</strong>
                 </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col">
+              <mat-form-field class="full-width">
+                <mat-select placeholder="Year" formControlName="cpiYear">
+                  <mat-option *ngFor="let year of cpiYear" [value]="year">
+                    {{ year }}
+                  </mat-option>
+                </mat-select>
+                <mat-error
+                  *ngIf="stateForm.controls['cpiYear'].hasError('required')"
+                >
+                  CPI Year is <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col">
+              <mat-form-field class="full-width">
+                <mat-select placeholder="Month (Optional)" formControlName="cpiMonth">
+                  <mat-option *ngFor="let month of cpiMonth" [value]="month">
+                    {{ month }}
+                  </mat-option>
+                </mat-select>
               </mat-form-field>
             </div>
           </div>

@@ -15,13 +15,30 @@ export class DataStartComponent implements OnInit {
   dataStartOptions = new DataStartOption(false, false);
   dataGSDP = {};
   stateForm = this.fb.group({
-    gsdpCPI: ['false'],
+    isCPIChecked: ['false'],
     state: [''],
     secStates: [],
     cpiArea: [],
+    cpiYear: [],
+    cpiMonth: [],
   });
 
   areas = ['Rural', 'Urban', 'Rural+Urban'];
+  cpiYear = [2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022];
+  cpiMonth = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
+  ];
   states = [
     'Andhra Pradesh',
     'Arunachal Pradesh',
@@ -149,6 +166,7 @@ export class DataStartComponent implements OnInit {
     );
     console.log('change to the radio of GSDP');
   }
+
   onRadioCPI() {
     this.dataStartOptions.optionCPI = true;
     this.stateForm.removeControl('state');
@@ -156,6 +174,11 @@ export class DataStartComponent implements OnInit {
       'cpiArea',
       new FormControl('', Validators.required)
     );
+    this.stateForm.addControl(
+      'cpiYear',
+      new FormControl('2013', Validators.required)
+    );
+    this.stateForm.addControl('cpiMonth', new FormControl('all'));
     console.log('change to the radio of CPI');
     // this.stateForm.
   }
