@@ -9,7 +9,7 @@ import { DataStartOption } from '../dataStart.model';
 @Component({
   selector: 'app-visualizer-cpi',
   templateUrl: './visualizer-cpi.component.html',
-  styleUrls: ['./visualizer-cpi.component.css']
+  styleUrls: ['./visualizer-cpi.component.css'],
 })
 export class VisualizerCpiComponent implements OnInit {
   private dataSub = new Subscription();
@@ -52,24 +52,23 @@ export class VisualizerCpiComponent implements OnInit {
   }
 
   async generateChart() {
-
+    if (!this.cpi_chart1) {
+      this.createNewChart();
+      this.dataService.clearData();
+    } else {
+      this.cpi_chart1.clear();
+      await this.setChartData();
+      this.cpi_chart1.update();
+      this.clearData();
+      this.dataService.clearData();
+    }
   }
 
   createNewChart() {
-
-      console.log('new Chart generated for GSDP');
-      this.ChartOptions1 = {
-        labels: this.data1.label,
-        datasets: [
-          {
-            label: this.data1.datasetLabel,
-            data: this.data1.data,
-          },
-        ],
-      };
+    console.log('new Chart generated for CPI');
     //Create a new chart
-    this.cpi_chart1 = new Chart('data_canvas1', {
-      type: 'line',
+    this.cpi_chart1 = new Chart('cpi_canvas1', {
+      type: 'bar',
       data: {
         labels: this.data1.label,
         datasets: [
@@ -82,7 +81,7 @@ export class VisualizerCpiComponent implements OnInit {
             hoverBorderWidth: 1.5,
             borderWidth: 1,
             order: 1,
-          }
+          },
         ],
       },
       options: {
@@ -98,11 +97,12 @@ export class VisualizerCpiComponent implements OnInit {
         },
       },
     });
-
   }
 
   async setChartData() {
-
+    this.cpi_chart1.config.data.datasets[0].data = this.data1.data;
+    this.cpi_chart1.config.data.datasets[0].label = this.data1.datasetLabel;
+    this.cpi_chart1.config.options.plugins.title.text = this.data1.title;
     return;
   }
 

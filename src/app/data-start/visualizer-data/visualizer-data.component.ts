@@ -38,13 +38,13 @@ export class VisualizerDataComponent implements OnInit, OnDestroy {
     this.dataSub = this.dataService.dataSubject
       .pipe(
         tap((res) => {
-          // console.log(res);
           this.data1 = res[0];
           this.data2 = res[1];
           this.secData1 = res[2];
           this.secData2 = res[3];
-          console.log(res);
-          this.generateChart();
+          if (this.dataStartOptions.optionCPI) {
+            // this.generateChart();
+          }
         })
       )
       .subscribe();
@@ -71,22 +71,6 @@ export class VisualizerDataComponent implements OnInit, OnDestroy {
   }
 
   createNewChart() {
-    // if(this.dataStartOptions.optionCPI){
-    //     console.log('2 Charts generated for GSDP');
-    //     this.ChartOptions1 = {
-    //       labels: this.data1.label,
-    //       datasets: [
-    //         {
-    //           label: 'some label',
-    //           data: this.data1.data,
-    //         },
-    //         // {
-    //         //   label: this.secData1.datasetLabel,
-    //         //   data: this.secData1.data,
-    //         // },
-    //       ],
-    //     };
-    // }
     if (this.dataStartOptions.twoStates) {
       console.log('2 Charts generated for GSDP');
       this.ChartOptions1 = {
