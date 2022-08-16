@@ -20,7 +20,14 @@ export class VisualizerCpiComponent implements OnInit {
 
   ChartOptions1: ChartData;
 
-  chart_1_bgColor: string = 'rgba(0, 255, 0, 0.7)';
+  chart_1_bgColor: string[] = [
+    'rgba(142, 202, 230, 0.7)',
+    'rgba(33, 158, 188, 0.7)',
+    'rgba(2, 48, 71, 0.7)',
+    'rgba(255, 183, 3, 0.7)',
+    'rgba(251, 133, 0, 0.7)',
+    'rgba(255, 0, 0, 0.7)',
+  ];
   chart_2_bgColor: string = 'rgba(255, 0, 0, 0.7)';
   chart_1_borderColor: string = 'rgb(255, 99, 132)';
   chart_2_borderColor: string = 'rgb(255, 99, 132)';
@@ -75,7 +82,7 @@ export class VisualizerCpiComponent implements OnInit {
           {
             label: this.data1.datasetLabel,
             data: this.data1.data,
-            backgroundColor: [this.chart_1_bgColor],
+            backgroundColor: this.chart_1_bgColor,
             borderColor: [this.chart_1_borderColor],
             hoverBackgroundColor: ['rgba(255, 159, 64, 0.7)'],
             hoverBorderWidth: 1.5,
@@ -86,6 +93,15 @@ export class VisualizerCpiComponent implements OnInit {
       },
       options: {
         responsive: true,
+      //   scales: {
+      //     xAxes: [{
+      //         ticks: {
+      //             autoSkip: false,
+      //             maxRotation: 90,
+      //             minRotation: 90
+      //         }
+      //     }]
+      // },
         plugins: {
           legend: {
             position: 'top',
