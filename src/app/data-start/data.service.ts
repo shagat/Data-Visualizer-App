@@ -162,8 +162,14 @@ export class DataService {
     } else {
       return false;
     }
-    console.log(arr.splice(3));
-    console.log(arr2.splice(3));
+    // console.log(arr.splice(3));
+    // console.log(arr2.splice(3));
+    this.data1.label = arr.splice(3)
+    this.data1.data = arr2.splice(3)
+    this.data1.datasetLabel = 'something'
+    this.data1.title = 'title'
+    console.log(this.data1);
+    this.dataSubject.next([this.data1, this.data2, this.secData1, this.secData2])
     return true;
   }
 

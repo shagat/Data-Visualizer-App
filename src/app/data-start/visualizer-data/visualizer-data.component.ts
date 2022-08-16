@@ -28,7 +28,7 @@ export class VisualizerDataComponent implements OnInit, OnDestroy {
   private data2 = new Data('', '', [], []);
   private secData1 = new Data('', '', [], []);
   private secData2 = new Data('', '', [], []);
-  private dataStartOptions = new DataStartOption(false, false);
+  public dataStartOptions = new DataStartOption(false, false);
 
   constructor(private dataService: DataService) {
     Chart.register(...registerables);
@@ -43,6 +43,7 @@ export class VisualizerDataComponent implements OnInit, OnDestroy {
           this.data2 = res[1];
           this.secData1 = res[2];
           this.secData2 = res[3];
+          console.log(res);
           this.generateChart();
         })
       )
@@ -70,9 +71,22 @@ export class VisualizerDataComponent implements OnInit, OnDestroy {
   }
 
   createNewChart() {
-    if(this.dataStartOptions.optionCPI){
-      //... Do something for the CPI
-    }
+    // if(this.dataStartOptions.optionCPI){
+    //     console.log('2 Charts generated for GSDP');
+    //     this.ChartOptions1 = {
+    //       labels: this.data1.label,
+    //       datasets: [
+    //         {
+    //           label: 'some label',
+    //           data: this.data1.data,
+    //         },
+    //         // {
+    //         //   label: this.secData1.datasetLabel,
+    //         //   data: this.secData1.data,
+    //         // },
+    //       ],
+    //     };
+    // }
     if (this.dataStartOptions.twoStates) {
       console.log('2 Charts generated for GSDP');
       this.ChartOptions1 = {
