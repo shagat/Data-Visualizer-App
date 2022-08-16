@@ -47,9 +47,11 @@ export class VisualizerDataComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe();
-    this.dataStartOptionsSub = this.dataService.twoStatesSubject.subscribe((twores) => {
-      this.dataStartOptions = twores;
-    });
+    this.dataStartOptionsSub = this.dataService.twoStatesSubject.subscribe(
+      (twores) => {
+        this.dataStartOptions = twores;
+      }
+    );
   }
 
   async generateChart() {
@@ -68,8 +70,11 @@ export class VisualizerDataComponent implements OnInit, OnDestroy {
   }
 
   createNewChart() {
+    if(this.dataStartOptions.optionCPI){
+      //... Do something for the CPI
+    }
     if (this.dataStartOptions.twoStates) {
-      console.log('new 2 Charts generated');
+      console.log('2 Charts generated for GSDP');
       this.ChartOptions1 = {
         labels: this.data1.label,
         datasets: [
@@ -97,7 +102,7 @@ export class VisualizerDataComponent implements OnInit, OnDestroy {
         ],
       };
     } else {
-      console.log('new Chart generated');
+      console.log('new Chart generated for GSDP');
       this.ChartOptions1 = {
         labels: this.data1.label,
         datasets: [

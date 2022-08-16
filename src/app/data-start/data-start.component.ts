@@ -26,18 +26,18 @@ export class DataStartComponent implements OnInit {
   areas = ['Rural', 'Urban', 'Rural+Urban'];
   cpiYear = [2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022];
   cpiMonth = [
-    'Jan',
-    'Feb',
-    'Mar',
-    'Apr',
+    'January',
+    'February',
+    'March',
+    'April',
     'May',
-    'Jun',
-    'Jul',
-    'Aug',
-    'Sep',
-    'Oct',
-    'Nov',
-    'Dec',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
   ];
   states = [
     'Andhra Pradesh',
@@ -121,24 +121,11 @@ export class DataStartComponent implements OnInit {
   }
 
   onSubmit(): void {
-    let index = this.mainForm.value.state;
-    let index2 = this.mainForm.value.secStates;
-    console.log(index, index2);
-    if (this.dataStartOptions.twoStates) {
-      if (index == index2) {
-        window.alert('Given same input');
-        return;
-      } else if (index == null || index2 == null) {
-        window.alert('Input required');
-        return;
-      } else {
-        console.log('Done two inputs');
-        // this.dataService.getTwoData(index, index2);
-      }
-    } else {
-      console.log('Done one inputs');
-      // this.dataService.getData(index);
-    }
+    let indexArea = this.mainForm.value.cpiArea;
+    let indexYear = this.mainForm.value.cpiYear;
+    let indexMonth = this.mainForm.value.cpiMonth;
+    console.log(indexArea, indexYear, indexMonth);
+    this.dataService.getCPIData(indexArea, indexYear, indexMonth);
   }
   // onSubmit(): void {
   //   console.log(this.mainForm.value);
@@ -158,7 +145,7 @@ export class DataStartComponent implements OnInit {
   }
 
   onRadioGSPD() {
-    this.dataStartOptions.optionCPI = false;
+    this.dataService.toggleCPIOptions(false);
     this.mainForm.removeControl('cpiArea');
     this.mainForm.removeControl('cpiYear');
     this.mainForm.removeControl('cpiMonth');
@@ -167,7 +154,7 @@ export class DataStartComponent implements OnInit {
   }
 
   onRadioCPI() {
-    this.dataStartOptions.optionCPI = true;
+    this.dataService.toggleCPIOptions(true);
     this.mainForm.removeControl('state');
     this.mainForm.removeControl('secState');
     this.mainForm = this.fb.group({

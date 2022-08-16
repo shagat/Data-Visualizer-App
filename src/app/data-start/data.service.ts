@@ -63,7 +63,7 @@ export class DataService {
           return res['records'];
         }),
         tap((res) => {
-          res.forEach((e: { sector: string; }) => {
+          res.forEach((e: { sector: string }) => {
             if (e.sector === 'Rural') {
               this.resCPIDataRural.push(e);
             } else if (e.sector === 'Urban') {
@@ -72,9 +72,10 @@ export class DataService {
               this.resCPIDataRuralUrban.push(e);
             }
           });
-          console.log(this.resCPIDataRural)
+          // console.log(this.resCPIDataRural);
           // console.log('THIS IS FOR URBAN', this.resCPIDataUrban)
           // console.log('THIS IS THE REST', this.resCPIDataRuralUrban)
+          console.log('data fetched and received');
         }),
         catchError((error) => {
           throw new Error(error);
@@ -137,25 +138,33 @@ export class DataService {
       return true;
     });
   }
-  getCPIData(index: string) {
+  getCPIData(indexArea: string, indexYear: number, indexMonth?: string) {
     this.clearTemp();
     this.clearData();
-    this.resDataData.every((e) => {
-      if (e['state_uts'].includes(index)) {
-        let result = this.convertSingleJSONtoArray(e);
-        this.getLabelAndData(result);
-        this.data1 = this.tempData1;
-        this.data2 = this.tempData2;
-        this.dataSubject.next([
-          this.data1,
-          this.data2,
-          this.secData1,
-          this.secData2,
-        ]);
-        return false;
-      }
-      return true;
-    });
+    let arr= []
+    let arr2= []
+    if (indexArea === 'Rural') {
+      this.resCPIDataRural.every((e) => {
+        if (e.year === indexYear && e.month === indexMonth) {
+          Object.keys(e).forEach((e1) => {
+            arr.push(e1);
+          } )
+          Object.values(e).forEach((e2) => {
+            arr2.push(e2);
+          } )
+          // console.log(Object.values(e));
+          return false;
+        }
+        return true;
+      });
+    } else if (indexArea === 'Urban') {
+      return false;
+    } else {
+      return false;
+    }
+    console.log(arr.splice(3));
+    console.log(arr2.splice(3));
+    return true;
   }
 
   getTwoData(index: string, index2: string) {
@@ -217,6 +226,10 @@ export class DataService {
 
   toggleTwoStates() {
     this.dataStartOptions.twoStates = !this.dataStartOptions.twoStates;
+    this.twoStatesSubject.next(this.dataStartOptions);
+  }
+  toggleCPIOptions(toggle: boolean) {
+    this.dataStartOptions.optionCPI = toggle;
     this.twoStatesSubject.next(this.dataStartOptions);
   }
 }
