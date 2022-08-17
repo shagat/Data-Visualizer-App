@@ -155,6 +155,7 @@ export class DataService {
           // console.log(Object.values(e));
           return false;
         }
+        this.data1.datasetLabel = 'Rural'
         return true;
       });
     } else if (indexArea === 'Urban') {
@@ -168,6 +169,7 @@ export class DataService {
           } )
           return false;
         }
+        this.data1.datasetLabel = 'Urban'
         return true;
       });
     } else {
@@ -181,6 +183,7 @@ export class DataService {
           } )
           return false;
         }
+        this.data1.datasetLabel = 'Rural And Urban'
         return true;
       });
     }
@@ -188,8 +191,7 @@ export class DataService {
     // console.log(arr2.splice(3));
     this.data1.label = arr.splice(3)
     this.data1.data = arr2.splice(3)
-    this.data1.datasetLabel = 'something'
-    this.data1.title = 'title'
+    this.data1.title = this.resCPIDataObj['title']
     console.log(this.data1);
     this.dataSubject.next([this.data1, this.data2, this.secData1, this.secData2])
     return true;
