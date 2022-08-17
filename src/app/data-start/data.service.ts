@@ -12,6 +12,7 @@ export class DataService {
   private resDataObj: {};
   private resCPIDataObj: {};
   public resDataData = [];
+  public resDataCPI = [];
   public resCPIDataRural = [];
   public resCPIDataUrban = [];
   public resCPIDataRuralUrban = [];
@@ -63,6 +64,7 @@ export class DataService {
           return res['records'];
         }),
         tap((res) => {
+          this.resDataCPI = res;
           res.forEach((e: { sector: string }) => {
             if (e.sector === 'Rural') {
               this.resCPIDataRural.push(e);
@@ -80,8 +82,7 @@ export class DataService {
         catchError((error) => {
           throw new Error(error);
         })
-      )
-      .subscribe();
+      );
   }
 
   getLabelAndData(res: any) {
@@ -141,21 +142,21 @@ export class DataService {
   getCPIData(indexArea: string, indexYear: number, indexMonth?: string) {
     this.clearTemp();
     this.clearData();
-    let arr= []
-    let arr2= []
+    let arr = [];
+    let arr2 = [];
     if (indexArea === 'Rural') {
       this.resCPIDataRural.every((e) => {
         if (e.year === indexYear && e.month === indexMonth) {
           Object.keys(e).forEach((e1) => {
             arr.push(e1);
-          } )
+          });
           Object.values(e).forEach((e2) => {
             arr2.push(e2);
-          } )
+          });
           // console.log(Object.values(e));
           return false;
         }
-        this.data1.datasetLabel = 'Rural'
+        this.data1.datasetLabel = 'Rural';
         return true;
       });
     } else if (indexArea === 'Urban') {
@@ -163,13 +164,13 @@ export class DataService {
         if (e.year === indexYear && e.month === indexMonth) {
           Object.keys(e).forEach((e1) => {
             arr.push(e1);
-          } )
+          });
           Object.values(e).forEach((e2) => {
             arr2.push(e2);
-          } )
+          });
           return false;
         }
-        this.data1.datasetLabel = 'Urban'
+        this.data1.datasetLabel = 'Urban';
         return true;
       });
     } else {
@@ -177,23 +178,28 @@ export class DataService {
         if (e.year === indexYear && e.month === indexMonth) {
           Object.keys(e).forEach((e1) => {
             arr.push(e1);
-          } )
+          });
           Object.values(e).forEach((e2) => {
             arr2.push(e2);
-          } )
+          });
           return false;
         }
-        this.data1.datasetLabel = 'Rural And Urban'
+        this.data1.datasetLabel = 'Rural And Urban';
         return true;
       });
     }
     // console.log(arr.splice(3));
     // console.log(arr2.splice(3));
-    this.data1.label = arr.splice(3)
-    this.data1.data = arr2.splice(3)
-    this.data1.title = this.resCPIDataObj['title']
+    this.data1.label = arr.splice(3);
+    this.data1.data = arr2.splice(3);
+    this.data1.title = this.resCPIDataObj['title'];
     console.log(this.data1);
-    this.dataSubject.next([this.data1, this.data2, this.secData1, this.secData2])
+    this.dataSubject.next([
+      this.data1,
+      this.data2,
+      this.secData1,
+      this.secData2,
+    ]);
     return true;
   }
 
@@ -228,6 +234,9 @@ export class DataService {
 
   getResData() {
     return this.resDataData.slice();
+  }
+  getResDataCPI() {
+    return this.resDataCPI.slice();
   }
 
   convertSingleJSONtoArray(json_data: {}) {
