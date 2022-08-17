@@ -158,9 +158,31 @@ export class DataService {
         return true;
       });
     } else if (indexArea === 'Urban') {
-      return false;
+      this.resCPIDataUrban.every((e) => {
+        if (e.year === indexYear && e.month === indexMonth) {
+          Object.keys(e).forEach((e1) => {
+            arr.push(e1);
+          } )
+          Object.values(e).forEach((e2) => {
+            arr2.push(e2);
+          } )
+          return false;
+        }
+        return true;
+      });
     } else {
-      return false;
+      this.resCPIDataRuralUrban.every((e) => {
+        if (e.year === indexYear && e.month === indexMonth) {
+          Object.keys(e).forEach((e1) => {
+            arr.push(e1);
+          } )
+          Object.values(e).forEach((e2) => {
+            arr2.push(e2);
+          } )
+          return false;
+        }
+        return true;
+      });
     }
     // console.log(arr.splice(3));
     // console.log(arr2.splice(3));
