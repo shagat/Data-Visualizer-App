@@ -44,9 +44,7 @@ export class VisualizerCpiComponent implements OnInit {
     this.dataSub = this.dataService.dataSubject
       .pipe(
         tap((res) => {
-          // console.log(res);
           this.data1 = res[0];
-          console.log(res);
           this.generateChart();
         })
       )
@@ -72,7 +70,6 @@ export class VisualizerCpiComponent implements OnInit {
   }
 
   createNewChart() {
-    console.log('new Chart generated for CPI');
     //Create a new chart
     this.cpi_chart1 = new Chart('cpi_canvas1', {
       type: 'bar',
@@ -93,15 +90,15 @@ export class VisualizerCpiComponent implements OnInit {
       },
       options: {
         responsive: true,
-      //   scales: {
-      //     xAxes: [{
-      //         ticks: {
-      //             autoSkip: false,
-      //             maxRotation: 90,
-      //             minRotation: 90
-      //         }
-      //     }]
-      // },
+        //   scales: {
+        //     xAxes: [{
+        //         ticks: {
+        //             autoSkip: false,
+        //             maxRotation: 90,
+        //             minRotation: 90
+        //         }
+        //     }]
+        // },
         plugins: {
           legend: {
             position: 'top',

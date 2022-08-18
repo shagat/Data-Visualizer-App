@@ -26,6 +26,7 @@ export class DataStartComponent implements OnInit {
   areas = ['Rural', 'Urban', 'Rural+Urban'];
   cpiYear = [2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022];
   cpiMonth = [
+    '',
     'January',
     'February',
     'March',
@@ -124,7 +125,7 @@ export class DataStartComponent implements OnInit {
     let indexArea = this.mainForm.value.cpiArea;
     let indexYear = this.mainForm.value.cpiYear;
     let indexMonth = this.mainForm.value.cpiMonth;
-    console.log(indexArea, indexYear, indexMonth);
+    // console.log(indexArea, indexYear, indexMonth);
     this.dataService.getCPIData(indexArea, indexYear, indexMonth);
   }
   // onSubmit(): void {
@@ -150,7 +151,6 @@ export class DataStartComponent implements OnInit {
     this.mainForm.removeControl('cpiYear');
     this.mainForm.removeControl('cpiMonth');
     this.mainForm.addControl('state', new FormControl('', Validators.required));
-    console.log('change to the radio of GSDP');
   }
 
   onRadioCPI() {
@@ -163,11 +163,5 @@ export class DataStartComponent implements OnInit {
       cpiYear: ['', Validators.required],
       cpiMonth: [''],
     });
-    console.log('change to the radio of CPI');
   }
-
-  // onClickFetch() {
-  //   console.log('Sent req');
-  //   this.dataService.fetchDataTwo();
-  // }
 }
