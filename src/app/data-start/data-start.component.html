@@ -49,9 +49,9 @@
             </div>
             <div class="col">
               <mat-form-field class="full-width">
-                <mat-select placeholder="Month (Optional)" formControlName="cpiMonth">
-                  <mat-option *ngFor="let month of cpiMonth" [value]="month">
-                    {{ month }}
+                <mat-select placeholder="Products (Optional)" formControlName="cpiMonth">
+                  <mat-option *ngFor="let product of cpiProducts" [value]="product">
+                    {{ product }}
                   </mat-option>
                 </mat-select>
               </mat-form-field>
