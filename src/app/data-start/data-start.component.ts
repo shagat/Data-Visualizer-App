@@ -166,8 +166,8 @@ export class DataStartComponent implements OnInit {
     console.log('change to the radio of CPI');
   }
 
-  onClickFetch() {
-    console.log('Sent req');
-    this.dataService.fetchDataTwo();
-  }
+  // onClickFetch() {
+  //   console.log('Sent req');
+  //   this.dataService.fetchDataTwo();
+  // }
 }

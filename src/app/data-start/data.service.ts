@@ -59,7 +59,6 @@ export class DataService {
       })
       .pipe(
         map((res) => {
-          // console.log(res);
           this.resCPIDataObj = res;
           return res['records'];
         }),
