@@ -145,8 +145,14 @@ export class DataService {
     let arr2 = [];
     if (indexArea === 'Rural') {
       this.resCPIDataRural.every((e) => {
-        if (e.year === indexYear) {
-
+        if (e.year === indexYear && e.month === indexMonth) {
+          Object.keys(e).forEach((e1) => {
+            arr.push(e1);
+          });
+          Object.values(e).forEach((e2) => {
+            arr2.push(e2);
+          });
+          return false;
         }
         this.data1.datasetLabel = 'Rural';
         return true;
