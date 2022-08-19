@@ -143,24 +143,10 @@ export class DataService {
     this.clearData();
     let arr = [];
     let arr2 = [];
-    if (!indexMonth) {
-    }
     if (indexArea === 'Rural') {
       this.resCPIDataRural.every((e) => {
         if (e.year === indexYear) {
-          if (!indexMonth) {
-            arr = this.convertCpiMonthToYear();
-            return false;
-          } else if (e.month === indexMonth) {
-            Object.keys(e).forEach((e1) => {
-              arr.push(e1);
-            });
-            Object.values(e).forEach((e2) => {
-              arr2.push(e2);
-            });
-            // console.log(Object.values(e));
-            return false;
-          }
+
         }
         this.data1.datasetLabel = 'Rural';
         return true;
